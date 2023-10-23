@@ -1,0 +1,15 @@
+{
+  "name": "iqnet-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "test",
+    "start": "electron main.js"
+  },
+  "author": "Cáceres Franco",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^27.0.2"
+  }
+}
