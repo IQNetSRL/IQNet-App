@@ -1,24 +1,23 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+import Home from "./views/home/Home.jsx";
+import Administrator from "./views/administrator/Administrator.jsx";
 import "./App.module.scss";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
-<main>
-    <section>
-      <h2>sidebar</h2>
-    </section>
-    <section>
-      <Routes>
-        
-      </Routes>
-    </section>
-</main>
+    <main>
+      <section>
+        <h2>sidebar</h2>
+      </section>
+      <section>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/admin" element={<Administrator />} />
+        </Routes>
+      </section>
+    </main>
   );
 }
 
