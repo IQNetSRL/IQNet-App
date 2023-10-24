@@ -1,0 +1,29 @@
+@mixin centerFlex($display, $direction, $justify, $align, $gap) {
+  display: $display;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
+  gap: $gap;
+}
+
+@mixin width($min, $max) {
+  min-width: $min;
+  max-width: $max;
+}
+
+@mixin height($min, $max) {
+  min-height: $min;
+  max-height: $max;
+}
+
+@mixin controllersContainer() {
+  min-height: 26.616vh;
+  max-height: 26.616vh;
+}
+
+@mixin button($background, $border) {
+  background-color: $background;
+  border: $border;
+  -webkit-tap-highlight-color: transparent;
+  cursor: pointer;
+}
