@@ -11,4 +11,4 @@ citiesRouter.post("/", postCity);
 
 citiesRouter.delete("/:id", deleteCity);
 
-export default citiesRouter;
+module.exports = citiesRouter;

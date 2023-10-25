@@ -4,7 +4,6 @@ const cors = require('cors')
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const router = require('./routes/index.js');
-const mercadopago = require("mercadopago");
 
 require('./db.js');
 

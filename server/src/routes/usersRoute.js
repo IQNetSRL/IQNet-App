@@ -8,4 +8,4 @@ usersRouter.get("/", getUsers);
 
 usersRouter.delete("/:id", deleteUser);
 
-export default usersRouter;
+module.exports = usersRouter;

@@ -1,4 +1,4 @@
-const controllPostCities = require("../../controllers/Cities/controllPostCities.js");
+const controllPostCities = require("../../controllers/Cities/controllPostCity.js");
 
 const postCity = async (req, res) => {
   try {
