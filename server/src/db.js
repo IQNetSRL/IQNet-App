@@ -38,8 +38,6 @@ let capsEntries = entries.map((entry) => [
 ]);
 sequelize.models = Object.fromEntries(capsEntries);
 
-const { Users } = sequelize.models;
-
 module.exports = {
   ...sequelize.models, 
   conn: sequelize, 
