@@ -38,6 +38,6 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
     },
-    { timestamps: true, paranoid: true }
+    { timestamps: true }
   );
 };
