@@ -2,7 +2,13 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { getUsers, getCities, postCity } from "../../redux/actions.js";
+import {
+  getUsers,
+  getCities,
+  postCity,
+  deleteCity,
+  deleteUser,
+} from "../../redux/actions.js";
 import styles from "./Administrator.module.scss";
 
 const Administrator = () => {
@@ -15,10 +21,18 @@ const Administrator = () => {
   useEffect(() => {
     dispatch(getCities());
     dispatch(getUsers());
-  }, []);
+  }, [dispatch]);
 
   const handleNavigate = () => {
     navigate("/");
+  };
+
+  const handleDeleteCity = (id) => {
+    dispatch(deleteCity(id));
+  };
+
+  const handleDeleteUser = (id) => {
+    dispatch(deleteUser(id));
   };
 
   const handleSubmit = async (e) => {
@@ -39,7 +53,7 @@ const Administrator = () => {
     const { name, value } = e.target;
     setNewCity({ ...newCity, [name]: value });
   };
-  console.log(allCities);
+
   return (
     <section className={styles.sectionAdministrator}>
       <h1>Administrator</h1>
@@ -47,7 +61,12 @@ const Administrator = () => {
         <h2>Usuarios</h2>
         <ol>
           {allUsers?.map((user) => (
-            <li key={user.id}>{user.name}</li>
+            <li key={user.id}>
+              {user.name}
+              <button onClick={() => handleDeleteUser(user.id)}>
+                eliminar
+              </button>
+            </li>
           ))}
         </ol>
       </section>
@@ -56,7 +75,12 @@ const Administrator = () => {
         {allCities.length > 0 ? (
           <ol>
             {allCities?.map((city, index) => (
-              <li key={city.id || index}>{city.name}</li>
+              <li key={city.id || index}>
+                {city.name}
+                <button onClick={() => handleDeleteCity(city.id)}>
+                  eliminar
+                </button>
+              </li>
             ))}
           </ol>
         ) : (

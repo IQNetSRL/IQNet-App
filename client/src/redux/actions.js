@@ -24,13 +24,13 @@ export function getUsers() {
 export function deleteUser(id) {
   return async function (dispatch) {
     try {
-      const response = await axios.delete(`/users/${id}`);
+      await axios.delete(`/users/${id}`);
       dispatch({
         type: DELETE_USER,
-        payload: response.data,
+        payload: id,
       });
     } catch (error) {
-      // alert(error.message);
+      console.error("Error al eliminar la usuario:", error);
     }
   };
 }
@@ -68,13 +68,13 @@ export function postCity(name) {
 export function deleteCity(id) {
   return async function (dispatch) {
     try {
-      const response = await axios.delete(`/cities/${id}`);
+      await axios.delete(`/cities/${id}`);
       dispatch({
         type: DELETE_CITY,
-        payload: response.data,
+        payload: id,
       });
     } catch (error) {
-      // alert(error.message);
+      console.error("Error al eliminar la ciudad:", error);
     }
   };
 }
