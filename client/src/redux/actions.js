@@ -49,15 +49,15 @@ export function getCities() {
   };
 }
 
-export function postUsers(name) {
+export function postCity(name) {
   return async function (dispatch) {
     try {
       const response = await axios.post(`/cities`, {
-        name: name,
+        name: name.name,
       });
       return dispatch({
         type: POST_CITY,
-        payload: response.data,
+        payload: response.data[0],
       });
     } catch (error) {
       // alert(error.message);
