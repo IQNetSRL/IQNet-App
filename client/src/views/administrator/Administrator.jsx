@@ -8,6 +8,7 @@ import {
   postCity,
   deleteCity,
   deleteUser,
+  getAccounts,
 } from "../../redux/actions.js";
 import styles from "./Administrator.module.scss";
 
@@ -16,11 +17,13 @@ const Administrator = () => {
   const dispatch = useDispatch();
   const allUsers = useSelector((state) => state.someReducer.allUsers);
   const allCities = useSelector((state) => state.someReducer.allCities);
+  const allAccounts = useSelector((state) => state.someReducer.allAccounts);
   const [newCity, setNewCity] = useState({ name: "" });
 
   useEffect(() => {
     dispatch(getCities());
     dispatch(getUsers());
+    dispatch(getAccounts());
   }, [dispatch]);
 
   const handleNavigate = () => {
@@ -99,6 +102,20 @@ const Administrator = () => {
           />
           <button type="submit">agregar</button>
         </form>
+      </section>
+      <section>
+        <h2>Cuentas</h2>
+        {allAccounts.length > 0 ? (
+          <ol>
+            {allAccounts?.map((account, index) => (
+              <li key={account.id || index}>
+                {account.name}
+              </li>
+            ))}
+          </ol>
+        ) : (
+          <p>Cargando cuentas...</p>
+        )}
       </section>
       <button onClick={handleNavigate}>ir a home</button>
     </section>
