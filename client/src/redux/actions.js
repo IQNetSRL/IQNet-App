@@ -90,7 +90,7 @@ export function getAccounts() {
         payload: response.data,
       });
     } catch (error) {
-      // alert("Error al obtener usuarios");
+      console.log(error);
     }
   };
 }
@@ -99,14 +99,14 @@ export function postAccount(name) {
   return async function (dispatch) {
     try {
       const response = await axios.post(`/accounts`, {
-        name: name.name,
+        name: name,
       });
       return dispatch({
         type: POST_ACCOUNT,
         payload: response.data,
       });
     } catch (error) {
-      // alert(error.message);
+      console.log(error);
     }
   };
 }

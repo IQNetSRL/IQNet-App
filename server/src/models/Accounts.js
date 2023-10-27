@@ -18,7 +18,7 @@ module.exports = (sequelize) => {
           "admin",
           "service",
         ),
-        allowNull: false,
+        allowNull: true,
       },
     },
     { timestamps: true }

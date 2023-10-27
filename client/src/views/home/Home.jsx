@@ -1,10 +1,25 @@
 /* eslint-disable no-unused-vars */
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
+import { useDispatch } from "react-redux";
+import { getAccounts, postAccount} from "../../redux/actions.js";
 import styles from "./Home.module.scss";
 
 const Home = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { user, isLoading } = useAuth0();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!isLoading && user && user.name) {
+        await dispatch(postAccount(user.name));
+        await dispatch(getAccounts());
+      }
+    };
+    fetchData();
+  }, [isLoading, dispatch]);
 
   const handleNavigate = () => {
     navigate("/admin");
