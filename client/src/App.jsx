@@ -6,6 +6,8 @@ import { Navigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import Login from "./views/login/Login.jsx";
 import LogoutButton from "./components/logoutButton/LogoutButton.jsx";
+import Profile from "./views/profile/Profile.jsx";
+import ProfileButton from "./components/profileButton/ProfileButton.jsx";
 import Home from "./views/home/Home.jsx";
 import Administrator from "./views/administrator/Administrator.jsx";
 import "./App.module.scss";
@@ -27,11 +29,13 @@ function App() {
           <section>
             <h2>sidebar</h2>
             <LogoutButton />
+            <ProfileButton />
           </section>
         )}
         <section>
           <Routes>
             <Route path="/" element={<Login />} />
+            <Route path="/profile" element={<Profile />} />
             <Route path="/home" element={<Home />} />
             <Route path="/admin" element={<Administrator />} />
             <Route path="*" element={<Navigate to="/" />} />
