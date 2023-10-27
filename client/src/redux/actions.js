@@ -5,6 +5,8 @@ import {
   GET_CITIES,
   POST_CITY,
   DELETE_CITY,
+  GET_ACCOUNTS,
+  POST_ACCOUNT,
 } from "./actionTypes.js";
 
 export function getUsers() {
@@ -75,6 +77,36 @@ export function deleteCity(id) {
       });
     } catch (error) {
       console.error("Error al eliminar la ciudad:", error);
+    }
+  };
+}
+
+export function getAccounts() {
+  return async function (dispatch) {
+    try {
+      const response = await axios.get("/accounts");
+      dispatch({
+        type: GET_ACCOUNTS,
+        payload: response.data,
+      });
+    } catch (error) {
+      // alert("Error al obtener usuarios");
+    }
+  };
+}
+
+export function postAccount(name) {
+  return async function (dispatch) {
+    try {
+      const response = await axios.post(`/accounts`, {
+        name: name.name,
+      });
+      return dispatch({
+        type: POST_ACCOUNT,
+        payload: response.data,
+      });
+    } catch (error) {
+      // alert(error.message);
     }
   };
 }

@@ -4,11 +4,14 @@ import {
   GET_CITIES,
   POST_CITY,
   DELETE_CITY,
+  GET_ACCOUNTS,
+  POST_ACCOUNT,
 } from "./actionTypes.js";
 
 let initialState = {
   allUsers: [],
   allCities: [],
+  allAccounts: [],
 };
 
 let updatedCities;
@@ -46,6 +49,16 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         allCities: updatedCities,
+      };
+      case GET_ACCOUNTS:
+      return {
+        ...state,
+        allAccounts: action.payload,
+      };
+    case POST_ACCOUNT:
+      return {
+        ...state,
+        allAccounts: [...state.allAccounts, action.payload],
       };
     default:
       return state;
