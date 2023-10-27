@@ -3,6 +3,7 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { Auth0Provider } from "@auth0/auth0-react";
 import axios from "axios";
+import Login from "./views/login/Login.jsx";
 import Home from "./views/home/Home.jsx";
 import Administrator from "./views/administrator/Administrator.jsx";
 import "./App.module.scss";
@@ -22,7 +23,8 @@ function App() {
         </section>
         <section>
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Login />} />
+            <Route path="/home" element={<Home />} />
             <Route path="/admin" element={<Administrator />} />
           </Routes>
         </section>

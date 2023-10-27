@@ -24,7 +24,7 @@ const Administrator = () => {
   }, [dispatch]);
 
   const handleNavigate = () => {
-    navigate("/");
+    navigate("/home");
   };
 
   const handleDeleteCity = (id) => {
