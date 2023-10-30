@@ -1,6 +1,6 @@
 const { Categories } = require("../../db");
 
-const controllPostCategories = async (req) => {
+const controllPostCategory = async (req) => {
   const { name, color } = req.body;
 
   const existingCategory = await Categories.findOne({
@@ -19,4 +19,4 @@ const controllPostCategories = async (req) => {
   return newCategory;
 };
 
-module.exports = controllPostCategories;
+module.exports = controllPostCategory;

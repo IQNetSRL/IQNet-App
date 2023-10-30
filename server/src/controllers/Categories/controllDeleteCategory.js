@@ -1,6 +1,6 @@
 const { Categories } = require('../../db.js');
 
-const controllDeleteCategories = async (id) => {
+const controllDeleteCategory = async (id) => {
   const category = await Categories.findByPk(id);
   if (!category) {
     throw new Error('Category not found.');
@@ -11,4 +11,4 @@ const controllDeleteCategories = async (id) => {
   return { message: 'Category deleted successfully.' };
 };
 
-module.exports = controllDeleteCategories;
+module.exports = controllDeleteCategory;
