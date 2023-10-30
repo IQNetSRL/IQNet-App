@@ -1,14 +1,14 @@
-const { Cities } = require('../../db.js');
+const { Areas } = require('../../db.js');
 
-const controllDeleteCity = async (id) => {
-  const city = await Cities.findByPk(id);
-  if (!city) {
-    throw new Error('City not found.');
+const controllDeleteArea = async (id) => {
+  const area = await Areas.findByPk(id);
+  if (!area) {
+    throw new Error('Area not found.');
   }
 
-  await city.destroy();
+  await area.destroy();
 
-  return { message: 'City deleted successfully.' };
+  return { message: 'Area deleted successfully.' };
 };
 
-module.exports = controllDeleteCity;
+module.exports = controllDeleteArea;
