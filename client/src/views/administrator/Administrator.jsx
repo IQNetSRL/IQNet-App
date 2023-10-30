@@ -61,7 +61,7 @@ const Administrator = () => {
     <section className={styles.sectionAdministrator}>
       <h1>Administrator</h1>
       <section>
-        <h2>Usuarios</h2>
+        <h2>Prospectos</h2>
         <ol>
           {allUsers?.map((user) => (
             <li key={user.id}>
@@ -104,7 +104,7 @@ const Administrator = () => {
         </form>
       </section>
       <section>
-        <h2>Cuentas</h2>
+        <h2>Usuarios</h2>
         {allAccounts.length > 0 ? (
           <ol>
             {allAccounts?.map((account, index) => (

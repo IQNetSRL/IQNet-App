@@ -2,7 +2,7 @@ const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
   sequelize.define(
-    "Accounts",
+    "Status",
     {
       id: {
         type: DataTypes.UUID,
@@ -13,12 +13,8 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      level: {
-        type: DataTypes.ENUM(
-          "admin",
-          "support",
-          "sales",
-        ),
+      color: {
+        type: DataTypes.STRING,
         allowNull: true,
       },
     },
