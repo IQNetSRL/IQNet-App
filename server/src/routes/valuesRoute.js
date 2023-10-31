@@ -14,28 +14,28 @@ const postPriority = require("../handlers/Priorities/postPriority.js");
 
 const valuesRouter = Router();
 
-valuesRouter.get("/area", deleteArea);
+valuesRouter.post("/areas", postArea);
 
-valuesRouter.post("/area", getAreas);
+valuesRouter.get("/areas", getAreas);
 
-valuesRouter.delete("/area:id", postArea);
+valuesRouter.delete("/areas:id", deleteArea);
 
-valuesRouter.get("/categories", deleteCategory);
+valuesRouter.post("/categories", postCategory);
 
-valuesRouter.post("/categories", getCategories);
+valuesRouter.get("/categories", getCategories);
 
-valuesRouter.delete("/categories:id", postCategory);
+valuesRouter.delete("/categories:id", deleteCategory);
 
-valuesRouter.get("/status", deleteStatus);
+valuesRouter.post("/status", postStatus);
 
-valuesRouter.post("/status", getStatus);
+valuesRouter.get("/status", getStatus);
 
-valuesRouter.delete("/status:id", postStatus);
+valuesRouter.delete("/status:id", deleteStatus);
 
-valuesRouter.get("/priorities", deletePriority);
+valuesRouter.post("/priorities", postPriority);
 
-valuesRouter.post("/priorities", getPriorities);
+valuesRouter.get("/priorities", getPriorities);
 
-valuesRouter.delete("/priorities:id", postPriority);
+valuesRouter.delete("/priorities:id", deletePriority);
 
-module.exports = usersRouter;
+module.exports = valuesRouter;

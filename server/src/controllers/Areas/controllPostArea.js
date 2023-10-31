@@ -16,7 +16,7 @@ const controllPostArea = async (req) => {
     color: color,
   });
 
-  return newArea;
+  return newArea; 
 };
 
 module.exports = controllPostArea;

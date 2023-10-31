@@ -2,7 +2,7 @@ const controllGetStatus = require("../../controllers/Status/controllGetStatus.js
 
 const getStatus = async (req, res) => {
   try {
-    const response = await controllGetStatus(req);
+    const response = await controllGetStatus();
     res.status(200).json(response);
   } catch (error) {
     res.status(400).json({ error: error.message });
