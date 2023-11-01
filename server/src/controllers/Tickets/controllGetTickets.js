@@ -1,12 +1,15 @@
 const { Tickets } = require("../../db");
 
 const controllGetTickets = async (req) => {
-  const { AccountId, areaId, categoryId, statusId, priorityId } = req.query;
+  const { Id, accountId, areaId, categoryId, statusId, priorityId } = req.query;
 
   const where = {};
 
-  if (AccountId) {
-    where.AccountId = AccountId;
+  if (Id) {
+    where.id = Id;
+  }
+  if (accountId) {
+    where.AccountId = accountId;
   }
   if (areaId) {
     where.AreaId = areaId;
