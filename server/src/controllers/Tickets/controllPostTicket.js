@@ -1,9 +1,9 @@
-const { Options } = require("../../db");
+const { Tickets } = require("../../db");
 
-const controllPostOptions = async (req) => {
+const controllPostTicket = async (req) => {
   const { informationId, areaId, categoryId, statusId, priorityId } = req.body;
 
-  const newTicket = await Options.create({
+  const newTicket = await Tickets.create({
     informationId: informationId,
     AreaId: areaId,
     CategoryId: categoryId,
@@ -14,4 +14,4 @@ const controllPostOptions = async (req) => {
   return newTicket;
 };
 
-module.exports = controllPostOptions;
+module.exports = controllPostTicket;
