@@ -6,16 +6,41 @@ import {
   DELETE_CITY,
   GET_ACCOUNTS,
   POST_ACCOUNT,
+  DELETE_AREA,
+  GET_AREAS,
+  POST_AREA,
+  DELETE_CATEGORY,
+  GET_CATEGORIES,
+  POST_CATEGORY,
+  PUT_INFORMATION,
+  GET_INFORMATION,
+  POST_INFORMATION,
+  DELETE_STATUS,
+  GET_STATUS,
+  POST_STATUS,
+  DELETE_PRIORITY,
+  GET_PRIORITIES,
+  POST_PRIORITY,
 } from "./actionTypes.js";
 
 let initialState = {
   allUsers: [],
   allCities: [],
   allAccounts: [],
+  allAreas: [],
+  allStatus: [],
+  allPriorities: [],
+  allInformation: [],
+  allCategories: [],
 };
 
 let updatedCities;
 let updatedUsers;
+let updatedAreas;
+let updatedCategories;
+let updatedPriorities;
+let updatedStatus;
+let updatedInformation;
 
 function rootReducer(state = initialState, action) {
   switch (action.type) {
@@ -50,7 +75,7 @@ function rootReducer(state = initialState, action) {
         ...state,
         allCities: updatedCities,
       };
-      case GET_ACCOUNTS:
+    case GET_ACCOUNTS:
       return {
         ...state,
         allAccounts: action.payload,
@@ -59,6 +84,106 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         allAccounts: [...state.allAccounts, action.payload],
+      };
+    case GET_AREAS:
+      return {
+        ...state,
+        allAreas: action.payload,
+      };
+    case GET_STATUS:
+      return {
+        ...state,
+        allStatus: action.payload,
+      };
+    case GET_PRIORITIES:
+      return {
+        ...state,
+        allPriorities: action.payload,
+      };
+    case GET_CATEGORIES:
+      return {
+        ...state,
+        allCategories: action.payload,
+      };
+    case GET_INFORMATION:
+      return {
+        ...state,
+        allInformation: action.payload,
+      };
+    case POST_AREA:
+      return {
+        ...state,
+        allAreas: [...state.allAreas, action.payload],
+      };
+    case POST_STATUS:
+      return {
+        ...state,
+        allStatus: [...state.allStatus, action.payload],
+      };
+    case POST_PRIORITY:
+      return {
+        ...state,
+        allPriorities: [...state.allPriorities, action.payload],
+      };
+    case POST_CATEGORY:
+      return {
+        ...state,
+        allCategories: [...state.allCategories, action.payload],
+      };
+    case POST_INFORMATION:
+      return {
+        ...state,
+        allInformation: [...state.allInformation, action.payload],
+      };
+    case DELETE_AREA:
+      updatedAreas = state.allAreas.filter(
+        (area) => area.id !== action.payload
+      );
+      return {
+        ...state,
+        allAreas: updatedAreas,
+      };
+    case DELETE_CATEGORY:
+      updatedCategories = state.allCategories.filter(
+        (category) => category.id !== action.payload
+      );
+      return {
+        ...state,
+        allCategories: updatedCategories,
+      };
+    case DELETE_STATUS:
+      updatedStatus = state.allStatus.filter(
+        (status) => status.id !== action.payload
+      );
+      return {
+        ...state,
+        allStatus: updatedStatus,
+      };
+    case DELETE_PRIORITY:
+      updatedPriorities = state.allPriorities.filter(
+        (priority) => priority.id !== action.payload
+      );
+      return {
+        ...state,
+        allPriorities: updatedPriorities,
+      };
+    case PUT_INFORMATION:
+      updatedInformation = state.allInformation.map((info) => {
+        if (info.id === action.payload.id) {
+          return {
+            ...info,
+            client: action.payload.client,
+            address: action.payload.address,
+            text: action.payload.text,
+            comment: action.payload.comment,
+          };
+        }
+        return info;
+      });
+
+      return {
+        ...state,
+        allInformation: updatedInformation,
       };
     default:
       return state;
