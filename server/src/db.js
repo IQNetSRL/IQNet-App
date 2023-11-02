@@ -38,10 +38,6 @@ let capsEntries = entries.map((entry) => [
 ]);
 sequelize.models = Object.fromEntries(capsEntries);
 
-const { Options, Accounts } = sequelize.models;
-
-Accounts.belongsToMany(Options, { through: "Tickets" });
-
 module.exports = {
   ...sequelize.models,
   conn: sequelize,
