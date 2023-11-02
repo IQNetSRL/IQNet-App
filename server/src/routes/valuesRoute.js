@@ -18,24 +18,24 @@ valuesRouter.post("/areas", postArea);
 
 valuesRouter.get("/areas", getAreas);
 
-valuesRouter.delete("/areas:id", deleteArea);
-
 valuesRouter.post("/categories", postCategory);
 
 valuesRouter.get("/categories", getCategories);
-
-valuesRouter.delete("/categories:id", deleteCategory);
 
 valuesRouter.post("/status", postStatus);
 
 valuesRouter.get("/status", getStatus);
 
-valuesRouter.delete("/status:id", deleteStatus);
-
 valuesRouter.post("/priorities", postPriority);
 
 valuesRouter.get("/priorities", getPriorities);
 
-valuesRouter.delete("/priorities:id", deletePriority);
+valuesRouter.delete("/areas/:id", deleteArea);
+
+valuesRouter.delete("/categories/:id", deleteCategory);
+
+valuesRouter.delete("/status/:id", deleteStatus);
+
+valuesRouter.delete("/priorities/:id", deletePriority);
 
 module.exports = valuesRouter;
