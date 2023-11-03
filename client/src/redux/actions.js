@@ -22,6 +22,8 @@ import {
   DELETE_PRIORITY,
   GET_PRIORITIES,
   POST_PRIORITY,
+  GET_TICKETS,
+  POST_TICKET,
 } from "./actionTypes.js";
 
 export function getUsers() {
@@ -272,7 +274,7 @@ export function deletePriority(id) {
 export function getAreas(areaId) {
   return async function (dispatch) {
     try {
-      let url = "/values/areas";  
+      let url = "/values/areas";
       if (areaId) {
         url += `?areaId=${areaId}`;
       }
@@ -291,7 +293,7 @@ export function getAreas(areaId) {
 export function getCategories(categoryId) {
   return async function (dispatch) {
     try {
-      let url = "/values/categories";  
+      let url = "/values/categories";
       if (categoryId) {
         url += `?categoryId=${categoryId}`;
       }
@@ -310,7 +312,7 @@ export function getCategories(categoryId) {
 export function getStatus(statusId) {
   return async function (dispatch) {
     try {
-      let url = "/values/status";  
+      let url = "/values/status";
       if (statusId) {
         url += `?statusId=${statusId}`;
       }
@@ -329,7 +331,7 @@ export function getStatus(statusId) {
 export function getPriorities(priorityId) {
   return async function (dispatch) {
     try {
-      let url = "/values/priorities";  
+      let url = "/values/priorities";
       if (priorityId) {
         url += `?priorityId=${priorityId}`;
       }
@@ -348,9 +350,9 @@ export function getPriorities(priorityId) {
 export function getInformation(informationId) {
   return async function (dispatch) {
     try {
-      let url = "/information"; 
+      let url = "/information";
       if (informationId) {
-        url += `?informationId=${informationId}`; 
+        url += `?informationId=${informationId}`;
       }
 
       const response = await axios.get(url);
@@ -380,6 +382,35 @@ export function putInformation(id, client, address, text, comment) {
       });
     } catch (error) {
       console.log(error);
+    }
+  };
+}
+
+export function getTickets(filters) {
+  return async function (dispatch) {
+    try {
+      const url = "/tickets?" + new URLSearchParams(filters).toString();
+      const response = await axios.get(url);
+      dispatch({
+        type: GET_TICKETS,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.error("Error al obtener los tickets:", error);
+    }
+  };
+}
+
+export function postTicket(ticketData) {
+  return async function (dispatch) {
+    try {
+      const response = await axios.post("/tickets", ticketData);
+      dispatch({
+        type: POST_TICKET,
+        payload: response.data[0],
+      });
+    } catch (error) {
+      console.error("Error al agregar un ticket:", error);
     }
   };
 }

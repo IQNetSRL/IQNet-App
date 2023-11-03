@@ -21,6 +21,8 @@ import {
   DELETE_PRIORITY,
   GET_PRIORITIES,
   POST_PRIORITY,
+  GET_TICKETS,
+  POST_TICKET,
 } from "./actionTypes.js";
 
 let initialState = {
@@ -32,6 +34,7 @@ let initialState = {
   allPriorities: [],
   allInformation: [],
   allCategories: [],
+  allTickets: [],
 };
 
 let updatedCities;
@@ -110,6 +113,11 @@ function rootReducer(state = initialState, action) {
         ...state,
         allInformation: action.payload,
       };
+    case GET_TICKETS:
+      return {
+        ...state,
+        allTickets: action.payload,
+      };
     case POST_AREA:
       return {
         ...state,
@@ -134,6 +142,11 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         allInformation: [...state.allInformation, action.payload],
+      };
+    case POST_TICKET:
+      return {
+        ...state,
+        allTickets: [...state.allTickets, action.payload],
       };
     case DELETE_AREA:
       updatedAreas = state.allAreas.filter(
