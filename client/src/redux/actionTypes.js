@@ -22,3 +22,4 @@ export const GET_PRIORITIES = "GET_PRIORITIES";
 export const POST_PRIORITY = "POST_PRIORITY";
 export const GET_TICKETS = "GET_TICKETS";
 export const POST_TICKET = "POST_TICKET";
+export const DELETE_TICKET = "DELETE_TICKET";

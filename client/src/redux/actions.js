@@ -24,6 +24,7 @@ import {
   POST_PRIORITY,
   GET_TICKETS,
   POST_TICKET,
+  DELETE_TICKET,
 } from "./actionTypes.js";
 
 export function getUsers() {
@@ -411,6 +412,20 @@ export function postTicket(ticketData) {
       });
     } catch (error) {
       console.error("Error al agregar un ticket:", error);
+    }
+  };
+}
+
+export function deleteTicket(id) {
+  return async function (dispatch) {
+    try {
+      await axios.delete(`/tickets/${id}`);
+      dispatch({
+        type: DELETE_TICKET,
+        payload: id,
+      });
+    } catch (error) {
+      console.error("Error al eliminar la ticket:", error);
     }
   };
 }
