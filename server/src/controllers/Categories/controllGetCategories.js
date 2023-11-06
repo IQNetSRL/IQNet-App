@@ -1,24 +1,30 @@
 const { Categories } = require("../../db.js");
 
 const controllGetCategories = async (req) => {
-  const { categoriesId } = req.query;
+  if (req) {
+    const { categoriesId } = req.query;
 
-  const where = {};
+    const where = {};
 
-  if (!categoriesId) {
-    const categories = await Categories.findAll();
+    if (!categoriesId) {
+      const categories = await Categories.findAll();
+      return categories;
+    }
+
+    if (categoriesId) {
+      where.id = categoriesId;
+    }
+
+    const categories = await Categories.findAll({
+      where,
+    });
+
     return categories;
   }
 
-  if (categoriesId) {
-    where.id = categoriesId;
-  }
+  const allCategories = await Categories.findAll();
 
-  const categories = await Categories.findAll({
-    where,
-  });
-
-  return categories;
+  return allCategories;
 };
 
 module.exports = controllGetCategories;
