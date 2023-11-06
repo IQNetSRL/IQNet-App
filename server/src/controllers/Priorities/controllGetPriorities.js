@@ -1,24 +1,30 @@
 const { Priorities } = require("../../db.js");
 
 const controllGetPriorities = async (req) => {
-  const { prioritiesId } = req.query;
+  if (req) {
+    const { prioritiesId } = req.query;
 
-  const where = {};
+    const where = {};
 
-  if (!prioritiesId) {
-    const priorities = await Priorities.findAll();
+    if (!prioritiesId) {
+      const priorities = await Priorities.findAll();
+      return priorities;
+    }
+
+    if (prioritiesId) {
+      where.id = prioritiesId;
+    }
+
+    const priorities = await Priorities.findAll({
+      where,
+    });
+
     return priorities;
   }
 
-  if (prioritiesId) {
-    where.id = prioritiesId;
-  }
+  const allPriorities = await Priorities.findAll();
 
-  const priorities = await Priorities.findAll({
-    where,
-  });
-
-  return priorities;
+  return allPriorities;
 };
 
 module.exports = controllGetPriorities;
