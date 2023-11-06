@@ -23,6 +23,7 @@ import {
   POST_PRIORITY,
   GET_TICKETS,
   POST_TICKET,
+  DELETE_TICKET,
 } from "./actionTypes.js";
 
 let initialState = {
@@ -44,6 +45,7 @@ let updatedCategories;
 let updatedPriorities;
 let updatedStatus;
 let updatedInformation;
+let updatedTickets;
 
 function rootReducer(state = initialState, action) {
   switch (action.type) {
@@ -193,10 +195,18 @@ function rootReducer(state = initialState, action) {
         }
         return info;
       });
-
+      
       return {
         ...state,
         allInformation: updatedInformation,
+      };
+    case DELETE_TICKET:
+      updatedTickets = state.allTickets.filter(
+        (ticket) => ticket.id !== action.payload
+      );
+      return {
+        ...state,
+        allTickets: updatedTickets,
       };
     default:
       return state;
