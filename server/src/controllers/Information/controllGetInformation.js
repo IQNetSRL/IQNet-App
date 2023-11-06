@@ -1,24 +1,30 @@
 const { Information } = require("../../db.js");
 
 const controllGetInformation = async (req) => {
-  const { informationId } = req.query;
+  if (req) {
+    const { informationId } = req.query;
 
-  const where = {};
+    const where = {};
 
-  if (!informationId) {
-    const information = await Information.findAll();
+    if (!informationId) {
+      const information = await Information.findAll();
+      return information;
+    }
+
+    if (informationId) {
+      where.id = informationId;
+    }
+
+    const information = await Information.findAll({
+      where,
+    });
+
     return information;
   }
 
-  if (informationId) {
-    where.id = informationId;
-  }
+  const allInformation = await Information.findAll();
 
-  const information = await Information.findAll({
-    where,
-  });
-
-  return information;
+  return allInformation;
 };
 
 module.exports = controllGetInformation;
