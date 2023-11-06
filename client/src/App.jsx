@@ -28,6 +28,7 @@ function App() {
         {!isLogin && (
           <section>
             <h2>sidebar</h2>
+            <button>Crear Nuevo Ticket</button>
             <LogoutButton />
             <ProfileButton />
           </section>
