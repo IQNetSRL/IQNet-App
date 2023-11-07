@@ -133,15 +133,15 @@ export function postArea(name, color) {
   return async function (dispatch) {
     try {
       const response = await axios.post(`/values/areas`, {
-        name: name,
+        name: name.name,
         color: color,
       });
       return dispatch({
         type: POST_AREA,
-        payload: response.data,
+        payload: response.data[0],
       });
     } catch (error) {
-      // alert(error.message);
+      console.error(error);
     }
   };
 }
