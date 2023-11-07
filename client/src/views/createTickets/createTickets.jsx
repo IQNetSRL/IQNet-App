@@ -24,6 +24,9 @@ const CreateTickets = () => {
   const allStatus = useSelector((state) => state.someReducer.allStatus);
   const allPriorities = useSelector((state) => state.someReducer.allPriorities);
   const [newArea, setNewArea] = useState({ name: "" });
+  const [newCategory, setNewCategory] = useState({ name: "" });
+  const [newStatus, setNewStatus] = useState({ name: "" });
+  const [newPriority, setNewPriority] = useState({ name: "" });
 
   useEffect(() => {
     dispatch(getAreas());
@@ -32,7 +35,7 @@ const CreateTickets = () => {
     dispatch(getPriorities());
   }, []);
 
-  const handleSubmit = async (e) => {
+  const handleSubmitArea = async (e) => {
     e.preventDefault();
     if (newArea.name.trim() === "") {
       return;
@@ -46,7 +49,26 @@ const CreateTickets = () => {
     }
   };
 
-  const handleInputChange = (e) => {
+  const handleSubmitCategory = async (e) => {
+    e.preventDefault();
+    if (newCategory.name.trim() === "") {
+      return;
+    }
+
+    try {
+      await dispatch(postCategory(newCategory));
+      setNewCategory({ name: "" });
+    } catch (error) {
+      console.error("Error al agregar la Categoria:", error);
+    }
+  };
+
+  const handleInputChangeCategory = (e) => {
+    const { name, value } = e.target;
+    setNewCategory({ ...newCategory, [name]: value });
+  };
+
+  const handleInputChangeArea = (e) => {
     const { name, value } = e.target;
     setNewArea({ ...newArea, [name]: value });
   };
@@ -55,8 +77,13 @@ const CreateTickets = () => {
     window.history.back();
   };
 
-  const handleDeleteArea = (id) => {
-    dispatch(deleteArea(id));
+  const handleDelete = (id, value) => {
+    if (value === "area") {
+      dispatch(deleteArea(id));
+    }
+    if (value === "category") {
+      dispatch(deleteCategory(id));
+    }
   };
 
   return (
@@ -65,31 +92,62 @@ const CreateTickets = () => {
       <button onClick={handleNavigateBack}>Volver</button>
       <div>
         <section>
-          <h3>Areas</h3>
-          {allAreas.length > 0 ? (
-            <ol>
-              {allAreas?.map((area, index) => (
-                <li key={area.id || index}>
-                  {area.name}
-                  <button onClick={() => handleDeleteArea(area.id)}>
-                    eliminar
-                  </button>
-                </li>
-              ))}
-            </ol>
-          ) : (
-            <p>Cargando areas...</p>
-          )}
-          <form onSubmit={handleSubmit}>
-            <input
-              type="text"
-              name="name"
-              placeholder="nueva area"
-              onChange={handleInputChange}
-              value={newArea.name}
-            />
-            <button type="submit">agregar</button>
-          </form>
+          <div>
+            <h3>Areas</h3>
+            {allAreas.length > 0 ? (
+              <ol>
+                {allAreas?.map((area, index) => (
+                  <li key={area.id || index}>
+                    {area.name}
+                    <button onClick={() => handleDelete(area.id, "area")}>
+                      eliminar
+                    </button>
+                  </li>
+                ))}
+              </ol>
+            ) : (
+              <p>Cargando areas...</p>
+            )}
+            <form onSubmit={handleSubmitArea}>
+              <input
+                type="text"
+                name="name"
+                placeholder="nueva area"
+                onChange={handleInputChangeArea}
+                value={newArea.name}
+              />
+              <button type="submit">agregar</button>
+            </form>
+          </div>
+          <div>
+            <h3>Categorias</h3>
+            {allCategories.length > 0 ? (
+              <ol>
+                {allCategories?.map((category, index) => (
+                  <li key={category.id || index}>
+                    {category.name}
+                    <button
+                      onClick={() => handleDelete(category.id, "category")}
+                    >
+                      eliminar
+                    </button>
+                  </li>
+                ))}
+              </ol>
+            ) : (
+              <p>Cargando categorias...</p>
+            )}
+            <form onSubmit={handleSubmitCategory}>
+              <input
+                type="text"
+                name="name"
+                placeholder="nueva categoria"
+                onChange={handleInputChangeCategory}
+                value={newCategory.name}
+              />
+              <button type="submit">agregar</button>
+            </form>
+          </div>
         </section>
       </div>
     </section>

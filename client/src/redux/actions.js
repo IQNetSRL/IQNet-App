@@ -167,15 +167,15 @@ export function postCategory(name, color) {
   return async function (dispatch) {
     try {
       const response = await axios.post(`/values/categories`, {
-        name: name,
+        name: name.name,
         color: color,
       });
       return dispatch({
         type: POST_CATEGORY,
-        payload: response.data,
+        payload: response.data[0],
       });
     } catch (error) {
-      // alert(error.message);
+      console.error(error);
     }
   };
 }
