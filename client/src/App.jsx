@@ -3,6 +3,7 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { Auth0Provider } from "@auth0/auth0-react";
 import { Navigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Login from "./views/login/Login.jsx";
 import LogoutButton from "./components/logoutButton/LogoutButton.jsx";
@@ -10,13 +11,19 @@ import Profile from "./views/profile/Profile.jsx";
 import ProfileButton from "./components/profileButton/ProfileButton.jsx";
 import Home from "./views/home/Home.jsx";
 import Administrator from "./views/administrator/Administrator.jsx";
+import CreateTickets from "./views/createTickets/createTickets.jsx";
 import "./App.module.scss";
 
 axios.defaults.baseURL = "http://localhost:3001/";
 
 function App() {
+  const navigate = useNavigate();
   const location = useLocation();
   const isLogin = location.pathname === "/";
+
+  const handleNavigate = () => {
+    navigate("/create");
+  };
 
   return (
     <Auth0Provider
@@ -28,7 +35,7 @@ function App() {
         {!isLogin && (
           <section>
             <h2>sidebar</h2>
-            <button>Crear Nuevo Ticket</button>
+            <button onClick={handleNavigate}>Crear Nuevo Ticket</button>
             <LogoutButton />
             <ProfileButton />
           </section>
@@ -39,6 +46,7 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/home" element={<Home />} />
             <Route path="/admin" element={<Administrator />} />
+            <Route path="/create" element={<CreateTickets />} />
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </section>
