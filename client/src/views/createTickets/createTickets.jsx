@@ -45,7 +45,7 @@ const CreateTickets = () => {
       await dispatch(postArea(newArea));
       setNewArea({ name: "" });
     } catch (error) {
-      console.error("Error al agregar la Area:", error);
+      console.error("Error al agregar el Area:", error);
     }
   };
 
@@ -63,6 +63,20 @@ const CreateTickets = () => {
     }
   };
 
+  const handleSubmitStatus = async (e) => {
+    e.preventDefault();
+    if (newStatus.name.trim() === "") {
+      return;
+    }
+
+    try {
+      await dispatch(postStatus(newStatus));
+      setNewStatus({ name: "" });
+    } catch (error) {
+      console.error("Error al agregar el Estatus:", error);
+    }
+  };
+
   const handleInputChangeCategory = (e) => {
     const { name, value } = e.target;
     setNewCategory({ ...newCategory, [name]: value });
@@ -71,6 +85,11 @@ const CreateTickets = () => {
   const handleInputChangeArea = (e) => {
     const { name, value } = e.target;
     setNewArea({ ...newArea, [name]: value });
+  };
+
+  const handleInputChangeStatus = (e) => {
+    const { name, value } = e.target;
+    setNewStatus({ ...newStatus, [name]: value });
   };
 
   const handleNavigateBack = () => {
@@ -83,6 +102,9 @@ const CreateTickets = () => {
     }
     if (value === "category") {
       dispatch(deleteCategory(id));
+    }
+    if (value === "status") {
+      dispatch(deleteStatus(id));
     }
   };
 
@@ -149,6 +171,33 @@ const CreateTickets = () => {
             </form>
           </div>
         </section>
+      </div>
+      <div>
+        <h3>Estatus</h3>
+        {allStatus.length > 0 ? (
+          <ol>
+            {allStatus?.map((status, index) => (
+              <li key={status.id || index}>
+                {status.name}
+                <button onClick={() => handleDelete(status.id, "status")}>
+                  eliminar
+                </button>
+              </li>
+            ))}
+          </ol>
+        ) : (
+          <p>Cargando estatus...</p>
+        )}
+        <form onSubmit={handleSubmitStatus}>
+          <input
+            type="text"
+            name="name"
+            placeholder="nuevo estatus"
+            onChange={handleInputChangeStatus}
+            value={newStatus.name}
+          />
+          <button type="submit">agregar</button>
+        </form>
       </div>
     </section>
   );
