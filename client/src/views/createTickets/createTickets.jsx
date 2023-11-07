@@ -10,6 +10,10 @@ import {
   getCategories,
   getStatus,
   getPriorities,
+  deleteArea,
+  deleteCategory,
+  deleteStatus,
+  deletePriority,
 } from "../../redux/actions.js";
 import styles from "./CreateTickets.module.scss";
 
@@ -51,6 +55,10 @@ const CreateTickets = () => {
     window.history.back();
   };
 
+  const handleDeleteArea = (id) => {
+    dispatch(deleteArea(id));
+  };
+
   return (
     <section className={styles.sectionHome}>
       <h1>Crear Ticket</h1>
@@ -61,7 +69,12 @@ const CreateTickets = () => {
           {allAreas.length > 0 ? (
             <ol>
               {allAreas?.map((area, index) => (
-                <li key={area.id || index}>{area.name}</li>
+                <li key={area.id || index}>
+                  {area.name}
+                  <button onClick={() => handleDeleteArea(area.id)}>
+                    eliminar
+                  </button>
+                </li>
               ))}
             </ol>
           ) : (
@@ -78,9 +91,6 @@ const CreateTickets = () => {
             <button type="submit">agregar</button>
           </form>
         </section>
-        {/* <li>{allCategories.name}</li>
-          <li>{allStatus.name}</li>
-          <li>{allPriorities.name}</li> */}
       </div>
     </section>
   );
