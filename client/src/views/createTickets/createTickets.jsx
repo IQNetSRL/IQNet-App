@@ -77,6 +77,20 @@ const CreateTickets = () => {
     }
   };
 
+  const handleSubmitPriority = async (e) => {
+    e.preventDefault();
+    if (newPriority.name.trim() === "") {
+      return;
+    }
+
+    try {
+      await dispatch(postPriority(newPriority));
+      setNewPriority({ name: "" });
+    } catch (error) {
+      console.error("Error al agregar la Prioridad:", error);
+    }
+  };
+
   const handleInputChangeCategory = (e) => {
     const { name, value } = e.target;
     setNewCategory({ ...newCategory, [name]: value });
@@ -92,6 +106,11 @@ const CreateTickets = () => {
     setNewStatus({ ...newStatus, [name]: value });
   };
 
+  const handleInputChangePriority = (e) => {
+    const { name, value } = e.target;
+    setNewPriority({ ...newPriority, [name]: value });
+  };
+
   const handleNavigateBack = () => {
     window.history.back();
   };
@@ -105,6 +124,9 @@ const CreateTickets = () => {
     }
     if (value === "status") {
       dispatch(deleteStatus(id));
+    }
+    if (value === "priority") {
+      dispatch(deletePriority(id));
     }
   };
 
@@ -195,6 +217,33 @@ const CreateTickets = () => {
             placeholder="nuevo estatus"
             onChange={handleInputChangeStatus}
             value={newStatus.name}
+          />
+          <button type="submit">agregar</button>
+        </form>
+      </div>
+      <div>
+        <h3>Prioridades</h3>
+        {allPriorities.length > 0 ? (
+          <ol>
+            {allPriorities?.map((priority, index) => (
+              <li key={priority.id || index}>
+                {priority.name}
+                <button onClick={() => handleDelete(priority.id, "priority")}>
+                  eliminar
+                </button>
+              </li>
+            ))}
+          </ol>
+        ) : (
+          <p>Cargando prioridades...</p>
+        )}
+        <form onSubmit={handleSubmitPriority}>
+          <input
+            type="text"
+            name="name"
+            placeholder="nueva prioridad"
+            onChange={handleInputChangePriority}
+            value={newPriority.name}
           />
           <button type="submit">agregar</button>
         </form>
