@@ -15,6 +15,7 @@ import {
   deleteStatus,
   deletePriority,
 } from "../../redux/actions.js";
+import FormTickets from "../../components/formTickets/FormTickets.jsx";
 import styles from "./CreateTickets.module.scss";
 
 const CreateTickets = () => {
@@ -131,8 +132,7 @@ const CreateTickets = () => {
   };
 
   return (
-    <section className={styles.sectionHome}>
-      <h1>Crear Ticket</h1>
+    <section className={styles.sectionCreateTickets}>
       <button onClick={handleNavigateBack}>Volver</button>
       <div>
         <section>
@@ -248,6 +248,7 @@ const CreateTickets = () => {
           <button type="submit">agregar</button>
         </form>
       </div>
+      <FormTickets/>
     </section>
   );
 };
