@@ -10,6 +10,7 @@ import {
   getCategories,
   getStatus,
   getPriorities,
+  getAccounts,
   deleteArea,
   deleteCategory,
   deleteStatus,
@@ -34,6 +35,7 @@ const CreateTickets = () => {
     dispatch(getCategories());
     dispatch(getStatus());
     dispatch(getPriorities());
+    dispatch(getAccounts());
   }, []);
 
   const handleSubmitArea = async (e) => {
