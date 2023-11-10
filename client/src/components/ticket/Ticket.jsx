@@ -1,35 +1,36 @@
 /* eslint-disable no-unused-vars */
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
 import { deleteTicket } from "../../redux/actions.js";
 import styles from "./Ticket.module.scss";
 
 const Ticket = () => {
   const dispatch = useDispatch();
+  const location = useLocation();
+  const { user, isLoading } = useAuth0();
+  const isProfile = location.pathname === "/profile";
+  const isHome = location.pathname === "/home";
   const allTickets = useSelector((state) => state.someReducer.allTickets);
   const allAreas = useSelector((state) => state.someReducer.allAreas);
   const allCategories = useSelector((state) => state.someReducer.allCategories);
   const allStatus = useSelector((state) => state.someReducer.allStatus);
   const allPriorities = useSelector((state) => state.someReducer.allPriorities);
+  const [isReady, setIsReady] = useState(false);
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!isLoading && user && user.name) {
+        setIsReady(true);
+      }
+    };
 
-  const getAreaNameById = (id, allAreas) => {
-    const area = allAreas.find((area) => area.id === id);
-    return area ? area.name : "";
-  };
+    fetchData();
+  }, []);
 
-  const getCategoryNameById = (id, allCategories) => {
-    const category = allCategories.find((category) => category.id === id);
-    return category ? category.name : "";
-  };
-
-  const getStatusNameById = (id, allStatus) => {
-    const status = allStatus.find((status) => status.id === id);
-    return status ? status.name : "";
-  };
-
-  const getPriorityNameById = (id, allPriorities) => {
-    const priority = allPriorities.find((priority) => priority.id === id);
-    return priority ? priority.name : "";
+  const getValueNameById = (id, state) => {
+    const value = state.find((priority) => priority.id === id);
+    return value ? value.name : "";
   };
 
   const handleDeleteTicket = (id) => {
@@ -39,32 +40,65 @@ const Ticket = () => {
   return (
     <section className={styles.sectionTicket}>
       <div className={styles.ticketList}>
-        <ul>
-          {allTickets.map((ticket) => (
-            <li key={ticket.id}>
-              <p>Área: {getAreaNameById(ticket.AreaId, allAreas)}</p>
-              <p>
-                Categoría:{" "}
-                {getCategoryNameById(ticket.CategoryId, allCategories)}
-              </p>
-              <p>Estado: {getStatusNameById(ticket.StatusId, allStatus)}</p>
-              <p>
-                Prioridad:{" "}
-                {getPriorityNameById(ticket.PriorityId, allPriorities)}
-              </p>
-              <p>Creador: {ticket.username}</p>
-              <p>Encargado: {ticket.responsable}</p>
-              <p>Cliente: {ticket.client}</p>
-              <p>Direccion: {ticket.address}</p>
-              <p>Descripcion: {ticket.text}</p>
-              <p>Comentarios: {ticket.comment}</p>
-              <button onClick={() => handleDeleteTicket(ticket.id)}>
-                Eliminar Ticket
-              </button>
-              <br />
-            </li>
-          ))}
-        </ul>
+        {isReady && isProfile ? (
+          <ul>
+            {allTickets
+              .filter((ticket) => ticket.responsable === user.name)
+              .map((ticket) => (
+                <li key={ticket.id}>
+                  <p>Área: {getValueNameById(ticket.AreaId, allAreas)}</p>
+                  <p>
+                    Categoría:{" "}
+                    {getValueNameById(ticket.CategoryId, allCategories)}
+                  </p>
+                  <p>Estado: {getValueNameById(ticket.StatusId, allStatus)}</p>
+                  <p>
+                    Prioridad:{" "}
+                    {getValueNameById(ticket.PriorityId, allPriorities)}
+                  </p>
+                  <p>Creador: {ticket.username}</p>
+                  <p>Encargado: {ticket.responsable}</p>
+                  <p>Cliente: {ticket.client}</p>
+                  <p>Direccion: {ticket.address}</p>
+                  <p>Descripcion: {ticket.text}</p>
+                  <p>Comentarios: {ticket.comment}</p>
+                  <button onClick={() => handleDeleteTicket(ticket.id)}>
+                    Eliminar Ticket
+                  </button>
+                  <br />
+                </li>
+              ))}
+          </ul>
+        ) : isHome ? (
+          <ul>
+            {allTickets.map((ticket) => (
+              <li key={ticket.id}>
+                <p>Área: {getValueNameById(ticket.AreaId, allAreas)}</p>
+                <p>
+                  Categoría:{" "}
+                  {getValueNameById(ticket.CategoryId, allCategories)}
+                </p>
+                <p>Estado: {getValueNameById(ticket.StatusId, allStatus)}</p>
+                <p>
+                  Prioridad:{" "}
+                  {getValueNameById(ticket.PriorityId, allPriorities)}
+                </p>
+                <p>Creador: {ticket.username}</p>
+                <p>Encargado: {ticket.responsable}</p>
+                <p>Cliente: {ticket.client}</p>
+                <p>Direccion: {ticket.address}</p>
+                <p>Descripcion: {ticket.text}</p>
+                <p>Comentarios: {ticket.comment}</p>
+                <button onClick={() => handleDeleteTicket(ticket.id)}>
+                  Eliminar Ticket
+                </button>
+                <br />
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <div>Cargando Tickets...</div>
+        )}
       </div>
     </section>
   );
