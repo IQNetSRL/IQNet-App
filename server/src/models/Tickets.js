@@ -33,6 +33,26 @@ module.exports = (sequelize) => {
         type: DataTypes.UUID,
         allowNull: false,
       },
+      client: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      responsable: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      address: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      text: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      comment: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
     },
     { timestamps: true }
   );
