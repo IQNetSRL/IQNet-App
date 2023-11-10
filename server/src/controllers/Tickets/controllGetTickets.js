@@ -1,7 +1,8 @@
 const { Tickets } = require("../../db");
 
 const controllGetTickets = async (req) => {
-  const { Id, Username, AreaId, CategoryId, StatusId, PriorityId } = req.query;
+  const { Id, Username, AreaId, CategoryId, StatusId, PriorityId, Responsable } =
+    req.query;
 
   const where = {};
 
@@ -11,17 +12,20 @@ const controllGetTickets = async (req) => {
   if (Username) {
     where.username = Username;
   }
+  if (Responsable) {
+    where.responsable = Responsable;
+  }
   if (AreaId) {
-    where.areaId = AreaId;
+    where.AreaId = AreaId;
   }
   if (CategoryId) {
-    where.categoryId = CategoryId;
+    where.CategoryId = CategoryId;
   }
   if (StatusId) {
-    where.statusId = StatusId;
+    where.StatusId = StatusId;
   }
   if (PriorityId) {
-    where.priorityId = PriorityId;
+    where.PriorityId = PriorityId;
   }
 
   const tickets = await Tickets.findAll({
