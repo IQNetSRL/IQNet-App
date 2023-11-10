@@ -10,7 +10,7 @@ ticketsRouter.get("/", getTickets);
 
 ticketsRouter.post("/", postTicket);
 
-ticketsRouter.post("/:id", deleteTicket);
+ticketsRouter.delete("/:id", deleteTicket);
 
 ticketsRouter.put("/:id", putTicket);
 

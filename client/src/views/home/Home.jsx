@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   postAccount,
   getTickets,
+  deleteTicket,
   getAreas,
   getCategories,
   getStatus,
@@ -61,6 +62,10 @@ const Home = () => {
     return priority ? priority.name : "";
   };
 
+  const handleDeleteTicket = (id) => {
+    dispatch(deleteTicket(id));
+  };
+
   return (
     <section className={styles.sectionHome}>
       <h1>Home</h1>
@@ -86,6 +91,7 @@ const Home = () => {
               <p>Direccion: {ticket.address}</p>
               <p>Descripcion: {ticket.text}</p>
               <p>Comentarios: {ticket.comment}</p>
+              <button onClick={() => handleDeleteTicket(ticket.id)}>Eliminar Ticket</button>
               <br />
             </li>
           ))}
