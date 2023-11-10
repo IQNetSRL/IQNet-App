@@ -13,9 +13,7 @@ import {
   DELETE_CATEGORY,
   GET_CATEGORIES,
   POST_CATEGORY,
-  PUT_INFORMATION,
-  GET_INFORMATION,
-  POST_INFORMATION,
+  PUT_TICKET,
   DELETE_STATUS,
   GET_STATUS,
   POST_STATUS,
@@ -197,25 +195,6 @@ export function postStatus(name, color) {
   };
 }
 
-export function postInformation(client, address, text, comment) {
-  return async function (dispatch) {
-    try {
-      const response = await axios.post(`/information`, {
-        client: client,
-        address: address,
-        text: text,
-        comment: comment,
-      });
-      return dispatch({
-        type: POST_INFORMATION,
-        payload: response.data,
-      });
-    } catch (error) {
-      // alert(error.message);
-    }
-  };
-}
-
 export function deleteArea(id) {
   return async function (dispatch) {
     try {
@@ -348,29 +327,10 @@ export function getPriorities(priorityId) {
   };
 }
 
-export function getInformation(informationId) {
+export function putTicket(id, client, address, text, comment) {
   return async function (dispatch) {
     try {
-      let url = "/information";
-      if (informationId) {
-        url += `?informationId=${informationId}`;
-      }
-
-      const response = await axios.get(url);
-      dispatch({
-        type: GET_INFORMATION,
-        payload: response.data,
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-}
-
-export function putInformation(id, client, address, text, comment) {
-  return async function (dispatch) {
-    try {
-      const response = await axios.put(`/information/${id}`, {
+      const response = await axios.put(`/tickets/${id}`, {
         client,
         address,
         text,
@@ -378,7 +338,7 @@ export function putInformation(id, client, address, text, comment) {
       });
 
       dispatch({
-        type: PUT_INFORMATION,
+        type: PUT_TICKET,
         payload: response.data,
       });
     } catch (error) {
