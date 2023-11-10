@@ -3,26 +3,28 @@ const { Tickets } = require("../../db");
 const controllPostTicket = async (req) => {
   const {
     username,
-    areaId,
-    categoryId,
-    statusId,
-    priorityId,
+    AreaId,
+    CategoryId,
+    StatusId,
+    PriorityId,
     client,
     address,
     text,
     comment,
+    responsable,
   } = req.body;
 
   const newTicket = await Tickets.create({
     username: username,
-    AreaId: areaId,
-    CategoryId: categoryId,
-    StatusId: statusId,
-    PriorityId: priorityId,
+    AreaId: AreaId,
+    CategoryId: CategoryId,
+    StatusId: StatusId,
+    PriorityId: PriorityId,
     client: client,
     address: address,
     text: text,
     comment: comment,
+    responsable: responsable,
   });
 
   return newTicket;

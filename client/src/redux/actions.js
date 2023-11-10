@@ -363,6 +363,7 @@ export function getTickets(filters) {
 }
 
 export function postTicket(ticketData) {
+  console.log(ticketData);
   return async function (dispatch) {
     try {
       const response = await axios.post("/tickets", ticketData);

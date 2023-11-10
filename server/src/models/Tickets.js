@@ -10,22 +10,22 @@ module.exports = (sequelize) => {
         defaultValue: DataTypes.UUIDV4,
       },
       username: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+      },
+      AreaId: {
         type: DataTypes.UUID,
         allowNull: false,
       },
-      areaId: {
+      CategoryId: {
         type: DataTypes.UUID,
         allowNull: false,
       },
-      categoryId: {
+      StatusId: {
         type: DataTypes.UUID,
         allowNull: false,
       },
-      statusId: {
-        type: DataTypes.UUID,
-        allowNull: false,
-      },
-      priorityId: {
+      PriorityId: {
         type: DataTypes.UUID,
         allowNull: false,
       },

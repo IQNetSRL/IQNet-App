@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useAuth0 } from "@auth0/auth0-react";
+import { postTicket } from "../../redux/actions.js";
 import styles from "./FormTickets.module.scss";
 
 const FormTickets = () => {
@@ -14,15 +15,14 @@ const FormTickets = () => {
   const allAccounts = useSelector((state) => state.someReducer.allAccounts);
   const [newTicket, setNewTicket] = useState({
     username: "",
-    informationId: "",
-    areaId: "",
-    categoryId: "",
-    statusId: "",
-    priorityId: "",
-    responsable: "",
-    text: "",
+    AreaId: "",
+    CategoryId: "",
+    StatusId: "",
+    PriorityId: "",
     client: "",
     address: "",
+    text: "",
+    responsable: "",
   });
 
   useEffect(() => {
@@ -46,15 +46,48 @@ const FormTickets = () => {
     });
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      await dispatch(
+        postTicket({
+          username: newTicket.username,
+          AreaId: newTicket.AreaId,
+          CategoryId: newTicket.CategoryId,
+          StatusId: newTicket.StatusId,
+          PriorityId: newTicket.PriorityId,
+          client: newTicket.client,
+          address: newTicket.address,
+          text: newTicket.text,
+          responsable: newTicket.responsable,
+        })
+      );
+      setNewTicket({
+        username: "",
+        AreaId: "",
+        CategoryId: "",
+        StatusId: "",
+        PriorityId: "",
+        client: "",
+        address: "",
+        text: "",
+        responsable: "",
+      });
+    } catch (error) {
+      console.error("Error al agregar un ticket:", error);
+    }
+  };
+
   console.log(newTicket);
 
   return (
     <section className={styles.sectionFormTickets}>
       <h1>Crear Ticket</h1>
-      <form>
+      <form onSubmit={handleSubmit}>
         <select
           name="areas"
-          onChange={(e) => handleSelectChange("areaId", e.target.value)}
+          onChange={(e) => handleSelectChange("AreaId", e.target.value)}
         >
           <option value="">Ninguna</option>
           {allAreas?.map((area, index) => (
@@ -65,7 +98,7 @@ const FormTickets = () => {
         </select>
         <select
           name="categories"
-          onChange={(e) => handleSelectChange("categoryId", e.target.value)}
+          onChange={(e) => handleSelectChange("CategoryId", e.target.value)}
         >
           <option value="">Ninguna</option>
           {allCategories?.map((category, index) => (
@@ -76,7 +109,7 @@ const FormTickets = () => {
         </select>
         <select
           name="status"
-          onChange={(e) => handleSelectChange("statusId", e.target.value)}
+          onChange={(e) => handleSelectChange("StatusId", e.target.value)}
         >
           <option value="">Ninguno</option>
           {allStatus?.map((status, index) => (
@@ -87,7 +120,7 @@ const FormTickets = () => {
         </select>
         <select
           name="priorities"
-          onChange={(e) => handleSelectChange("priorityId", e.target.value)}
+          onChange={(e) => handleSelectChange("PriorityId", e.target.value)}
         >
           <option value="">Ninguna</option>
           {allPriorities?.map((priority, index) => (
@@ -125,6 +158,7 @@ const FormTickets = () => {
           placeholder="direccion"
           onChange={(e) => handleSelectChange("address", e.target.value)}
         />
+        <button type="submit">Crear</button>
       </form>
     </section>
   );
