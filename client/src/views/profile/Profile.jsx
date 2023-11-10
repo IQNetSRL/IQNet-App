@@ -13,7 +13,7 @@ const Profile = () => {
   const handleNavigate = () => {
     window.history.back();
   };
-  
+
   return (
     <section className={styles.sectionProfile}>
       <h1>Perfil</h1>

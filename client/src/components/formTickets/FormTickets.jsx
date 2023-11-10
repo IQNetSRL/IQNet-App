@@ -32,12 +32,16 @@ const FormTickets = () => {
           (account) => account.name === user.name
         );
         if (userAccount) {
-          setNewTicket({ ...newTicket, username: userAccount.name });
+          setNewTicket((prevTicket) => ({
+            ...prevTicket,
+            username: userAccount.name,
+          }));
         }
       }
     };
+
     fetchData();
-  }, [isLoading, dispatch]);
+  }, [isLoading, user, allAccounts]);
 
   const handleSelectChange = (field, value) => {
     setNewTicket({
@@ -63,7 +67,8 @@ const FormTickets = () => {
           responsable: newTicket.responsable,
         })
       );
-      setNewTicket({
+      setNewTicket((prevTicket) => ({
+        ...prevTicket,
         username: "",
         AreaId: "",
         CategoryId: "",
@@ -73,7 +78,7 @@ const FormTickets = () => {
         address: "",
         text: "",
         responsable: "",
-      });
+      }));
     } catch (error) {
       console.error("Error al agregar un ticket:", error);
     }
@@ -87,6 +92,7 @@ const FormTickets = () => {
       <form onSubmit={handleSubmit}>
         <select
           name="areas"
+          value={newTicket.AreaId}
           onChange={(e) => handleSelectChange("AreaId", e.target.value)}
         >
           <option value="">Ninguna</option>
@@ -98,6 +104,7 @@ const FormTickets = () => {
         </select>
         <select
           name="categories"
+          value={newTicket.CategoryId}
           onChange={(e) => handleSelectChange("CategoryId", e.target.value)}
         >
           <option value="">Ninguna</option>
@@ -109,6 +116,7 @@ const FormTickets = () => {
         </select>
         <select
           name="status"
+          value={newTicket.StatusId}
           onChange={(e) => handleSelectChange("StatusId", e.target.value)}
         >
           <option value="">Ninguno</option>
@@ -120,6 +128,7 @@ const FormTickets = () => {
         </select>
         <select
           name="priorities"
+          value={newTicket.PriorityId}
           onChange={(e) => handleSelectChange("PriorityId", e.target.value)}
         >
           <option value="">Ninguna</option>
@@ -131,6 +140,7 @@ const FormTickets = () => {
         </select>
         <select
           name="responsable"
+          value={newTicket.responsable}
           onChange={(e) => handleSelectChange("responsable", e.target.value)}
         >
           <option value="">Ninguno</option>
@@ -144,18 +154,21 @@ const FormTickets = () => {
           type="text"
           name="text"
           placeholder="descripcion"
+          value={newTicket.text}
           onChange={(e) => handleSelectChange("text", e.target.value)}
         />
         <input
           type="text"
           name="client"
           placeholder="cliente"
+          value={newTicket.client}
           onChange={(e) => handleSelectChange("client", e.target.value)}
         />
         <input
           type="text"
           name="address"
           placeholder="direccion"
+          value={newTicket.address}
           onChange={(e) => handleSelectChange("address", e.target.value)}
         />
         <button type="submit">Crear</button>
