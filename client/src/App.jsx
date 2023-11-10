@@ -1,10 +1,20 @@
 /* eslint-disable no-unused-vars */
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { Routes, Route } from "react-router-dom";
 import { Auth0Provider } from "@auth0/auth0-react";
 import { Navigate, useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
+import {
+  postAccount,
+  getTickets,
+  getAreas,
+  getCategories,
+  getStatus,
+  getPriorities,
+} from "./redux/actions.js";
 import Login from "./views/login/Login.jsx";
 import LogoutButton from "./components/logoutButton/LogoutButton.jsx";
 import Profile from "./views/profile/Profile.jsx";
@@ -20,6 +30,22 @@ function App() {
   const navigate = useNavigate();
   const location = useLocation();
   const isLogin = location.pathname === "/";
+  const dispatch = useDispatch();
+  const { user, isLoading } = useAuth0();
+
+  useEffect(() => {
+    dispatch(getTickets());
+    dispatch(getAreas());
+    dispatch(getCategories());
+    dispatch(getStatus());
+    dispatch(getPriorities());
+    const fetchData = async () => {
+      if (!isLoading && user && user.name) {
+        await dispatch(postAccount(user.name));
+      }
+    };
+    fetchData();
+  }, [isLoading, dispatch]);
 
   const handleNavigate = () => {
     navigate("/create");

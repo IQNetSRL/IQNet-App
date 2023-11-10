@@ -84,8 +84,6 @@ const FormTickets = () => {
     }
   };
 
-  console.log(newTicket);
-
   return (
     <section className={styles.sectionFormTickets}>
       <h1>Crear Ticket</h1>
