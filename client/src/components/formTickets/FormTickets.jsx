@@ -12,12 +12,6 @@ const FormTickets = () => {
   const allStatus = useSelector((state) => state.someReducer.allStatus);
   const allPriorities = useSelector((state) => state.someReducer.allPriorities);
   const allAccounts = useSelector((state) => state.someReducer.allAccounts);
-  const [newForm, setNewForm] = useState({
-    responsable: "",
-    text: "",
-    client: "",
-    address: "",
-  });
   const [newTicket, setNewTicket] = useState({
     username: "",
     informationId: "",
@@ -25,6 +19,10 @@ const FormTickets = () => {
     categoryId: "",
     statusId: "",
     priorityId: "",
+    responsable: "",
+    text: "",
+    client: "",
+    address: "",
   });
 
   useEffect(() => {
@@ -98,17 +96,35 @@ const FormTickets = () => {
             </option>
           ))}
         </select>
-        <select name="responsable">
-        <option value="">Ninguno</option>
+        <select
+          name="responsable"
+          onChange={(e) => handleSelectChange("responsable", e.target.value)}
+        >
+          <option value="">Ninguno</option>
           {allAccounts?.map((aaccount, index) => (
             <option key={aaccount.id || index} value={aaccount.name}>
               {aaccount.name}
             </option>
           ))}
         </select>
-        <input type="text" name="text" placeholder="descripcion" />
-        <input type="text" name="client" placeholder="cliente" />
-        <input type="text" name="address" placeholder="direccion" />
+        <input
+          type="text"
+          name="text"
+          placeholder="descripcion"
+          onChange={(e) => handleSelectChange("text", e.target.value)}
+        />
+        <input
+          type="text"
+          name="client"
+          placeholder="cliente"
+          onChange={(e) => handleSelectChange("client", e.target.value)}
+        />
+        <input
+          type="text"
+          name="address"
+          placeholder="direccion"
+          onChange={(e) => handleSelectChange("address", e.target.value)}
+        />
       </form>
     </section>
   );

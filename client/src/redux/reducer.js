@@ -12,9 +12,6 @@ import {
   DELETE_CATEGORY,
   GET_CATEGORIES,
   POST_CATEGORY,
-  PUT_INFORMATION,
-  GET_INFORMATION,
-  POST_INFORMATION,
   DELETE_STATUS,
   GET_STATUS,
   POST_STATUS,
@@ -24,6 +21,7 @@ import {
   GET_TICKETS,
   POST_TICKET,
   DELETE_TICKET,
+  PUT_TICKET,
 } from "./actionTypes.js";
 
 let initialState = {
@@ -33,7 +31,6 @@ let initialState = {
   allAreas: [],
   allStatus: [],
   allPriorities: [],
-  allInformation: [],
   allCategories: [],
   allTickets: [],
 };
@@ -110,11 +107,6 @@ function rootReducer(state = initialState, action) {
         ...state,
         allCategories: action.payload,
       };
-    case GET_INFORMATION:
-      return {
-        ...state,
-        allInformation: action.payload,
-      };
     case GET_TICKETS:
       return {
         ...state,
@@ -139,11 +131,6 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         allCategories: [...state.allCategories, action.payload],
-      };
-    case POST_INFORMATION:
-      return {
-        ...state,
-        allInformation: [...state.allInformation, action.payload],
       };
     case POST_TICKET:
       return {
@@ -182,8 +169,8 @@ function rootReducer(state = initialState, action) {
         ...state,
         allPriorities: updatedPriorities,
       };
-    case PUT_INFORMATION:
-      updatedInformation = state.allInformation.map((info) => {
+    case PUT_TICKET:
+      updatedInformation = state.allTickets.map((info) => {
         if (info.id === action.payload.id) {
           return {
             ...info,
@@ -198,7 +185,7 @@ function rootReducer(state = initialState, action) {
       
       return {
         ...state,
-        allInformation: updatedInformation,
+        allTickets: updatedInformation,
       };
     case DELETE_TICKET:
       updatedTickets = state.allTickets.filter(
