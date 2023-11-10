@@ -13,10 +13,6 @@ module.exports = (sequelize) => {
         type: DataTypes.UUID,
         allowNull: false,
       },
-      informationId: {
-        type: DataTypes.UUID,
-        allowNull: false,
-      },
       areaId: {
         type: DataTypes.UUID,
         allowNull: false,
