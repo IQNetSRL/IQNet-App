@@ -5,10 +5,8 @@ import { Routes, Route } from "react-router-dom";
 import { Auth0Provider } from "@auth0/auth0-react";
 import { Navigate, useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
 import {
-  postAccount,
   getTickets,
   getAreas,
   getCategories,
@@ -31,7 +29,6 @@ function App() {
   const location = useLocation();
   const isLogin = location.pathname === "/";
   const dispatch = useDispatch();
-  const { user, isLoading } = useAuth0();
 
   useEffect(() => {
     dispatch(getTickets());
@@ -39,13 +36,7 @@ function App() {
     dispatch(getCategories());
     dispatch(getStatus());
     dispatch(getPriorities());
-    const fetchData = async () => {
-      if (!isLoading && user && user.name) {
-        await dispatch(postAccount(user.name));
-      }
-    };
-    fetchData();
-  }, [isLoading, dispatch]);
+  }, [dispatch]);
 
   const handleNavigate = () => {
     navigate("/create");

@@ -49,12 +49,11 @@ const Ticket = () => {
                 <th>Categoría</th>
                 <th>Estado</th>
                 <th>Prioridad</th>
-                <th>Creador</th>
+                <th>Operador</th>
                 <th>Encargado</th>
                 <th>Cliente</th>
                 <th>Dirección</th>
                 <th>Descripción</th>
-                <th>Comentarios</th>
                 <th>Acciones</th>
               </tr>
             </thead>
@@ -72,7 +71,6 @@ const Ticket = () => {
                     <td>{ticket.client}</td>
                     <td>{ticket.address}</td>
                     <td>{ticket.text}</td>
-                    <td>{ticket.comment}</td>
                     <td>
                       <button onClick={() => handleDeleteTicket(ticket.id)}>
                         Eliminar Ticket
