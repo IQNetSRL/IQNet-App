@@ -1,8 +1,15 @@
 const { Tickets } = require("../../db");
 
 const controllGetTickets = async (req) => {
-  const { Id, Username, AreaId, CategoryId, StatusId, PriorityId, Responsable } =
-    req.query;
+  const {
+    Id,
+    Username,
+    AreaId,
+    CategoryId,
+    StatusId,
+    PriorityId,
+    Responsable,
+  } = req.query;
 
   const where = {};
 

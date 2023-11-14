@@ -18,6 +18,7 @@ const Ticket = () => {
   const allStatus = useSelector((state) => state.someReducer.allStatus);
   const allPriorities = useSelector((state) => state.someReducer.allPriorities);
   const [isReady, setIsReady] = useState(false);
+
   useEffect(() => {
     const fetchData = async () => {
       if (!isLoading && user && user.name) {
@@ -26,7 +27,7 @@ const Ticket = () => {
     };
 
     fetchData();
-  }, []);
+  }, [user]);
 
   const getValueNameById = (id, state) => {
     const value = state.find((priority) => priority.id === id);
@@ -40,62 +41,47 @@ const Ticket = () => {
   return (
     <section className={styles.sectionTicket}>
       <div className={styles.ticketList}>
-        {isReady && isProfile ? (
-          <ul>
-            {allTickets
-              .filter((ticket) => ticket.responsable === user.name)
-              .map((ticket) => (
-                <li key={ticket.id}>
-                  <p>Área: {getValueNameById(ticket.AreaId, allAreas)}</p>
-                  <p>
-                    Categoría:{" "}
-                    {getValueNameById(ticket.CategoryId, allCategories)}
-                  </p>
-                  <p>Estado: {getValueNameById(ticket.StatusId, allStatus)}</p>
-                  <p>
-                    Prioridad:{" "}
-                    {getValueNameById(ticket.PriorityId, allPriorities)}
-                  </p>
-                  <p>Creador: {ticket.username}</p>
-                  <p>Encargado: {ticket.responsable}</p>
-                  <p>Cliente: {ticket.client}</p>
-                  <p>Direccion: {ticket.address}</p>
-                  <p>Descripcion: {ticket.text}</p>
-                  <p>Comentarios: {ticket.comment}</p>
-                  <button onClick={() => handleDeleteTicket(ticket.id)}>
-                    Eliminar Ticket
-                  </button>
-                  <br />
-                </li>
-              ))}
-          </ul>
-        ) : isHome ? (
-          <ul>
-            {allTickets.map((ticket) => (
-              <li key={ticket.id}>
-                <p>Área: {getValueNameById(ticket.AreaId, allAreas)}</p>
-                <p>
-                  Categoría:{" "}
-                  {getValueNameById(ticket.CategoryId, allCategories)}
-                </p>
-                <p>Estado: {getValueNameById(ticket.StatusId, allStatus)}</p>
-                <p>
-                  Prioridad:{" "}
-                  {getValueNameById(ticket.PriorityId, allPriorities)}
-                </p>
-                <p>Creador: {ticket.username}</p>
-                <p>Encargado: {ticket.responsable}</p>
-                <p>Cliente: {ticket.client}</p>
-                <p>Direccion: {ticket.address}</p>
-                <p>Descripcion: {ticket.text}</p>
-                <p>Comentarios: {ticket.comment}</p>
-                <button onClick={() => handleDeleteTicket(ticket.id)}>
-                  Eliminar Ticket
-                </button>
-                <br />
-              </li>
-            ))}
-          </ul>
+        {isReady && (isProfile || isHome) ? (
+          <table>
+            <thead>
+              <tr>
+                <th>Área</th>
+                <th>Categoría</th>
+                <th>Estado</th>
+                <th>Prioridad</th>
+                <th>Creador</th>
+                <th>Encargado</th>
+                <th>Cliente</th>
+                <th>Dirección</th>
+                <th>Descripción</th>
+                <th>Comentarios</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              {allTickets
+                .filter((ticket) => (isProfile ? ticket.responsable === user.name : true))
+                .map((ticket) => (
+                  <tr key={ticket.id}>
+                    <td>{getValueNameById(ticket.AreaId, allAreas)}</td>
+                    <td>{getValueNameById(ticket.CategoryId, allCategories)}</td>
+                    <td>{getValueNameById(ticket.StatusId, allStatus)}</td>
+                    <td>{getValueNameById(ticket.PriorityId, allPriorities)}</td>
+                    <td>{ticket.username}</td>
+                    <td>{ticket.responsable}</td>
+                    <td>{ticket.client}</td>
+                    <td>{ticket.address}</td>
+                    <td>{ticket.text}</td>
+                    <td>{ticket.comment}</td>
+                    <td>
+                      <button onClick={() => handleDeleteTicket(ticket.id)}>
+                        Eliminar Ticket
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
         ) : (
           <div>Cargando Tickets...</div>
         )}

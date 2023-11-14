@@ -8,7 +8,7 @@ const Profile = () => {
   const { user, isLoading } = useAuth0();
 
   if (isLoading) {
-    return <div>Loading ...</div>;
+    return <div>Cargando ...</div>;
   }
 
   const handleNavigate = () => {
