@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
+import { differenceInDays } from "date-fns";
 import { deleteTicket } from "../../redux/actions.js";
 import styles from "./Ticket.module.scss";
 
@@ -18,8 +19,18 @@ const Ticket = () => {
   const allStatus = useSelector((state) => state.someReducer.allStatus);
   const allPriorities = useSelector((state) => state.someReducer.allPriorities);
   const [isReady, setIsReady] = useState(false);
+  const [sortedTickets, setSortedTickets] = useState([]);
+  const [sortOrder, setSortOrder] = useState("asc");
 
   useEffect(() => {
+    const sorted = [...allTickets].sort((a, b) => {
+      const dateA = new Date(a.createdAt);
+      const dateB = new Date(b.createdAt);
+      return sortOrder === "asc" ? dateA - dateB : dateB - dateA;
+    });
+
+    setSortedTickets(sorted);
+
     const fetchData = async () => {
       if (!isLoading && user && user.name) {
         setIsReady(true);
@@ -27,7 +38,13 @@ const Ticket = () => {
     };
 
     fetchData();
-  }, [user]);
+  }, [user, allTickets, sortOrder]);
+
+  const calculateDaysSinceCreation = (createdAt) => {
+    const now = new Date();
+    const creationDate = new Date(createdAt);
+    return differenceInDays(now, creationDate);
+  };
 
   const getValueNameById = (id, state) => {
     const value = state.find((priority) => priority.id === id);
@@ -36,6 +53,10 @@ const Ticket = () => {
 
   const handleDeleteTicket = (id) => {
     dispatch(deleteTicket(id));
+  };
+
+  const toggleSortOrder = () => {
+    setSortOrder((prevOrder) => (prevOrder === "asc" ? "desc" : "asc"));
   };
 
   return (
@@ -54,23 +75,36 @@ const Ticket = () => {
                 <th>Cliente</th>
                 <th>Dirección</th>
                 <th>Descripción</th>
+                <th>
+                  Tiempo transcurrido
+                  <button onClick={toggleSortOrder}>
+                    {sortOrder === "asc" ? "↓" : "↑"}
+                  </button>
+                </th>
                 <th>Acciones</th>
               </tr>
             </thead>
             <tbody>
-              {allTickets
-                .filter((ticket) => (isProfile ? ticket.responsable === user.name : true))
+              {sortedTickets
+                .filter((ticket) =>
+                  isProfile ? ticket.responsable === user.name : true
+                )
                 .map((ticket) => (
                   <tr key={ticket.id}>
                     <td>{getValueNameById(ticket.AreaId, allAreas)}</td>
-                    <td>{getValueNameById(ticket.CategoryId, allCategories)}</td>
+                    <td>
+                      {getValueNameById(ticket.CategoryId, allCategories)}
+                    </td>
                     <td>{getValueNameById(ticket.StatusId, allStatus)}</td>
-                    <td>{getValueNameById(ticket.PriorityId, allPriorities)}</td>
+                    <td>
+                      {getValueNameById(ticket.PriorityId, allPriorities)}
+                    </td>
                     <td>{ticket.username}</td>
                     <td>{ticket.responsable}</td>
                     <td>{ticket.client}</td>
                     <td>{ticket.address}</td>
                     <td>{ticket.text}</td>
+                    <td>{calculateDaysSinceCreation(ticket.createdAt)} días</td>
                     <td>
                       <button onClick={() => handleDeleteTicket(ticket.id)}>
                         Eliminar Ticket
