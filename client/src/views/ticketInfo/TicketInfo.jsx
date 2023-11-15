@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useAuth0 } from "@auth0/auth0-react";
 import { differenceInDays } from "date-fns";
 import { deleteTicket } from "../../redux/actions.js";
+import { GET_TICKET_BY_ID } from "../../redux/actionTypes.js";
 import styles from "./TicketInfo.module.scss";
 
 const TicketInfo = () => {
@@ -24,6 +25,16 @@ const TicketInfo = () => {
     };
 
     fetchData();
+
+    const storedTicket = localStorage.getItem('TicketById');
+    if (storedTicket) {
+      dispatch({
+        type: GET_TICKET_BY_ID,
+        payload: JSON.parse(storedTicket),
+      });
+    }
+
+    return () => localStorage.removeItem('TicketById');
   }, [user, isLoading]);
 
   const calculateDaysSinceCreation = (createdAt) => {
@@ -46,7 +57,7 @@ const TicketInfo = () => {
   };
 
   return (
-    <section className={styles.sectionProfileButton}>
+    <section className={styles.sectionTicketInfo}>
       <h1>Ticket</h1>
       <button onClick={handleNavigate}>volver</button>
       <div>

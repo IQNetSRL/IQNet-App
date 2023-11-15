@@ -367,9 +367,12 @@ export function getTicketById(id) {
   return async function (dispatch) {
     try {
       const response = await axios.get(`/tickets?Id=${id}`);
+      const ticket = response.data;
+      
+      localStorage.setItem('TicketById', JSON.stringify(ticket));
       dispatch({
         type: GET_TICKET_BY_ID,
-        payload: response.data,
+        payload: ticket,
       });
     } catch (error) {
       console.error("Error al obtener ticket:", error);
