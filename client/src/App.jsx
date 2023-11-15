@@ -22,6 +22,7 @@ import Home from "./views/home/Home.jsx";
 import Administrator from "./views/administrator/Administrator.jsx";
 import CreateTickets from "./views/createTickets/createTickets.jsx";
 import "./App.module.scss";
+import TicketInfo from "./views/ticketInfo/TicketInfo.jsx";
 
 axios.defaults.baseURL = "http://localhost:3001/";
 
@@ -66,6 +67,7 @@ function App() {
             <Route path="/home" element={<Home />} />
             <Route path="/admin" element={<Administrator />} />
             <Route path="/create" element={<CreateTickets />} />
+            <Route path="/ticket-info" element={<TicketInfo />} />
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </section>

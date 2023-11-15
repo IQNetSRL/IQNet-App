@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import { differenceInDays } from "date-fns";
@@ -10,9 +11,9 @@ import styles from "./Ticket.module.scss";
 const Ticket = () => {
   const dispatch = useDispatch();
   const location = useLocation();
+  const navigate = useNavigate();
   const { user, isLoading } = useAuth0();
   const isProfile = location.pathname === "/profile";
-  const isHome = location.pathname === "/home";
   const allTickets = useSelector((state) => state.someReducer.allTickets);
   const allAreas = useSelector((state) => state.someReducer.allAreas);
   const allCategories = useSelector((state) => state.someReducer.allCategories);
@@ -71,6 +72,11 @@ const Ticket = () => {
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
     setFilters((prevFilters) => ({ ...prevFilters, [name]: value }));
+  };
+
+  const handleTicketInfo = (id) => {
+    navigate("/ticket-info");
+    dispatch(getTicketsAction(id));
   };
 
   return (
@@ -174,7 +180,7 @@ const Ticket = () => {
                   isProfile ? ticket.responsable === user.name : true
                 )
                 .map((ticket) => (
-                  <tr key={ticket.id}>
+                  <tr key={ticket.id} onClick={() => handleTicketInfo(ticket.id)}>
                     <td>{getValueNameById(ticket.AreaId, allAreas)}</td>
                     <td>
                       {getValueNameById(ticket.CategoryId, allCategories)}
