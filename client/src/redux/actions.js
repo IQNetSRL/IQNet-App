@@ -366,10 +366,10 @@ export function getTickets(filters) {
 export function getTicketById(id) {
   return async function (dispatch) {
     try {
-      await axios.get(`/tickets?Id=${id}`);
+      const response = await axios.get(`/tickets?Id=${id}`);
       dispatch({
         type: GET_TICKET_BY_ID,
-        payload: id,
+        payload: response.data,
       });
     } catch (error) {
       console.error("Error al obtener ticket:", error);
