@@ -8,7 +8,6 @@ import {
   postCity,
   deleteCity,
   deleteUser,
-  getAccounts,
 } from "../../redux/actions.js";
 import styles from "./Administrator.module.scss";
 
@@ -23,7 +22,6 @@ const Administrator = () => {
   useEffect(() => {
     dispatch(getCities());
     dispatch(getUsers());
-    dispatch(getAccounts());
   }, [dispatch]);
 
   const handleNavigate = () => {

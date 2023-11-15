@@ -12,6 +12,7 @@ import {
   getCategories,
   getStatus,
   getPriorities,
+  getAccounts,
 } from "./redux/actions.js";
 import Login from "./views/login/Login.jsx";
 import LogoutButton from "./components/logoutButton/LogoutButton.jsx";
@@ -36,6 +37,7 @@ function App() {
     dispatch(getCategories());
     dispatch(getStatus());
     dispatch(getPriorities());
+    dispatch(getAccounts());
   }, [dispatch]);
 
   const handleNavigate = () => {

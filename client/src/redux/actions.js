@@ -119,7 +119,7 @@ export function postAccount(name) {
       });
       return dispatch({
         type: POST_ACCOUNT,
-        payload: response.data,
+        payload: response.data[0],
       });
     } catch (error) {
       console.log(error);

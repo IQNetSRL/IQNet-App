@@ -43,6 +43,7 @@ let updatedPriorities;
 let updatedStatus;
 let updatedInformation;
 let updatedTickets;
+let newUser;
 
 function rootReducer(state = initialState, action) {
   switch (action.type) {
@@ -83,10 +84,14 @@ function rootReducer(state = initialState, action) {
         allAccounts: action.payload,
       };
     case POST_ACCOUNT:
-      return {
-        ...state,
-        allAccounts: [...state.allAccounts, action.payload],
-      };
+      newUser = action.payload;
+      if (!state.allAccounts.some((user) => user.id === newUser.id)) {
+        return {
+          ...state,
+          allAccounts: [...state.allAccounts, newUser],
+        };
+      }
+      return state;
     case GET_AREAS:
       return {
         ...state,
@@ -182,7 +187,7 @@ function rootReducer(state = initialState, action) {
         }
         return info;
       });
-      
+
       return {
         ...state,
         allTickets: updatedInformation,
