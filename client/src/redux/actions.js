@@ -23,6 +23,7 @@ import {
   GET_TICKETS,
   POST_TICKET,
   DELETE_TICKET,
+  GET_TICKET_BY_ID,
 } from "./actionTypes.js";
 
 export function getUsers() {
@@ -358,6 +359,20 @@ export function getTickets(filters) {
       });
     } catch (error) {
       console.error("Error al obtener los tickets:", error);
+    }
+  };
+}
+
+export function getTicketById(id) {
+  return async function (dispatch) {
+    try {
+      await axios.get(`/tickets?Id=${id}`);
+      dispatch({
+        type: GET_TICKET_BY_ID,
+        payload: id,
+      });
+    } catch (error) {
+      console.error("Error al obtener ticket:", error);
     }
   };
 }

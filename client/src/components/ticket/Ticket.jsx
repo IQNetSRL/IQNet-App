@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import { differenceInDays } from "date-fns";
-import { deleteTicket, getTickets as getTicketsAction } from "../../redux/actions.js";
+import { deleteTicket, getTickets as getTicketsAction, getTicketById } from "../../redux/actions.js";
 import styles from "./Ticket.module.scss";
 
 const Ticket = () => {
@@ -76,7 +76,7 @@ const Ticket = () => {
 
   const handleTicketInfo = (id) => {
     navigate("/ticket-info");
-    dispatch(getTicketsAction(id));
+    dispatch(getTicketById(id));
   };
 
   return (

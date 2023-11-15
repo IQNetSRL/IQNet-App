@@ -22,6 +22,7 @@ import {
   POST_TICKET,
   DELETE_TICKET,
   PUT_TICKET,
+  GET_TICKET_BY_ID,
 } from "./actionTypes.js";
 
 let initialState = {
@@ -33,6 +34,7 @@ let initialState = {
   allPriorities: [],
   allCategories: [],
   allTickets: [],
+  TicketById: [],
 };
 
 let updatedCities;
@@ -116,6 +118,11 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         allTickets: action.payload,
+      };
+    case GET_TICKET_BY_ID:
+      return {
+        ...state,
+        TicketById: action.payload,
       };
     case POST_AREA:
       return {
