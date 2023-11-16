@@ -98,7 +98,7 @@ const Ticket = () => {
   return (
     <section className={styles.sectionTicket}>
       <div className={styles.ticketList}>
-        <th>
+        <div>
           Desde
           <DatePicker
             selected={startDate}
@@ -107,8 +107,8 @@ const Ticket = () => {
             startDate={startDate}
             endDate={endDate}
           />
-        </th>
-        <th>
+        </div>
+        <div>
           Hasta
           <DatePicker
             selected={endDate}
@@ -118,7 +118,7 @@ const Ticket = () => {
             endDate={endDate}
             minDate={startDate}
           />
-        </th>
+        </div>
         {isReady ? (
           <table>
             <thead>

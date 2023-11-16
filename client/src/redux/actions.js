@@ -328,7 +328,18 @@ export function getPriorities(priorityId) {
   };
 }
 
-export function putTicket(id, client, address, text, comment) {
+export function putTicket(
+  id,
+  client,
+  address,
+  text,
+  comment,
+  responsable,
+  AreaId,
+  PriorityId,
+  CategoryId,
+  StatusId
+) {
   return async function (dispatch) {
     try {
       const response = await axios.put(`/tickets/${id}`, {
@@ -336,6 +347,11 @@ export function putTicket(id, client, address, text, comment) {
         address,
         text,
         comment,
+        responsable,
+        AreaId,
+        PriorityId,
+        CategoryId,
+        StatusId,
       });
 
       dispatch({
@@ -368,8 +384,8 @@ export function getTicketById(id) {
     try {
       const response = await axios.get(`/tickets?Id=${id}`);
       const ticket = response.data;
-      
-      localStorage.setItem('TicketById', JSON.stringify(ticket));
+
+      localStorage.setItem("TicketById", JSON.stringify(ticket));
       dispatch({
         type: GET_TICKET_BY_ID,
         payload: ticket,

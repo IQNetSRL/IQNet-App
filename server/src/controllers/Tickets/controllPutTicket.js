@@ -1,7 +1,18 @@
 const { Tickets } = require("../../db");
 
 const controllPutTicket = async (req) => {
-  const { id, client, address, text, comment } = req.body;
+  const {
+    id,
+    client,
+    address,
+    text,
+    comment,
+    responsable,
+    AreaId,
+    PriorityId,
+    CategoryId,
+    StatusId,
+  } = req.body;
 
   const existingTicket = await Tickets.findByPk(id);
 
@@ -10,6 +21,11 @@ const controllPutTicket = async (req) => {
   }
 
   existingTicket.client = client;
+  existingTicket.AreaId = AreaId;
+  existingTicket.PriorityId = PriorityId;
+  existingTicket.CategoryId = CategoryId;
+  existingTicket.StatusId = StatusId;
+  existingTicket.responsable = responsable;
   existingTicket.address = address;
   existingTicket.text = text;
   existingTicket.comment = comment;
