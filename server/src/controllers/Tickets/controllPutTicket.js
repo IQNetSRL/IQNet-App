@@ -2,7 +2,6 @@ const { Tickets } = require("../../db");
 
 const controllPutTicket = async (req) => {
   const {
-    id,
     client,
     address,
     text,
@@ -14,7 +13,9 @@ const controllPutTicket = async (req) => {
     StatusId,
   } = req.body;
 
-  const existingTicket = await Tickets.findByPk(id);
+  const { id } = req.params;
+
+  const existingTicket = await Tickets.findOne({ where: { id: id } });
 
   if (!existingTicket) {
     throw new Error("Registro no encontrado");

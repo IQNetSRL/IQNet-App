@@ -328,21 +328,19 @@ export function getPriorities(priorityId) {
   };
 }
 
-export function putTicket(
-  id,
-  client,
-  address,
-  text,
-  comment,
-  responsable,
-  AreaId,
-  PriorityId,
-  CategoryId,
-  StatusId
-) {
+export function putTicket(ticketInfo) {
+  const client = ticketInfo.client;
+  const address = ticketInfo.address;
+  const text = ticketInfo.text;
+  const comment = ticketInfo.comment;
+  const responsable = ticketInfo.responsable;
+  const AreaId = ticketInfo.AreaId;
+  const PriorityId = ticketInfo.PriorityId;
+  const CategoryId = ticketInfo.CategoryId;
+  const StatusId = ticketInfo.StatusId;
   return async function (dispatch) {
     try {
-      const response = await axios.put(`/tickets/${id}`, {
+      const response = await axios.put(`/tickets/${ticketInfo.id}`, {
         client,
         address,
         text,
@@ -383,7 +381,7 @@ export function getTicketById(id) {
   return async function (dispatch) {
     try {
       const response = await axios.get(`/tickets?Id=${id}`);
-      const ticket = response.data;
+      const ticket = response.data[0];
 
       localStorage.setItem("TicketById", JSON.stringify(ticket));
       dispatch({
@@ -397,7 +395,6 @@ export function getTicketById(id) {
 }
 
 export function postTicket(ticketData) {
-  console.log(ticketData);
   return async function (dispatch) {
     try {
       const response = await axios.post("/tickets", ticketData);
