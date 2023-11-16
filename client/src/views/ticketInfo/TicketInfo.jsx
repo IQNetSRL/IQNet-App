@@ -26,7 +26,7 @@ const TicketInfo = () => {
 
     fetchData();
 
-    const storedTicket = localStorage.getItem('TicketById');
+    const storedTicket = localStorage.getItem("TicketById");
     if (storedTicket) {
       dispatch({
         type: GET_TICKET_BY_ID,
@@ -34,7 +34,7 @@ const TicketInfo = () => {
       });
     }
 
-    return () => localStorage.removeItem('TicketById');
+    return () => localStorage.removeItem("TicketById");
   }, [user, isLoading]);
 
   const calculateDaysSinceCreation = (createdAt) => {
@@ -74,7 +74,9 @@ const TicketInfo = () => {
                 <th>Cliente</th>
                 <th>Dirección</th>
                 <th>Descripción</th>
+                <th>Comentarios</th>
                 <th>Tiempo transcurrido</th>
+                <th>Creación</th>
                 <th>Acciones</th>
               </tr>
             </thead>
@@ -90,7 +92,9 @@ const TicketInfo = () => {
                   <td>{ticket.client}</td>
                   <td>{ticket.address}</td>
                   <td>{ticket.text}</td>
+                  <td>{ticket.comment}</td>
                   <td>{calculateDaysSinceCreation(ticket.createdAt)} días</td>
+                  <td>{ticket.createdAt}</td>
                   <td>
                     <button onClick={() => handleDeleteTicket(ticket.id)}>
                       Eliminar Ticket

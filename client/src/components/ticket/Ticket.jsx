@@ -5,7 +5,13 @@ import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import { differenceInDays } from "date-fns";
-import { deleteTicket, getTickets as getTicketsAction, getTicketById } from "../../redux/actions.js";
+import {
+  deleteTicket,
+  getTickets as getTicketsAction,
+  getTicketById,
+} from "../../redux/actions.js";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import styles from "./Ticket.module.scss";
 
 const Ticket = () => {
@@ -24,6 +30,8 @@ const Ticket = () => {
   const [sortedTickets, setSortedTickets] = useState([]);
   const [sortOrder, setSortOrder] = useState("asc");
   const [filters, setFilters] = useState({});
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -49,6 +57,14 @@ const Ticket = () => {
 
     setSortedTickets(sorted);
   }, [allTickets, sortOrder]);
+
+  const handleStartDateChange = (date) => {
+    setStartDate(date);
+  };
+
+  const handleEndDateChange = (date) => {
+    setEndDate(date);
+  };
 
   const calculateDaysSinceCreation = (createdAt) => {
     const now = new Date();
@@ -82,6 +98,27 @@ const Ticket = () => {
   return (
     <section className={styles.sectionTicket}>
       <div className={styles.ticketList}>
+        <th>
+          Desde
+          <DatePicker
+            selected={startDate}
+            onChange={handleStartDateChange}
+            selectsStart
+            startDate={startDate}
+            endDate={endDate}
+          />
+        </th>
+        <th>
+          Hasta
+          <DatePicker
+            selected={endDate}
+            onChange={handleEndDateChange}
+            selectsEnd
+            startDate={startDate}
+            endDate={endDate}
+            minDate={startDate}
+          />
+        </th>
         {isReady ? (
           <table>
             <thead>
@@ -179,8 +216,19 @@ const Ticket = () => {
                 .filter((ticket) =>
                   isProfile ? ticket.responsable === user.name : true
                 )
+                .filter((ticket) => {
+                  const ticketDate = new Date(ticket.createdAt);
+
+                  return (
+                    (!startDate || ticketDate >= startDate) &&
+                    (!endDate || ticketDate <= endDate)
+                  );
+                })
                 .map((ticket) => (
-                  <tr key={ticket.id} onClick={() => handleTicketInfo(ticket.id)}>
+                  <tr
+                    key={ticket.id}
+                    onClick={() => handleTicketInfo(ticket.id)}
+                  >
                     <td>{getValueNameById(ticket.AreaId, allAreas)}</td>
                     <td>
                       {getValueNameById(ticket.CategoryId, allCategories)}
