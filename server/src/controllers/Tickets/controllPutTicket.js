@@ -1,11 +1,11 @@
-const { Tickets } = require("../../db");
+const { Tickets, Comments } = require("../../db");
 
 const controllPutTicket = async (req) => {
   const {
     client,
     address,
     text,
-    comment,
+    commentText,
     responsable,
     AreaId,
     PriorityId,
@@ -29,7 +29,11 @@ const controllPutTicket = async (req) => {
   existingTicket.responsable = responsable;
   existingTicket.address = address;
   existingTicket.text = text;
-  existingTicket.comment = comment;
+
+  const newComment = await Comments.create({ text: commentText });
+
+  existingTicket.comment = newComment.id;
+  existingTicket.addComment(newComment);
 
   await existingTicket.save();
 

@@ -22,7 +22,7 @@ const TicketInfo = () => {
     client: "",
     address: "",
     text: "",
-    comment: "",
+    commentText: "",
     responsable: "",
     AreaId: "",
     PriorityId: "",
@@ -57,7 +57,7 @@ const TicketInfo = () => {
           client: TicketById.client,
           address: TicketById.address,
           text: TicketById.text,
-          comment: "",
+          commentText: "",
           responsable: TicketById.responsable,
           AreaId: TicketById.AreaId,
           PriorityId: TicketById.PriorityId,
@@ -67,7 +67,7 @@ const TicketInfo = () => {
         if (TicketById.comment) {
           setNewTicket((prevTicket) => ({
             ...prevTicket,
-            comment: TicketById.comment,
+            commentText: TicketById.comment,
           }));
         }
       }
@@ -94,7 +94,7 @@ const TicketInfo = () => {
           client: newTicket.client,
           address: newTicket.address,
           text: newTicket.text,
-          comment: newTicket.comment,
+          commentText: newTicket.commentText,
           responsable: newTicket.responsable,
           AreaId: newTicket.AreaId,
           PriorityId: newTicket.PriorityId,
@@ -107,7 +107,7 @@ const TicketInfo = () => {
         client: "",
         address: "",
         text: "",
-        comment: "",
+        commentText: "",
         responsable: "",
         AreaId: "",
         PriorityId: "",

@@ -332,7 +332,7 @@ export function putTicket(ticketInfo) {
   const client = ticketInfo.client;
   const address = ticketInfo.address;
   const text = ticketInfo.text;
-  const comment = ticketInfo.comment;
+  const commentText = ticketInfo.commentText;
   const responsable = ticketInfo.responsable;
   const AreaId = ticketInfo.AreaId;
   const PriorityId = ticketInfo.PriorityId;
@@ -344,7 +344,7 @@ export function putTicket(ticketInfo) {
         client,
         address,
         text,
-        comment,
+        commentText,
         responsable,
         AreaId,
         PriorityId,
