@@ -28,6 +28,7 @@ const TicketInfo = () => {
     PriorityId: "",
     CategoryId: "",
     StatusId: "",
+    user: "",
   });
 
   useEffect(() => {
@@ -63,6 +64,7 @@ const TicketInfo = () => {
           PriorityId: TicketById.PriorityId,
           CategoryId: TicketById.CategoryId,
           StatusId: TicketById.StatusId,
+          user: user.name,
         });
         if (TicketById.comment) {
           setNewTicket((prevTicket) => ({
@@ -100,6 +102,7 @@ const TicketInfo = () => {
           PriorityId: newTicket.PriorityId,
           CategoryId: newTicket.CategoryId,
           StatusId: newTicket.StatusId,
+          user: newTicket.user,
         })
       );
       setNewTicket((prevTicket) => ({
@@ -113,6 +116,7 @@ const TicketInfo = () => {
         PriorityId: "",
         CategoryId: "",
         StatusId: "",
+        user: "",
       }));
     } catch (error) {
       console.error("Error al agregar un ticket:", error);
@@ -196,7 +200,13 @@ const TicketInfo = () => {
                     <td>{TicketById.client}</td>
                     <td>{TicketById.address}</td>
                     <td>{TicketById.text}</td>
-                    <td>{TicketById.comment}</td>
+                    <td>
+                      {TicketById.comments.map((comment) => (
+                        <div key={comment.id}>
+                          {comment.text} - {comment.user}
+                        </div>
+                      ))}
+                    </td>
                   </>
                 ) : (
                   <>
@@ -325,11 +335,11 @@ const TicketInfo = () => {
                     <td>
                       <input
                         type="text"
-                        name="comment"
+                        name="commentText"
                         placeholder="comentario"
-                        value={newTicket.comment}
+                        value={newTicket.commentText}
                         onChange={(e) =>
-                          handleSelectChange("comment", e.target.value)
+                          handleSelectChange("commentText", e.target.value)
                         }
                       />
                     </td>

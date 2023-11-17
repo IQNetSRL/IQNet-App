@@ -1,4 +1,4 @@
-const { Tickets } = require("../../db");
+const { Tickets, Comments } = require("../../db");
 
 const controllGetTickets = async (req) => {
   const {
@@ -37,6 +37,7 @@ const controllGetTickets = async (req) => {
 
   const tickets = await Tickets.findAll({
     where,
+    include: [{ model: Comments, as: 'comments' }],
   });
 
   return tickets;

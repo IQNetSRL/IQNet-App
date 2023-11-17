@@ -338,6 +338,8 @@ export function putTicket(ticketInfo) {
   const PriorityId = ticketInfo.PriorityId;
   const CategoryId = ticketInfo.CategoryId;
   const StatusId = ticketInfo.StatusId;
+  const user = ticketInfo.user;
+
   return async function (dispatch) {
     try {
       const response = await axios.put(`/tickets/${ticketInfo.id}`, {
@@ -350,6 +352,7 @@ export function putTicket(ticketInfo) {
         PriorityId,
         CategoryId,
         StatusId,
+        user,
       });
 
       dispatch({

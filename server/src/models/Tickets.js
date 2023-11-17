@@ -46,7 +46,7 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
       comment: {
-        type: DataTypes.STRING,
+        type: DataTypes.UUID,
         allowNull: true,
       },
     },
