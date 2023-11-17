@@ -48,7 +48,7 @@ const TicketInfo = () => {
     }
 
     return () => localStorage.removeItem("TicketById");
-  }, [user, isLoading]);
+  }, [user, isLoading, dispatch]);
 
   useEffect(() => {
     const fetchData = async () => {

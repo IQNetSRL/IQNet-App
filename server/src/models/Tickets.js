@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
-  sequelize.define(
+  const Ticket = sequelize.define(
     "Tickets",
     {
       id: {
@@ -52,4 +52,8 @@ module.exports = (sequelize) => {
     },
     { timestamps: true }
   );
+
+  Ticket.hasMany(sequelize.models.Comments, { as: "comments" });
+
+  return Ticket;
 };
