@@ -164,7 +164,7 @@ const TicketInfo = () => {
         </>
       )}
       <div>
-        {isReady ? (
+        {isReady && TicketById.comments ? (
           <table>
             <thead>
               <tr>
@@ -203,7 +203,7 @@ const TicketInfo = () => {
                     <td>
                       {TicketById.comments.map((comment) => (
                         <div key={comment.id}>
-                          {comment.text} - {comment.user}
+                          {comment.text} - {comment.user} - {comment.createdAt}
                         </div>
                       ))}
                     </td>
