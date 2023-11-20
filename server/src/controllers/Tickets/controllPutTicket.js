@@ -1,4 +1,4 @@
-const { Tickets, Comments } = require("../../db");
+const { Tickets, Comments, TicketHistories } = require("../../db");
 
 const controllPutTicket = async (req) => {
   const {
@@ -22,7 +22,7 @@ const controllPutTicket = async (req) => {
     throw new Error("Registro no encontrado");
   }
 
-  await existingTicket.createHistory({
+  const newHistory = await TicketHistories.create({
     client: existingTicket.client,
     address: existingTicket.address,
     text: existingTicket.text,
@@ -31,6 +31,7 @@ const controllPutTicket = async (req) => {
     CategoryId: existingTicket.CategoryId,
     StatusId: existingTicket.StatusId,
     responsable: existingTicket.responsable,
+    user: user,
   });
 
   existingTicket.client = client;
@@ -45,6 +46,7 @@ const controllPutTicket = async (req) => {
   const newComment = await Comments.create({ text: commentText, user: user });
 
   existingTicket.addComment(newComment);
+  existingTicket.addHistory(newHistory);
 
   await existingTicket.save();
 

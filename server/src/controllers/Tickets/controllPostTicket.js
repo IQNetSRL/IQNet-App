@@ -10,7 +10,6 @@ const controllPostTicket = async (req) => {
     client,
     address,
     text,
-    comment,
     responsable,
   } = req.body;
 
@@ -23,7 +22,6 @@ const controllPostTicket = async (req) => {
     client: client,
     address: address,
     text: text,
-    comment: comment,
     responsable: responsable,
   });
 

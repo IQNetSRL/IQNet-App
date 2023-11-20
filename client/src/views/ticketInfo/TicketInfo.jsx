@@ -6,6 +6,7 @@ import { differenceInDays } from "date-fns";
 import { deleteTicket, putTicket } from "../../redux/actions.js";
 import { GET_TICKET_BY_ID } from "../../redux/actionTypes.js";
 import styles from "./TicketInfo.module.scss";
+import TicketHistory from "../../components/ticketHistory/TicketHistory.jsx";
 
 const TicketInfo = () => {
   const dispatch = useDispatch();
@@ -357,6 +358,11 @@ const TicketInfo = () => {
           </table>
         ) : (
           <div>Cargando Tickets...</div>
+        )}
+        {isReady && !isEditing ? (
+          <TicketHistory TicketById={TicketById} />
+        ) : (
+          <div>Cargando Historial...</div>
         )}
       </div>
     </section>

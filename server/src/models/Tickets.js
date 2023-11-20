@@ -45,15 +45,11 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      comment: {
-        type: DataTypes.UUID,
-        allowNull: true,
-      },
     },
     { timestamps: true }
   );
   
-  Ticket.hasMany(sequelize.models.TicketHistory, { as: "history" });
+  Ticket.hasMany(sequelize.models.TicketHistories, { as: "history" });
   Ticket.hasMany(sequelize.models.Comments, { as: "comments" });
 
   return Ticket;

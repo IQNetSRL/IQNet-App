@@ -2,7 +2,7 @@ const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
   sequelize.define(
-    "TicketHistory",
+    "TicketHistories",
     {
       id: {
         type: DataTypes.UUID,
@@ -23,6 +23,10 @@ module.exports = (sequelize) => {
       },
       PriorityId: {
         type: DataTypes.UUID,
+        allowNull: false,
+      },
+      user: {
+        type: DataTypes.STRING,
         allowNull: false,
       },
       responsable: {
