@@ -9,7 +9,6 @@ const TicketHistory = (props) => {
   const allCategories = useSelector((state) => state.someReducer.allCategories);
   const allStatus = useSelector((state) => state.someReducer.allStatus);
   const allPriorities = useSelector((state) => state.someReducer.allPriorities);
-  const TicketById = useSelector((state) => state.someReducer.TicketById);
 
   TicketHistory.propTypes = {
     TicketById: PropTypes.object.isRequired,

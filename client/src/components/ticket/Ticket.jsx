@@ -32,6 +32,8 @@ const Ticket = () => {
   const [filters, setFilters] = useState({});
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+  const [rol, setRol] = useState("");
+  const [rolFilter, setRolFilter] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -42,21 +44,58 @@ const Ticket = () => {
         const finalFilters = { ...userFilter, ...filters };
 
         dispatch(getTicketsAction(finalFilters));
+
+        const currentUser = allAccounts.find(
+          (account) => account.name === user.name
+        );
+
+        if (currentUser) {
+          setRol(currentUser.level);
+        } else {
+          console.log("Usuario no encontrado en allAccounts");
+        }
       }
     };
 
     fetchData();
-  }, [user, filters, isLoading, dispatch, isProfile]);
+  }, [user, filters, isLoading, dispatch, isProfile, allAccounts]);
 
   useEffect(() => {
-    const sorted = [...allTickets].sort((a, b) => {
-      const dateA = new Date(a.createdAt);
-      const dateB = new Date(b.createdAt);
-      return sortOrder === "asc" ? dateA - dateB : dateB - dateA;
-    });
+    const fetchData = async () => {
+      if (rol) {
+        if (rol === "admin") {
+          setSortedTickets(allTickets);
+        } else {
+          const areaName =
+            (rol === "admin" && "administracion") ||
+            (rol === "support" && "servicio técnico") ||
+            (rol === "sales" && "ventas");
 
-    setSortedTickets(sorted);
-  }, [allTickets, sortOrder]);
+          const area = allAreas.find((a) => a.name === areaName);
+
+          if (area) {
+            const filteredTickets = allTickets.filter(
+              (ticket) => ticket.AreaId === area.id
+            );
+            setSortedTickets(filteredTickets);
+            setRolFilter(filteredTickets);
+
+            const sorted = [...rolFilter].sort((a, b) => {
+              const dateA = new Date(a.createdAt);
+              const dateB = new Date(b.createdAt);
+              return sortOrder === "asc" ? dateA - dateB : dateB - dateA;
+            });
+
+            setSortedTickets(sorted);
+          } else {
+            console.log("Área no encontrada para el rol", rol);
+          }
+        }
+      }
+    };
+
+    fetchData();
+  }, [rol, allTickets, allAreas, sortOrder]);
 
   const handleStartDateChange = (date) => {
     setStartDate(date);
@@ -125,18 +164,20 @@ const Ticket = () => {
               <tr>
                 <th>
                   Área
-                  <select
-                    name="AreaId"
-                    value={filters.AreaId || ""}
-                    onChange={handleFilterChange}
-                  >
-                    <option value="">Todas</option>
-                    {allAreas.map((area) => (
-                      <option key={area.id} value={area.id}>
-                        {area.name}
-                      </option>
-                    ))}
-                  </select>
+                  {rol === "admin" && (
+                    <select
+                      name="AreaId"
+                      value={filters.AreaId || ""}
+                      onChange={handleFilterChange}
+                    >
+                      <option value="">Todas</option>
+                      {allAreas.map((area) => (
+                        <option key={area.id} value={area.id}>
+                          {area.name}
+                        </option>
+                      ))}
+                    </select>
+                  )}
                 </th>
                 <th>
                   Categoría
