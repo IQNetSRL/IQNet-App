@@ -22,6 +22,17 @@ const controllPutTicket = async (req) => {
     throw new Error("Registro no encontrado");
   }
 
+  await existingTicket.createHistory({
+    client: existingTicket.client,
+    address: existingTicket.address,
+    text: existingTicket.text,
+    AreaId: existingTicket.AreaId,
+    PriorityId: existingTicket.PriorityId,
+    CategoryId: existingTicket.CategoryId,
+    StatusId: existingTicket.StatusId,
+    responsable: existingTicket.responsable,
+  });
+
   existingTicket.client = client;
   existingTicket.AreaId = AreaId;
   existingTicket.PriorityId = PriorityId;
