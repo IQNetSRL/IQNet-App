@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Routes, Route } from "react-router-dom";
-import { Auth0Provider } from "@auth0/auth0-react";
+import { useAuth0 } from "@auth0/auth0-react";
 import { Navigate, useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -29,8 +29,11 @@ axios.defaults.baseURL = "http://localhost:3001/";
 function App() {
   const navigate = useNavigate();
   const location = useLocation();
+  const { user, isLoading } = useAuth0();
   const isLogin = location.pathname === "/";
   const dispatch = useDispatch();
+  const allAccounts = useSelector((state) => state.someReducer.allAccounts);
+  const [rol, setRol] = useState("");
 
   useEffect(() => {
     dispatch(getTickets());
@@ -41,38 +44,49 @@ function App() {
     dispatch(getAccounts());
   }, [dispatch]);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!isLoading && user && user.name) {
+        const currentUser = allAccounts.find(
+          (account) => account.name === user.name
+        );
+        if (currentUser) {
+          setRol(currentUser.level);
+        } else {
+          console.log("Usuario no encontrado en allAccounts");
+        }
+      }
+    };
+
+    fetchData();
+  }, [user, isLoading]);
+
   const handleNavigate = () => {
     navigate("/create");
   };
 
   return (
-    <Auth0Provider
-      domain="dev-turz1d4jnq1ljebe.us.auth0.com"
-      clientId="bcoMdxZEYC3Z00LTKJ2df7sPHWzXNyJU"
-      redirectUri={window.location.origin}
-    >
-      <main>
-        {!isLogin && (
-          <section>
-            <h2>sidebar</h2>
-            <button onClick={handleNavigate}>Crear Nuevo Ticket</button>
-            <LogoutButton />
-            <ProfileButton />
-          </section>
-        )}
+    <main>
+      {!isLogin && (
         <section>
-          <Routes>
-            <Route path="/" element={<Login />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/home" element={<Home />} />
-            <Route path="/admin" element={<Administrator />} />
-            <Route path="/create" element={<CreateTickets />} />
-            <Route path="/ticket-info" element={<TicketInfo />} />
-            <Route path="*" element={<Navigate to="/" />} />
-          </Routes>
+          <h2>sidebar</h2>
+          <button onClick={handleNavigate}>Crear Nuevo Ticket</button>
+          <LogoutButton />
+          <ProfileButton />
         </section>
-      </main>
-    </Auth0Provider>
+      )}
+      <section>
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/home" element={<Home rol={rol}/>} />
+          {rol === "administrador" && <Route path="/admin" element={<Administrator />} />}
+          <Route path="/create" element={<CreateTickets />} />
+          <Route path="/ticket-info" element={<TicketInfo />} />
+          <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
+      </section>
+    </main>
   );
 }
 
