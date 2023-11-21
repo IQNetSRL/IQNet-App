@@ -116,7 +116,8 @@ const Ticket = () => {
     return value ? value.name : "";
   };
 
-  const handleDeleteTicket = (id) => {
+  const handleDeleteTicket = (id, e) => {
+    e.stopPropagation();
     dispatch(deleteTicket(id));
   };
 
@@ -285,7 +286,7 @@ const Ticket = () => {
                     <td>{ticket.text}</td>
                     <td>{calculateDaysSinceCreation(ticket.createdAt)} días</td>
                     <td>
-                      <button onClick={() => handleDeleteTicket(ticket.id)}>
+                      <button onClick={(e) => handleDeleteTicket(ticket.id, e)}>
                         Eliminar Ticket
                       </button>
                     </td>

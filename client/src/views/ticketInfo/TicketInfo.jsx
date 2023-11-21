@@ -138,6 +138,7 @@ const TicketInfo = () => {
 
   const handleDeleteTicket = (id) => {
     dispatch(deleteTicket(id));
+    window.history.back();
   };
 
   const handleNavigate = () => {
