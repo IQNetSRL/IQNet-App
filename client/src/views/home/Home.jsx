@@ -19,7 +19,7 @@ const Home = (props) => {
   return (
     <section className={styles.sectionHome}>
       <h1>Home</h1>
-      {props.rol === "administrador" && (
+      {props.rol === "admin" && (
         <button onClick={handleNavigate}>ir a administrador</button>
       )}
       <h2>Lista de Tickets</h2>

@@ -80,7 +80,7 @@ function App() {
           <Route path="/" element={<Login />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/home" element={<Home rol={rol}/>} />
-          {rol === "administrador" && <Route path="/admin" element={<Administrator />} />}
+          {rol === "admin" && <Route path="/admin" element={<Administrator />} />}
           <Route path="/create" element={<CreateTickets />} />
           <Route path="/ticket-info" element={<TicketInfo />} />
           <Route path="*" element={<Navigate to="/" />} />

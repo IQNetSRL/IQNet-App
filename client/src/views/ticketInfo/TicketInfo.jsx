@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useAuth0 } from "@auth0/auth0-react";
 import { differenceInDays } from "date-fns";
-import { deleteTicket, putTicket } from "../../redux/actions.js";
+import { deleteTicket, putTicket, getTicketById } from "../../redux/actions.js";
 import { GET_TICKET_BY_ID } from "../../redux/actionTypes.js";
 import styles from "./TicketInfo.module.scss";
 import TicketHistory from "../../components/ticketHistory/TicketHistory.jsx";
@@ -119,6 +119,7 @@ const TicketInfo = () => {
         StatusId: "",
         user: "",
       }));
+      dispatch(getTicketById(TicketById.id));
     } catch (error) {
       console.error("Error al agregar un ticket:", error);
     }
