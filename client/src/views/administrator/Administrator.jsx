@@ -8,6 +8,8 @@ import {
   postCity,
   deleteCity,
   deleteUser,
+  putAccount,
+  getAccounts,
 } from "../../redux/actions.js";
 import styles from "./Administrator.module.scss";
 
@@ -17,7 +19,13 @@ const Administrator = () => {
   const allUsers = useSelector((state) => state.someReducer.allUsers);
   const allCities = useSelector((state) => state.someReducer.allCities);
   const allAccounts = useSelector((state) => state.someReducer.allAccounts);
+  const [isEditing, setIsEditing] = useState(false);
   const [newCity, setNewCity] = useState({ name: "" });
+  const [level, setLevel] = useState("");
+  const [newLevel, setNewLevel] = useState({
+    id: "",
+    level: "",
+  });
 
   useEffect(() => {
     dispatch(getCities());
@@ -26,6 +34,12 @@ const Administrator = () => {
 
   const handleNavigate = () => {
     navigate("/home");
+  };
+
+  const handleEdit = (id, level) => {
+    setIsEditing(true);
+    setLevel(level);
+    setNewLevel({ ...newLevel, id: id });
   };
 
   const handleDeleteCity = (id) => {
@@ -48,6 +62,28 @@ const Administrator = () => {
     } catch (error) {
       console.error("Error al agregar la ciudad:", error);
     }
+  };
+
+  const handleSubmitAccount = async (e) => {
+    e.preventDefault();
+    try {
+      await dispatch(putAccount(newLevel));
+      setNewLevel({ id: "", level: "" });
+      dispatch(getAccounts());
+    } catch (error) {
+      console.error("Error al cambiar de nivel:", error);
+    }
+  };
+
+  const handleLevelChange = (value) => {
+    setNewLevel({
+      ...newLevel,
+      level: value,
+    });
+  };
+
+  const handleCancel = () => {
+    setIsEditing(false);
   };
 
   const handleInputChange = (e) => {
@@ -108,11 +144,35 @@ const Administrator = () => {
             {allAccounts?.map((account, index) => (
               <li key={account.id || index}>
                 {account.name}
+                <button onClick={() => handleEdit(account.id, account.level)}>
+                  editar
+                </button>
               </li>
             ))}
           </ol>
         ) : (
           <p>Cargando cuentas...</p>
+        )}
+        {isEditing && (
+          <div>
+            <select
+              name="level"
+              onChange={(e) => handleLevelChange(e.target.value)}
+            >
+              <option value={level}>
+                {level === "admin"
+                  ? "Administrador"
+                  : level === "sales"
+                  ? "Ventas"
+                  : level === "support" && "Técnico"}
+              </option>
+              <option value="admin">Administrador</option>
+              <option value="support">Técnico</option>
+              <option value="sales">Ventas</option>
+            </select>
+            <button onClick={handleCancel}>cancelar</button>
+            <button onClick={handleSubmitAccount}>aceptar</button>
+          </div>
         )}
       </section>
       <button onClick={handleNavigate}>ir a home</button>
