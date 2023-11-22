@@ -23,6 +23,7 @@ import {
   DELETE_TICKET,
   PUT_TICKET,
   GET_TICKET_BY_ID,
+  PUT_ACCOUNT,
 } from "./actionTypes.js";
 
 let initialState = {
@@ -44,6 +45,7 @@ let updatedCategories;
 let updatedPriorities;
 let updatedStatus;
 let updatedInformation;
+let updatedAccounts;
 let updatedTickets;
 let newUser;
 
@@ -198,6 +200,21 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         allTickets: updatedInformation,
+      };
+    case PUT_ACCOUNT:
+      updatedAccounts = state.allAccounts.map((info) => {
+        if (info.id === action.payload.id) {
+          return {
+            ...info,
+            level: action.payload.level,
+          };
+        }
+        return info;
+      });
+
+      return {
+        ...state,
+        allTickets: updatedAccounts,
       };
     case DELETE_TICKET:
       updatedTickets = state.allTickets.filter(

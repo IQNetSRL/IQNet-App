@@ -22,3 +22,4 @@ export const POST_TICKET = "POST_TICKET";
 export const DELETE_TICKET = "DELETE_TICKET";
 export const PUT_TICKET = "PUT_TICKET";
 export const GET_TICKET_BY_ID = "GET_TICKET_BY_ID";
+export const PUT_ACCOUNT = "PUT_ACCOUNT";

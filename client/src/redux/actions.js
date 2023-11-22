@@ -24,6 +24,7 @@ import {
   POST_TICKET,
   DELETE_TICKET,
   GET_TICKET_BY_ID,
+  PUT_ACCOUNT,
 } from "./actionTypes.js";
 
 export function getUsers() {
@@ -320,6 +321,25 @@ export function getPriorities(priorityId) {
       const response = await axios.get(url);
       dispatch({
         type: GET_PRIORITIES,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export function putAccount(accountInfo) {
+  const level = accountInfo.level;
+
+  return async function (dispatch) {
+    try {
+      const response = await axios.put(`/accounts/${accountInfo.id}`, {
+        level,
+      });
+
+      dispatch({
+        type: PUT_ACCOUNT,
         payload: response.data,
       });
     } catch (error) {
