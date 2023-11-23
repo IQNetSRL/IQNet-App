@@ -11,6 +11,7 @@ import {
   putAccount,
   getAccounts,
 } from "../../redux/actions.js";
+import * as XLSX from "xlsx";
 import styles from "./Administrator.module.scss";
 
 const Administrator = () => {
@@ -31,6 +32,33 @@ const Administrator = () => {
     dispatch(getCities());
     dispatch(getUsers());
   }, [dispatch]);
+
+  const handleExportToExcel = () => {
+    const sheetData = allUsers.map((user) => [
+      user.name,
+      user.lastName,
+      user.city,
+      user.phoneNumber,
+      user.emailAddress,
+      user.address,
+      user.consult,
+    ]);
+
+    const ws = XLSX.utils.aoa_to_sheet([headerRow, ...sheetData]);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Usuarios");
+    XLSX.writeFile(wb, "usuarios.xlsx");
+  };
+
+  const headerRow = [
+    "Nombre",
+    "Apellido",
+    "Localidad",
+    "Número telefónico",
+    "Email",
+    "Dirección",
+    "Consulta",
+  ];
 
   const handleNavigate = () => {
     navigate("/home");
@@ -96,6 +124,7 @@ const Administrator = () => {
       <h1>Administrator</h1>
       <section>
         <h2>Prospectos</h2>
+        <button onClick={handleExportToExcel}>Exportar a Excel</button>
         <table>
           <thead>
             <tr>
