@@ -11,6 +11,7 @@ import {
   getTicketById,
 } from "../../redux/actions.js";
 import DatePicker from "react-datepicker";
+import * as XLSX from "xlsx";
 import "react-datepicker/dist/react-datepicker.css";
 import styles from "./Ticket.module.scss";
 
@@ -97,6 +98,39 @@ const Ticket = () => {
     fetchData();
   }, [rol, allTickets, allAreas, sortOrder]);
 
+  const handleExportToExcel = () => {
+    const sheetData = sortedTickets.map((ticket) => [
+      getValueNameById(ticket.AreaId, allAreas),
+      getValueNameById(ticket.CategoryId, allCategories),
+      getValueNameById(ticket.StatusId, allStatus),
+      getValueNameById(ticket.PriorityId, allPriorities),
+      ticket.username,
+      ticket.responsable,
+      ticket.client,
+      ticket.address,
+      ticket.text,
+      calculateDaysSinceCreation(ticket.createdAt) + " días",
+    ]);
+
+    const ws = XLSX.utils.aoa_to_sheet([headerRow, ...sheetData]);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Tickets");
+    XLSX.writeFile(wb, "tickets.xlsx");
+  };
+
+  const headerRow = [
+    "Área",
+    "Categoría",
+    "Estado",
+    "Prioridad",
+    "Operador",
+    "Encargado",
+    "Cliente",
+    "Dirección",
+    "Descripción",
+    "Tiempo transcurrido",
+  ];
+
   const handleStartDateChange = (date) => {
     setStartDate(date);
   };
@@ -160,140 +194,147 @@ const Ticket = () => {
           />
         </div>
         {isReady ? (
-          <table>
-            <thead>
-              <tr>
-                <th>
-                  Área
-                  {rol === "admin" && (
+          <>
+            <button onClick={handleExportToExcel}>Exportar a Excel</button>
+            <table>
+              <thead>
+                <tr>
+                  <th>
+                    Área
+                    {rol === "admin" && (
+                      <select
+                        name="AreaId"
+                        value={filters.AreaId || ""}
+                        onChange={handleFilterChange}
+                      >
+                        <option value="">Todas</option>
+                        {allAreas.map((area) => (
+                          <option key={area.id} value={area.id}>
+                            {area.name}
+                          </option>
+                        ))}
+                      </select>
+                    )}
+                  </th>
+                  <th>
+                    Categoría
                     <select
-                      name="AreaId"
-                      value={filters.AreaId || ""}
+                      name="CategoryId"
+                      value={filters.CategoryId || ""}
                       onChange={handleFilterChange}
                     >
                       <option value="">Todas</option>
-                      {allAreas.map((area) => (
-                        <option key={area.id} value={area.id}>
-                          {area.name}
+                      {allCategories.map((category) => (
+                        <option key={category.id} value={category.id}>
+                          {category.name}
                         </option>
                       ))}
                     </select>
-                  )}
-                </th>
-                <th>
-                  Categoría
-                  <select
-                    name="CategoryId"
-                    value={filters.CategoryId || ""}
-                    onChange={handleFilterChange}
-                  >
-                    <option value="">Todas</option>
-                    {allCategories.map((category) => (
-                      <option key={category.id} value={category.id}>
-                        {category.name}
-                      </option>
-                    ))}
-                  </select>
-                </th>
-                <th>
-                  Estado
-                  <select
-                    name="StatusId"
-                    value={filters.StatusId || ""}
-                    onChange={handleFilterChange}
-                  >
-                    <option value="">Todos</option>
-                    {allStatus.map((status) => (
-                      <option key={status.id} value={status.id}>
-                        {status.name}
-                      </option>
-                    ))}
-                  </select>
-                </th>
-                <th>
-                  Prioridad
-                  <select
-                    name="PriorityId"
-                    value={filters.PriorityId || ""}
-                    onChange={handleFilterChange}
-                  >
-                    <option value="">Todas</option>
-                    {allPriorities.map((priority) => (
-                      <option key={priority.id} value={priority.id}>
-                        {priority.name}
-                      </option>
-                    ))}
-                  </select>
-                </th>
-                <th>Operador</th>
-                <th>
-                  Encargado
-                  <select
-                    name="Responsable"
-                    value={filters.Responsable || ""}
-                    onChange={handleFilterChange}
-                  >
-                    <option value="">Todos</option>
-                    {allAccounts.map((account) => (
-                      <option key={account.id} value={account.name}>
-                        {account.name}
-                      </option>
-                    ))}
-                  </select>
-                </th>
-                <th>Cliente</th>
-                <th>Dirección</th>
-                <th>Descripción</th>
-                <th>
-                  Tiempo transcurrido
-                  <button onClick={toggleSortOrder}>
-                    {sortOrder === "asc" ? "↓" : "↑"}
-                  </button>
-                </th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              {sortedTickets
-                .filter((ticket) =>
-                  isProfile ? ticket.responsable === user.name : true
-                )
-                .filter((ticket) => {
-                  const ticketDate = new Date(ticket.createdAt);
+                  </th>
+                  <th>
+                    Estado
+                    <select
+                      name="StatusId"
+                      value={filters.StatusId || ""}
+                      onChange={handleFilterChange}
+                    >
+                      <option value="">Todos</option>
+                      {allStatus.map((status) => (
+                        <option key={status.id} value={status.id}>
+                          {status.name}
+                        </option>
+                      ))}
+                    </select>
+                  </th>
+                  <th>
+                    Prioridad
+                    <select
+                      name="PriorityId"
+                      value={filters.PriorityId || ""}
+                      onChange={handleFilterChange}
+                    >
+                      <option value="">Todas</option>
+                      {allPriorities.map((priority) => (
+                        <option key={priority.id} value={priority.id}>
+                          {priority.name}
+                        </option>
+                      ))}
+                    </select>
+                  </th>
+                  <th>Operador</th>
+                  <th>
+                    Encargado
+                    <select
+                      name="Responsable"
+                      value={filters.Responsable || ""}
+                      onChange={handleFilterChange}
+                    >
+                      <option value="">Todos</option>
+                      {allAccounts.map((account) => (
+                        <option key={account.id} value={account.name}>
+                          {account.name}
+                        </option>
+                      ))}
+                    </select>
+                  </th>
+                  <th>Cliente</th>
+                  <th>Dirección</th>
+                  <th>Descripción</th>
+                  <th>
+                    Tiempo transcurrido
+                    <button onClick={toggleSortOrder}>
+                      {sortOrder === "asc" ? "↓" : "↑"}
+                    </button>
+                  </th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                {sortedTickets
+                  .filter((ticket) =>
+                    isProfile ? ticket.responsable === user.name : true
+                  )
+                  .filter((ticket) => {
+                    const ticketDate = new Date(ticket.createdAt);
 
-                  return (
-                    (!startDate || ticketDate >= startDate) &&
-                    (!endDate || ticketDate <= endDate)
-                  );
-                })
-                .map((ticket) => (
-                  <tr
-                    key={ticket.id}
-                    onClick={() => handleTicketInfo(ticket.id)}
-                  >
-                    <td>{getValueNameById(ticket.AreaId, allAreas)}</td>
-                    <td>
-                      {getValueNameById(ticket.CategoryId, allCategories)}
-                    </td>
-                    <td>{getValueNameById(ticket.StatusId, allStatus)}</td>
-                    <td>
-                      {getValueNameById(ticket.PriorityId, allPriorities)}
-                    </td>
-                    <td>{ticket.username}</td>
-                    <td>{ticket.responsable}</td>
-                    <td>{ticket.client}</td>
-                    <td>{ticket.address}</td>
-                    <td>{ticket.text}</td>
-                    <td>{calculateDaysSinceCreation(ticket.createdAt)} días</td>
-                    <td>
-                      <button onClick={(e) => handleDeleteTicket(ticket.id, e)}>
-                        Eliminar Ticket
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-            </tbody>
-          </table>
+                    return (
+                      (!startDate || ticketDate >= startDate) &&
+                      (!endDate || ticketDate <= endDate)
+                    );
+                  })
+                  .map((ticket) => (
+                    <tr
+                      key={ticket.id}
+                      onClick={() => handleTicketInfo(ticket.id)}
+                    >
+                      <td>{getValueNameById(ticket.AreaId, allAreas)}</td>
+                      <td>
+                        {getValueNameById(ticket.CategoryId, allCategories)}
+                      </td>
+                      <td>{getValueNameById(ticket.StatusId, allStatus)}</td>
+                      <td>
+                        {getValueNameById(ticket.PriorityId, allPriorities)}
+                      </td>
+                      <td>{ticket.username}</td>
+                      <td>{ticket.responsable}</td>
+                      <td>{ticket.client}</td>
+                      <td>{ticket.address}</td>
+                      <td>{ticket.text}</td>
+                      <td>
+                        {calculateDaysSinceCreation(ticket.createdAt)} días
+                      </td>
+                      <td>
+                        <button
+                          onClick={(e) => handleDeleteTicket(ticket.id, e)}
+                        >
+                          Eliminar Ticket
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+          </>
         ) : (
           <div>Cargando Tickets...</div>
         )}
