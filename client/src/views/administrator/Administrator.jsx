@@ -96,6 +96,32 @@ const Administrator = () => {
       <h1>Administrator</h1>
       <section>
         <h2>Prospectos</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Apellido</th>
+              <th>localidad</th>
+              <th>numero telefonico</th>
+              <th>email</th>
+              <th>direccion</th>
+              <th>consulta</th>
+            </tr>
+          </thead>
+          <tbody>
+            {allUsers?.map((user) => (
+              <tr key={user.id}>
+                <td>{user.name}</td>
+                <td>{user.lastName}</td>
+                <td>{user.city}</td>
+                <td>{user.phoneNumber}</td>
+                <td>{user.emailAddress}</td>
+                <td>{user.address}</td>
+                <td>{user.consult}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
         <ol>
           {allUsers?.map((user) => (
             <li key={user.id}>
