@@ -1,18 +1,22 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useAuth0 } from "@auth0/auth0-react";
 import { postTicket } from "../../redux/actions.js";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
 import styles from "./FormTickets.module.scss";
 
 const FormTickets = () => {
   const dispatch = useDispatch();
+  const mapRef = useRef(null);
   const { user, isLoading } = useAuth0();
   const allAreas = useSelector((state) => state.someReducer.allAreas);
   const allCategories = useSelector((state) => state.someReducer.allCategories);
   const allStatus = useSelector((state) => state.someReducer.allStatus);
   const allPriorities = useSelector((state) => state.someReducer.allPriorities);
   const allAccounts = useSelector((state) => state.someReducer.allAccounts);
+  const [map, setMap] = useState(null);
   const [newTicket, setNewTicket] = useState({
     username: "",
     AreaId: "",
@@ -23,9 +27,13 @@ const FormTickets = () => {
     address: "",
     text: "",
     responsable: "",
+    coordinates: "",
   });
 
   useEffect(() => {
+    if (mapRef.current && map) {
+      map.invalidateSize();
+    }
     const fetchData = async () => {
       if (!isLoading && user && user.name) {
         const userAccount = allAccounts.find(
@@ -41,13 +49,26 @@ const FormTickets = () => {
     };
 
     fetchData();
-  }, [isLoading, user, allAccounts]);
+  }, [isLoading, user, allAccounts, map]);
 
   const handleSelectChange = (field, value) => {
     setNewTicket({
       ...newTicket,
       [field]: value,
     });
+  };
+
+  const handleCoordinatesChange = (value) => {
+    const coordinatesArray = value.split(/,\s*/).map(Number);
+
+    if (coordinatesArray.length === 2 && !coordinatesArray.some(isNaN)) {
+      setNewTicket({
+        ...newTicket,
+        coordinates: coordinatesArray.join(","),
+      });
+    } else {
+      console.error("Formato de coordenadas incorrecto");
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -65,6 +86,7 @@ const FormTickets = () => {
           address: newTicket.address,
           text: newTicket.text,
           responsable: newTicket.responsable,
+          coordinates: newTicket.coordinates,
         })
       );
       setNewTicket((prevTicket) => ({
@@ -78,10 +100,15 @@ const FormTickets = () => {
         address: "",
         text: "",
         responsable: "",
+        coordinates: "",
       }));
     } catch (error) {
       console.error("Error al agregar un ticket:", error);
     }
+  };
+
+  const handleMapLoad = (map) => {
+    setMap(map);
   };
 
   return (
@@ -169,8 +196,43 @@ const FormTickets = () => {
           value={newTicket.address}
           onChange={(e) => handleSelectChange("address", e.target.value)}
         />
+        <input
+          type="text"
+          name="coordinates"
+          placeholder="Coordenadas"
+          value={newTicket.coordinates}
+          onChange={(e) => handleCoordinatesChange(e.target.value)}
+        />
         <button type="submit">Crear</button>
       </form>
+      <div style={{ height: "400px", width: "100%" }}>
+        <MapContainer
+          center={
+            newTicket.coordinates
+              ? newTicket.coordinates.split(",").map(Number)
+              : [-27.20789114815453, -54.975951133931545]
+          }
+          zoom={9}
+          style={{ height: "100%", width: "100%" }}
+          whenCreated={handleMapLoad}
+          onLoad={() =>
+            mapRef.current && mapRef.current.leafletElement.invalidateSize()
+          }
+        >
+          <TileLayer
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          />
+          {newTicket.coordinates && (
+            <Marker
+              position={newTicket.coordinates.split(",").map(Number)}
+              draggable={true}
+            >
+              <Popup>Tu ubicación ingresada aquí.</Popup>
+            </Marker>
+          )}
+        </MapContainer>
+      </div>
     </section>
   );
 };
