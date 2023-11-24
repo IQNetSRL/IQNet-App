@@ -82,7 +82,7 @@ function App() {
           <Route path="/home" element={<Home rol={rol}/>} />
           {rol === "admin" && <Route path="/admin" element={<Administrator />} />}
           <Route path="/create" element={<CreateTickets />} />
-          <Route path="/ticket-info" element={<TicketInfo />} />
+          <Route path="/ticket-info" element={<TicketInfo rol={rol}/>} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </section>

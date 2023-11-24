@@ -10,12 +10,13 @@ import {
   getTickets as getTicketsAction,
   getTicketById,
 } from "../../redux/actions.js";
+import PropTypes from "prop-types";
 import DatePicker from "react-datepicker";
 import * as XLSX from "xlsx";
 import "react-datepicker/dist/react-datepicker.css";
 import styles from "./Ticket.module.scss";
 
-const Ticket = () => {
+const Ticket = (props) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
@@ -35,6 +36,10 @@ const Ticket = () => {
   const [endDate, setEndDate] = useState(null);
   const [rol, setRol] = useState("");
   const [rolFilter, setRolFilter] = useState([]);
+
+  Ticket.propTypes = {
+    rol: PropTypes.string.isRequired,
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -286,7 +291,7 @@ const Ticket = () => {
                       {sortOrder === "asc" ? "↓" : "↑"}
                     </button>
                   </th>
-                  <th>Acciones</th>
+                  {props.rol === "admin" && <th>Acciones</th>}
                 </tr>
               </thead>
               <tbody>
@@ -323,13 +328,15 @@ const Ticket = () => {
                       <td>
                         {calculateDaysSinceCreation(ticket.createdAt)} días
                       </td>
-                      <td>
-                        <button
-                          onClick={(e) => handleDeleteTicket(ticket.id, e)}
-                        >
-                          Eliminar Ticket
-                        </button>
-                      </td>
+                      {props.rol === "admin" && (
+                        <td>
+                          <button
+                            onClick={(e) => handleDeleteTicket(ticket.id, e)}
+                          >
+                            Eliminar Ticket
+                          </button>
+                        </td>
+                      )}
                     </tr>
                   ))}
               </tbody>

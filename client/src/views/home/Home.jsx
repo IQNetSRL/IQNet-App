@@ -23,7 +23,7 @@ const Home = (props) => {
         <button onClick={handleNavigate}>ir a administrador</button>
       )}
       <h2>Lista de Tickets</h2>
-      <Ticket />
+      <Ticket rol={props.rol}/>
     </section>
   );
 };
