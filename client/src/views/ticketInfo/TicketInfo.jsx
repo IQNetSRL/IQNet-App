@@ -1,15 +1,18 @@
 /* eslint-disable no-unused-vars */
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useAuth0 } from "@auth0/auth0-react";
 import { differenceInDays } from "date-fns";
 import { deleteTicket, putTicket, getTicketById } from "../../redux/actions.js";
 import { GET_TICKET_BY_ID } from "../../redux/actionTypes.js";
-import styles from "./TicketInfo.module.scss";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import TicketHistory from "../../components/ticketHistory/TicketHistory.jsx";
+import "leaflet/dist/leaflet.css";
+import styles from "./TicketInfo.module.scss";
 
 const TicketInfo = () => {
   const dispatch = useDispatch();
+  const mapRef = useRef(null);
   const { user, isLoading } = useAuth0();
   const allAreas = useSelector((state) => state.someReducer.allAreas);
   const allCategories = useSelector((state) => state.someReducer.allCategories);
@@ -19,6 +22,8 @@ const TicketInfo = () => {
   const allAccounts = useSelector((state) => state.someReducer.allAccounts);
   const [isReady, setIsReady] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
+  const [map, setMap] = useState(null);
+  const [viewMap, setViewMap] = useState(false);
   const [newTicket, setNewTicket] = useState({
     client: "",
     address: "",
@@ -29,10 +34,15 @@ const TicketInfo = () => {
     PriorityId: "",
     CategoryId: "",
     StatusId: "",
+    coordinates: "",
     user: "",
   });
 
   useEffect(() => {
+    if (mapRef.current && map) {
+      map.invalidateSize();
+    }
+
     const fetchData = async () => {
       if (!isLoading && user && user.name) {
         setIsReady(true);
@@ -65,6 +75,7 @@ const TicketInfo = () => {
           PriorityId: TicketById.PriorityId,
           CategoryId: TicketById.CategoryId,
           StatusId: TicketById.StatusId,
+          coordinates: TicketById.coordinates,
           user: user.name,
         });
         if (TicketById.comment) {
@@ -86,6 +97,19 @@ const TicketInfo = () => {
     });
   };
 
+  const handleCoordinatesChange = (value) => {
+    const coordinatesArray = value.split(/,\s*/).map(Number);
+
+    if (coordinatesArray.length === 2 && !coordinatesArray.some(isNaN)) {
+      setNewTicket({
+        ...newTicket,
+        coordinates: coordinatesArray.join(","),
+      });
+    } else {
+      console.error("Formato de coordenadas incorrecto");
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsEditing(false);
@@ -103,6 +127,7 @@ const TicketInfo = () => {
           PriorityId: newTicket.PriorityId,
           CategoryId: newTicket.CategoryId,
           StatusId: newTicket.StatusId,
+          coordinates: newTicket.coordinates,
           user: newTicket.user,
         })
       );
@@ -117,6 +142,7 @@ const TicketInfo = () => {
         PriorityId: "",
         CategoryId: "",
         StatusId: "",
+        coordinates: "",
         user: "",
       }));
       dispatch(getTicketById(TicketById.id));
@@ -151,6 +177,14 @@ const TicketInfo = () => {
 
   const handleCancelEdit = () => {
     setIsEditing(false);
+  };
+
+  const handleMapLoad = (map) => {
+    setMap(map);
+  };
+
+  const handleViewMap = () => {
+    setViewMap(!viewMap);
   };
 
   return (
@@ -365,6 +399,33 @@ const TicketInfo = () => {
           <TicketHistory TicketById={TicketById} />
         ) : (
           <div>Cargando Historial...</div>
+        )}
+        <button onClick={handleViewMap}>Ver Mapa</button>
+        {isReady && viewMap && (
+          <div style={{ height: "400px", width: "100%" }}>
+            <MapContainer
+              center={newTicket.coordinates.split(",").map(Number)}
+              zoom={13}
+              style={{ height: "100%", width: "100%" }}
+              whenCreated={handleMapLoad}
+              onLoad={() =>
+                mapRef.current && mapRef.current.leafletElement.invalidateSize()
+              }
+            >
+              <TileLayer
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+              />
+              {newTicket.coordinates && (
+                <Marker
+                  position={newTicket.coordinates.split(",").map(Number)}
+                  draggable={true}
+                >
+                  <Popup>Tu ubicación ingresada aquí.</Popup>
+                </Marker>
+              )}
+            </MapContainer>
+          </div>
         )}
       </div>
     </section>

@@ -329,9 +329,9 @@ export function getPriorities(priorityId) {
   };
 }
 
-export function putAccount(accountInfo) { 
+export function putAccount(accountInfo) {
   const level = accountInfo.level;
-console.log(accountInfo);
+  console.log(accountInfo);
   return async function (dispatch) {
     try {
       const response = await axios.put(`/accounts/${accountInfo.id}`, {
@@ -358,6 +358,7 @@ export function putTicket(ticketInfo) {
   const PriorityId = ticketInfo.PriorityId;
   const CategoryId = ticketInfo.CategoryId;
   const StatusId = ticketInfo.StatusId;
+  const coordinates = ticketInfo.coordinates;
   const user = ticketInfo.user;
 
   return async function (dispatch) {
@@ -372,6 +373,7 @@ export function putTicket(ticketInfo) {
         PriorityId,
         CategoryId,
         StatusId,
+        coordinates,
         user,
       });
 
