@@ -6,11 +6,12 @@ import { differenceInDays } from "date-fns";
 import { deleteTicket, putTicket, getTicketById } from "../../redux/actions.js";
 import { GET_TICKET_BY_ID } from "../../redux/actionTypes.js";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import PropTypes from "prop-types";
 import TicketHistory from "../../components/ticketHistory/TicketHistory.jsx";
 import "leaflet/dist/leaflet.css";
 import styles from "./TicketInfo.module.scss";
 
-const TicketInfo = () => {
+const TicketInfo = (props) => {
   const dispatch = useDispatch();
   const mapRef = useRef(null);
   const { user, isLoading } = useAuth0();
@@ -37,6 +38,10 @@ const TicketInfo = () => {
     coordinates: "",
     user: "",
   });
+
+  TicketInfo.propTypes = {
+    rol: PropTypes.string.isRequired,
+  };
 
   useEffect(() => {
     if (mapRef.current && map) {
@@ -218,7 +223,7 @@ const TicketInfo = () => {
                 {isEditing && <th>Coordenadas</th>}
                 <th>Tiempo transcurrido</th>
                 <th>Creación</th>
-                <th>Acciones</th>
+                {props.rol === "admin" && <th>Acciones</th>}
               </tr>
             </thead>
             <tbody>
@@ -396,11 +401,13 @@ const TicketInfo = () => {
                 )}
                 <td>{calculateDaysSinceCreation(TicketById.createdAt)} días</td>
                 <td>{TicketById.createdAt}</td>
-                <td>
-                  <button onClick={() => handleDeleteTicket(TicketById.id)}>
-                    Eliminar Ticket
-                  </button>
-                </td>
+                {props.rol === "admin" && (
+                  <td>
+                    <button onClick={() => handleDeleteTicket(TicketById.id)}>
+                      Eliminar Ticket
+                    </button>
+                  </td>
+                )}
               </tr>
             </tbody>
           </table>
