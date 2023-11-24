@@ -135,6 +135,7 @@ const Administrator = () => {
               <th>email</th>
               <th>direccion</th>
               <th>consulta</th>
+              <th>acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -147,20 +148,15 @@ const Administrator = () => {
                 <td>{user.emailAddress}</td>
                 <td>{user.address}</td>
                 <td>{user.consult}</td>
+                <td>
+                  <button onClick={() => handleDeleteUser(user.id)}>
+                    eliminar
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
-        <ol>
-          {allUsers?.map((user) => (
-            <li key={user.id}>
-              {user.name}
-              <button onClick={() => handleDeleteUser(user.id)}>
-                eliminar
-              </button>
-            </li>
-          ))}
-        </ol>
       </section>
       <section>
         <h2>Localidades</h2>
