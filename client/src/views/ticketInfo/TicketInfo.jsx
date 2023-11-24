@@ -215,6 +215,7 @@ const TicketInfo = () => {
                 <th>Dirección</th>
                 <th>Descripción</th>
                 <th>Comentarios</th>
+                {isEditing && <th>Coordenadas</th>}
                 <th>Tiempo transcurrido</th>
                 <th>Creación</th>
                 <th>Acciones</th>
@@ -377,6 +378,17 @@ const TicketInfo = () => {
                         value={newTicket.commentText}
                         onChange={(e) =>
                           handleSelectChange("commentText", e.target.value)
+                        }
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        name="coordinates"
+                        placeholder="Coordenadas"
+                        value={newTicket.coordinates}
+                        onChange={(e) =>
+                          handleCoordinatesChange(e.target.value)
                         }
                       />
                     </td>
