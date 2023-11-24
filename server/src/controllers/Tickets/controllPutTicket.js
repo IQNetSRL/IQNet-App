@@ -11,6 +11,7 @@ const controllPutTicket = async (req) => {
     PriorityId,
     CategoryId,
     StatusId,
+    coordinates,
     user,
   } = req.body;
 
@@ -31,6 +32,7 @@ const controllPutTicket = async (req) => {
     CategoryId: existingTicket.CategoryId,
     StatusId: existingTicket.StatusId,
     responsable: existingTicket.responsable,
+    coordinates: existingTicket.coordinates,
     user: user,
   });
 
@@ -41,6 +43,7 @@ const controllPutTicket = async (req) => {
   existingTicket.StatusId = StatusId;
   existingTicket.responsable = responsable;
   existingTicket.address = address;
+  existingTicket.coordinates = coordinates;
   existingTicket.text = text;
 
   const newComment = await Comments.create({ text: commentText, user: user });

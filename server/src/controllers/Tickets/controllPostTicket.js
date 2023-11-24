@@ -11,6 +11,7 @@ const controllPostTicket = async (req) => {
     address,
     text,
     responsable,
+    coordinates,
   } = req.body;
 
   const newTicket = await Tickets.create({
@@ -23,6 +24,7 @@ const controllPostTicket = async (req) => {
     address: address,
     text: text,
     responsable: responsable,
+    coordinates: coordinates,
   });
 
   return newTicket;
