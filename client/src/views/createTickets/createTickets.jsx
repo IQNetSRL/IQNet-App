@@ -16,10 +16,11 @@ import {
   deleteStatus,
   deletePriority,
 } from "../../redux/actions.js";
+import PropTypes from "prop-types";
 import FormTickets from "../../components/formTickets/FormTickets.jsx";
 import styles from "./CreateTickets.module.scss";
 
-const CreateTickets = () => {
+const CreateTickets = (props) => {
   const dispatch = useDispatch();
   const allAreas = useSelector((state) => state.someReducer.allAreas);
   const allCategories = useSelector((state) => state.someReducer.allCategories);
@@ -29,6 +30,10 @@ const CreateTickets = () => {
   const [newCategory, setNewCategory] = useState({ name: "" });
   const [newStatus, setNewStatus] = useState({ name: "" });
   const [newPriority, setNewPriority] = useState({ name: "" });
+
+  CreateTickets.propTypes = {
+    rol: PropTypes.string.isRequired,
+  };
 
   useEffect(() => {
     dispatch(getAreas());
@@ -136,44 +141,104 @@ const CreateTickets = () => {
   return (
     <section className={styles.sectionCreateTickets}>
       <button onClick={handleNavigateBack}>Volver</button>
-      <div>
-        <section>
+      {props.rol === "admin" && (
+        <>
           <div>
-            <h3>Areas</h3>
-            {allAreas.length > 0 ? (
+            <section>
+              <div>
+                <h3>Areas</h3>
+                {allAreas.length > 0 ? (
+                  <ol>
+                    {allAreas?.map((area, index) => (
+                      <li key={area.id || index}>
+                        {area.name}
+                        <button onClick={() => handleDelete(area.id, "area")}>
+                          eliminar
+                        </button>
+                      </li>
+                    ))}
+                  </ol>
+                ) : (
+                  <p>Cargando areas...</p>
+                )}
+                <form onSubmit={handleSubmitArea}>
+                  <input
+                    type="text"
+                    name="name"
+                    placeholder="nueva area"
+                    onChange={handleInputChangeArea}
+                    value={newArea.name}
+                  />
+                  <button type="submit">agregar</button>
+                </form>
+              </div>
+              <div>
+                <h3>Categorias</h3>
+                {allCategories.length > 0 ? (
+                  <ol>
+                    {allCategories?.map((category, index) => (
+                      <li key={category.id || index}>
+                        {category.name}
+                        <button
+                          onClick={() => handleDelete(category.id, "category")}
+                        >
+                          eliminar
+                        </button>
+                      </li>
+                    ))}
+                  </ol>
+                ) : (
+                  <p>Cargando categorias...</p>
+                )}
+                <form onSubmit={handleSubmitCategory}>
+                  <input
+                    type="text"
+                    name="name"
+                    placeholder="nueva categoria"
+                    onChange={handleInputChangeCategory}
+                    value={newCategory.name}
+                  />
+                  <button type="submit">agregar</button>
+                </form>
+              </div>
+            </section>
+          </div>
+          <div>
+            <h3>Estatus</h3>
+            {allStatus.length > 0 ? (
               <ol>
-                {allAreas?.map((area, index) => (
-                  <li key={area.id || index}>
-                    {area.name}
-                    <button onClick={() => handleDelete(area.id, "area")}>
+                {allStatus?.map((status, index) => (
+                  <li key={status.id || index}>
+                    {status.name}
+                    <button onClick={() => handleDelete(status.id, "status")}>
                       eliminar
                     </button>
                   </li>
                 ))}
               </ol>
             ) : (
-              <p>Cargando areas...</p>
+              <p>Cargando estatus...</p>
             )}
-            <form onSubmit={handleSubmitArea}>
+            <form onSubmit={handleSubmitStatus}>
               <input
                 type="text"
                 name="name"
-                placeholder="nueva area"
-                onChange={handleInputChangeArea}
-                value={newArea.name}
+                placeholder="nuevo estatus"
+                onChange={handleInputChangeStatus}
+                value={newStatus.name}
               />
               <button type="submit">agregar</button>
             </form>
           </div>
           <div>
-            <h3>Categorias</h3>
-            {allCategories.length > 0 ? (
+            <h3>Prioridades</h3>
+            {allPriorities.length > 0 ? (
               <ol>
-                {allCategories?.map((category, index) => (
-                  <li key={category.id || index}>
-                    {category.name}
+                {allPriorities?.map((priority, index) => (
+                  <li key={priority.id || index}>
+                    {priority.name}
                     <button
-                      onClick={() => handleDelete(category.id, "category")}
+                      onClick={() => handleDelete(priority.id, "priority")}
                     >
                       eliminar
                     </button>
@@ -181,76 +246,22 @@ const CreateTickets = () => {
                 ))}
               </ol>
             ) : (
-              <p>Cargando categorias...</p>
+              <p>Cargando prioridades...</p>
             )}
-            <form onSubmit={handleSubmitCategory}>
+            <form onSubmit={handleSubmitPriority}>
               <input
                 type="text"
                 name="name"
-                placeholder="nueva categoria"
-                onChange={handleInputChangeCategory}
-                value={newCategory.name}
+                placeholder="nueva prioridad"
+                onChange={handleInputChangePriority}
+                value={newPriority.name}
               />
               <button type="submit">agregar</button>
             </form>
           </div>
-        </section>
-      </div>
-      <div>
-        <h3>Estatus</h3>
-        {allStatus.length > 0 ? (
-          <ol>
-            {allStatus?.map((status, index) => (
-              <li key={status.id || index}>
-                {status.name}
-                <button onClick={() => handleDelete(status.id, "status")}>
-                  eliminar
-                </button>
-              </li>
-            ))}
-          </ol>
-        ) : (
-          <p>Cargando estatus...</p>
-        )}
-        <form onSubmit={handleSubmitStatus}>
-          <input
-            type="text"
-            name="name"
-            placeholder="nuevo estatus"
-            onChange={handleInputChangeStatus}
-            value={newStatus.name}
-          />
-          <button type="submit">agregar</button>
-        </form>
-      </div>
-      <div>
-        <h3>Prioridades</h3>
-        {allPriorities.length > 0 ? (
-          <ol>
-            {allPriorities?.map((priority, index) => (
-              <li key={priority.id || index}>
-                {priority.name}
-                <button onClick={() => handleDelete(priority.id, "priority")}>
-                  eliminar
-                </button>
-              </li>
-            ))}
-          </ol>
-        ) : (
-          <p>Cargando prioridades...</p>
-        )}
-        <form onSubmit={handleSubmitPriority}>
-          <input
-            type="text"
-            name="name"
-            placeholder="nueva prioridad"
-            onChange={handleInputChangePriority}
-            value={newPriority.name}
-          />
-          <button type="submit">agregar</button>
-        </form>
-      </div>
-      <FormTickets/>
+        </>
+      )}
+      <FormTickets />
     </section>
   );
 };
