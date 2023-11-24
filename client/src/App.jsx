@@ -78,7 +78,7 @@ function App() {
       <section>
         <Routes>
           <Route path="/" element={<Login />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route path="/profile" element={<Profile rol={rol}/>} />
           <Route path="/home" element={<Home rol={rol}/>} />
           {rol === "admin" && <Route path="/admin" element={<Administrator />} />}
           <Route path="/create" element={<CreateTickets />} />
