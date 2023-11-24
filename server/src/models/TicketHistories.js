@@ -45,6 +45,10 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: true,
       },
+      coordinates: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+      },
     },
     { timestamps: true }
   );

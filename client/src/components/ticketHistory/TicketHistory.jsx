@@ -18,7 +18,7 @@ const TicketHistory = (props) => {
     const value = state.find((priority) => priority.id === id);
     return value ? value.name : "";
   };
-
+console.log(props.TicketById.history);
   return (
     <section className={styles.sectionTicketInfo}>
       <h1>Historial</h1>
@@ -35,6 +35,7 @@ const TicketHistory = (props) => {
               <th>Cliente</th>
               <th>Dirección</th>
               <th>Descripción</th>
+              <th>Coordenadas</th>
               <th>Creación</th>
             </tr>
           </thead>
@@ -55,6 +56,7 @@ const TicketHistory = (props) => {
                   <td>{historyEntry.client}</td>
                   <td>{historyEntry.address}</td>
                   <td>{historyEntry.text}</td>
+                  <td>{historyEntry.coordinates}</td>
                   <td>{historyEntry.createdAt}</td>
                 </tr>
               ))}
