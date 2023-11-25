@@ -129,7 +129,8 @@ const TicketInfo = (props) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsEditing(false);
-
+    setViewMap(false);
+    
     try {
       await dispatch(
         putTicket({

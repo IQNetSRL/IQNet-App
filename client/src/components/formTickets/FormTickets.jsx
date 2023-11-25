@@ -17,6 +17,8 @@ const FormTickets = () => {
   const allPriorities = useSelector((state) => state.someReducer.allPriorities);
   const allAccounts = useSelector((state) => state.someReducer.allAccounts);
   const [map, setMap] = useState(null);
+  const [selectedArea, setSelectedArea] = useState("Ninguna");
+  const [isSelected, setIsSelected] = useState(false);
   const [newTicket, setNewTicket] = useState({
     username: "",
     AreaId: "",
@@ -52,6 +54,14 @@ const FormTickets = () => {
   }, [isLoading, user, allAccounts, map]);
 
   const handleSelectChange = (field, value) => {
+    if (field === "AreaId" && value) {
+      let area = allAreas.find((area) => area.id === value);
+      setSelectedArea(area.name);
+      setIsSelected(true);
+    } else if (field === "AreaId" && !value) {
+      setIsSelected(false);
+      setSelectedArea("Ninguna");
+    }
     setNewTicket({
       ...newTicket,
       [field]: value,
@@ -166,14 +176,43 @@ const FormTickets = () => {
         <select
           name="responsable"
           value={newTicket.responsable}
+          disabled={isSelected ? false : true}
           onChange={(e) => handleSelectChange("responsable", e.target.value)}
         >
           <option value="">Ninguno</option>
-          {allAccounts?.map((aaccount, index) => (
-            <option key={aaccount.id || index} value={aaccount.name}>
-              {aaccount.name}
-            </option>
-          ))}
+          {selectedArea === "administracion" &&
+            allAccounts
+              .filter((account) => account.level === "admin")
+              .map((adminAccount, index) => (
+                <option
+                  key={adminAccount.id || index}
+                  value={adminAccount.name}
+                >
+                  {adminAccount.name}
+                </option>
+              ))}
+          {selectedArea === "ventas" &&
+            allAccounts
+              .filter((account) => account.level === "sales")
+              .map((adminAccount, index) => (
+                <option
+                  key={adminAccount.id || index}
+                  value={adminAccount.name}
+                >
+                  {adminAccount.name}
+                </option>
+              ))}
+          {selectedArea === "servicio técnico" &&
+            allAccounts
+              .filter((account) => account.level === "support")
+              .map((adminAccount, index) => (
+                <option
+                  key={adminAccount.id || index}
+                  value={adminAccount.name}
+                >
+                  {adminAccount.name}
+                </option>
+              ))}
         </select>
         <input
           type="text"
