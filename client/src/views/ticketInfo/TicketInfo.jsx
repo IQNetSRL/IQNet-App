@@ -8,6 +8,7 @@ import { GET_TICKET_BY_ID } from "../../redux/actionTypes.js";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import PropTypes from "prop-types";
 import TicketHistory from "../../components/ticketHistory/TicketHistory.jsx";
+import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import styles from "./TicketInfo.module.scss";
 
@@ -41,6 +42,7 @@ const TicketInfo = (props) => {
 
   TicketInfo.propTypes = {
     rol: PropTypes.string.isRequired,
+    currentLocation: PropTypes.array.isRequired,
   };
 
   useEffect(() => {
@@ -94,6 +96,15 @@ const TicketInfo = (props) => {
 
     fetchData();
   }, [TicketById]);
+
+  const customIcon = new L.Icon({
+    iconUrl: "../../../dist/images/actualLocation.svg",
+    iconSize: [20, 20],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    tooltipAnchor: [16, -28],
+    shadowSize: [41, 41],
+  });
 
   const handleSelectChange = (field, value) => {
     setNewTicket({
@@ -436,12 +447,23 @@ const TicketInfo = (props) => {
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
               />
               {newTicket.coordinates && (
-                <Marker
-                  position={newTicket.coordinates.split(",").map(Number)}
-                  draggable={true}
-                >
-                  <Popup>Tu ubicación ingresada aquí.</Popup>
-                </Marker>
+                <>
+                  {props.currentLocation.length > 0 && (
+                    <Marker
+                      position={props.currentLocation}
+                      draggable={false}
+                      icon={customIcon}
+                    >
+                      <Popup>Tu ubicación actual</Popup>
+                    </Marker>
+                  )}
+                  <Marker
+                    position={newTicket.coordinates.split(",").map(Number)}
+                    draggable={false}
+                  >
+                    <Popup>Tu destino aqui</Popup>
+                  </Marker>
+                </>
               )}
             </MapContainer>
           </div>

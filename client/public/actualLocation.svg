@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="549" height="552" viewBox="0 0 549 552">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #eb8017;
+        stroke: #fff;
+        stroke-width: 45.19px;
+        fill-rule: evenodd;
+      }
+    </style>
+  </defs>
+  <path id="Elipse_1" data-name="Elipse 1" class="cls-1" d="M275.5,31C411.086,31,521,141.362,521,277.5S411.086,524,275.5,524,30,413.638,30,277.5,139.914,31,275.5,31Z"/>
+</svg>

@@ -18,7 +18,7 @@ const TicketHistory = (props) => {
     const value = state.find((priority) => priority.id === id);
     return value ? value.name : "";
   };
-console.log(props.TicketById.history);
+
   return (
     <section className={styles.sectionTicketInfo}>
       <h1>Historial</h1>

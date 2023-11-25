@@ -226,7 +226,7 @@ const FormTickets = () => {
           {newTicket.coordinates && (
             <Marker
               position={newTicket.coordinates.split(",").map(Number)}
-              draggable={true}
+              draggable={false}
             >
               <Popup>Tu ubicación ingresada aquí.</Popup>
             </Marker>
