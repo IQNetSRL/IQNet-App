@@ -23,7 +23,7 @@ import Administrator from "./views/administrator/Administrator.jsx";
 import CreateTickets from "./views/createTickets/createTickets.jsx";
 import L from "leaflet";
 import TicketInfo from "./views/ticketInfo/TicketInfo.jsx";
-import "./App.module.scss";
+import styles from "./App.module.scss";
 
 axios.defaults.baseURL = "http://localhost:3001/";
 
@@ -96,8 +96,8 @@ function App() {
   return (
     <main>
       {!isLogin && (
-        <section>
-          <h2>sidebar</h2>
+        <section className={styles.sideBar}>
+          <h2>IQNet</h2>
           <button onClick={handleNavigate}>Crear Nuevo Ticket</button>
           <LogoutButton />
           <ProfileButton />
