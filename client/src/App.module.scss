@@ -6,7 +6,13 @@ main {
 }
 
 .sideBar {
-  @include centerFlex(flex, row, center, center, 0);
+  @include centerFlex(flex, row, space-between, center, 0);
   @include width(100%, 100%);
   background-color: $white-100;
+  h2 {
+    color: $pumpkin-600;
+  }
+  div {
+    @include centerFlex(flex, row, space-between, center, 0);
+  }
 }

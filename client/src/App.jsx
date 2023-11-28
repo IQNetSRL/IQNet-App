@@ -99,8 +99,10 @@ function App() {
         <section className={styles.sideBar}>
           <h2>IQNet</h2>
           <button onClick={handleNavigate}>Crear Nuevo Ticket</button>
-          <LogoutButton />
-          <ProfileButton />
+          <div>
+            <LogoutButton />
+            <ProfileButton />
+          </div>
         </section>
       )}
       <section>
