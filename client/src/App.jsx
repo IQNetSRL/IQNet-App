@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Routes, Route } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Navigate, useLocation } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import {
   getTickets,
@@ -24,11 +23,11 @@ import CreateTickets from "./views/createTickets/createTickets.jsx";
 import L from "leaflet";
 import TicketInfo from "./views/ticketInfo/TicketInfo.jsx";
 import styles from "./App.module.scss";
+import SideBar from "./components/sideBar/SideBar.jsx";
 
 axios.defaults.baseURL = "http://localhost:3001/";
 
 function App() {
-  const navigate = useNavigate();
   const location = useLocation();
   const { user, isLoading } = useAuth0();
   const isLogin = location.pathname === "/";
@@ -89,47 +88,45 @@ function App() {
     });
   };
 
-  const handleNavigate = () => {
-    navigate("/create");
-  };
-
   return (
     <main>
       {!isLogin && (
-        <section className={styles.sideBar}>
+        <section className={styles.navBar}>
           <h2>IQNet</h2>
-          <button onClick={handleNavigate}>Crear Nuevo Ticket</button>
           <div>
             <LogoutButton />
             <ProfileButton />
           </div>
         </section>
       )}
-      <section>
-        <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/profile" element={<Profile rol={rol} />} />
-          <Route
-            path="/home"
-            element={<Home rol={rol} createCustomIcon={createCustomIcon} />}
-          />
-          {rol === "admin" && (
-            <Route path="/admin" element={<Administrator />} />
-          )}
-          <Route path="/create" element={<CreateTickets rol={rol} />} />
-          <Route
-            path="/ticket-info"
-            element={
-              <TicketInfo
-                rol={rol}
-                currentLocation={currentLocation}
-                createCustomIcon={createCustomIcon}
-              />
-            }
-          />
-          <Route path="*" element={<Navigate to="/" />} />
-        </Routes>
-      </section>
+      <div className={styles.mainContainer}>
+        {!isLogin && <SideBar rol={rol}/>}
+        <section>
+          <Routes>
+            <Route path="/" element={<Login />} />
+            <Route path="/profile" element={<Profile rol={rol} />} />
+            <Route
+              path="/home"
+              element={<Home rol={rol} createCustomIcon={createCustomIcon} />}
+            />
+            {rol === "admin" && (
+              <Route path="/admin" element={<Administrator />} />
+            )}
+            <Route path="/create" element={<CreateTickets rol={rol} />} />
+            <Route
+              path="/ticket-info"
+              element={
+                <TicketInfo
+                  rol={rol}
+                  currentLocation={currentLocation}
+                  createCustomIcon={createCustomIcon}
+                />
+              }
+            />
+            <Route path="*" element={<Navigate to="/" />} />
+          </Routes>
+        </section>
+      </div>
     </main>
   );
 }

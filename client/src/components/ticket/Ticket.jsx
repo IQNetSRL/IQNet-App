@@ -70,7 +70,12 @@ const Ticket = (props) => {
     const fetchData = async () => {
       if (rol) {
         if (rol === "admin") {
-          setSortedTickets(allTickets);
+          const sorted = [...allTickets].sort((a, b) => {
+            const dateA = new Date(a.createdAt);
+            const dateB = new Date(b.createdAt);
+            return sortOrder === "asc" ? dateA - dateB : dateB - dateA;
+          });
+          setSortedTickets(sorted);
         } else {
           const areaName =
             (rol === "admin" && "administracion") ||
@@ -83,10 +88,8 @@ const Ticket = (props) => {
             const filteredTickets = allTickets.filter(
               (ticket) => ticket.AreaId === area.id
             );
-            setSortedTickets(filteredTickets);
-            setRolFilter(filteredTickets);
 
-            const sorted = [...rolFilter].sort((a, b) => {
+            const sorted = [...filteredTickets].sort((a, b) => {
               const dateA = new Date(a.createdAt);
               const dateB = new Date(b.createdAt);
               return sortOrder === "asc" ? dateA - dateB : dateB - dateA;

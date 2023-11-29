@@ -42,7 +42,7 @@ const TicketInfo = (props) => {
 
   TicketInfo.propTypes = {
     rol: PropTypes.string.isRequired,
-    currentLocation: PropTypes.array.isRequired,
+    currentLocation: PropTypes.array,
   };
 
   useEffect(() => {
@@ -449,7 +449,7 @@ const TicketInfo = (props) => {
               />
               {newTicket.coordinates && (
                 <>
-                  {props.currentLocation.length > 0 && (
+                  {props.currentLocation && (
                     <Marker
                       position={props.currentLocation}
                       draggable={false}

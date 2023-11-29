@@ -3,9 +3,13 @@
 
 main {
   @include centerFlex(flex, column, center, center, 0);
+  .mainContainer {
+    @include centerFlex(flex, row, space-between, center, 0);
+    @include width(100%, 100%);
+  }
 }
 
-.sideBar {
+.navBar {
   @include centerFlex(flex, row, space-between, center, 0);
   @include width(100%, 100%);
   background-color: $white-100;
