@@ -6,6 +6,7 @@ main {
   .mainContainer {
     @include centerFlex(flex, row, space-between, center, 0);
     @include width(100%, 100%);
+    position: relative;
   }
 }
 
