@@ -3,10 +3,11 @@
 
 .sectionTicket {
   @include width(100%, 100%);
+  margin-top: 0.5rem;
   .topOptions {
     @include centerFlex(flex, row, space-between, center, 0);
     .dateContainer {
-      @include centerFlex(flex, row, center, center, 1rem);
+      @include centerFlex(flex, row, center, flex-end, 1rem);
       padding: 0.5rem;
       div {
         h3 {
@@ -16,11 +17,28 @@
           cursor: default;
         }
       }
+      .reset {
+        button {
+          @include button($pumpkin-600, none);
+          @include width(2.5rem, 2.5rem);
+          @include height(2rem, 2rem);
+          border-radius: 0.2rem;
+          color: $pumpkin-950;
+          transition: 0.2s ease;
+          svg {
+            @include width(1.1rem, 1.1rem);
+            @include height(1.1rem, 1.1rem);
+          }
+          &:hover {
+            color: $white-100;
+          }
+        }
+      }
     }
     .leftSection {
       @include centerFlex(flex, row, center, center, 0.5rem);
       padding-right: 0.6rem;
-      margin-top: 0.5rem;
+      margin-top: 0.6rem;
       .renderList {
         @include centerFlex(flex, column, center, center, 0);
         @include width(2.5rem, 2.5rem);
@@ -158,7 +176,7 @@
         }
         tbody {
           tr {
-            background-color: $white-400;
+            background-color: $white-300;
             td {
               @include width(6rem, 6rem);
               height: 3rem;

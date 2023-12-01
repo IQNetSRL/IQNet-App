@@ -4,7 +4,7 @@
 .sectionHome {
   .titleContainer {
     @include centerFlex(flex, row, center, center, 0.5rem);
-    @include height(4rem, 4rem);
+    @include height(4.5rem, 4.5rem);
     background-color: $white-200;
     .title {
       font-size: 2rem;

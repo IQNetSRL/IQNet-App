@@ -15,9 +15,11 @@ import { MdCheckBox } from "react-icons/md";
 import { MdCheckBoxOutlineBlank } from "react-icons/md";
 import { IoFilter } from "react-icons/io5";
 import { MdOutlineClose } from "react-icons/md";
-import { MdDelete, MdEdit } from "react-icons/md";
+import { MdDelete } from "react-icons/md";
+import { IoEye } from "react-icons/io5";
 import { MdFormatListBulletedAdd } from "react-icons/md";
 import { RiFileExcel2Fill } from "react-icons/ri";
+import { TfiReload } from "react-icons/tfi";
 import PropTypes from "prop-types";
 import DatePicker from "react-datepicker";
 import * as XLSX from "xlsx";
@@ -249,6 +251,11 @@ const Ticket = (props) => {
     dispatch(getTicketById(id));
   };
 
+  const handleResetFilters = () => {
+    dispatch(getTicketsAction());
+    setFilters({});
+  };
+
   return (
     <section className={styles.sectionTicket}>
       <section className={styles.topOptions}>
@@ -273,6 +280,11 @@ const Ticket = (props) => {
               endDate={endDate}
               minDate={startDate}
             />
+          </div>
+          <div className={styles.reset}>
+            <button onClick={handleResetFilters}>
+              <TfiReload />
+            </button>
           </div>
         </div>
         <section className={styles.leftSection}>
@@ -549,7 +561,7 @@ const Ticket = (props) => {
                                   className={styles.edit}
                                   onClick={() => handleTicketInfo(ticket.id)}
                                 >
-                                  <MdEdit />
+                                  <IoEye />
                                 </button>
                               </div>
                             </div>
