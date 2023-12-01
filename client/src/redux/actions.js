@@ -129,12 +129,12 @@ export function postAccount(name) {
   };
 }
 
-export function postArea(name, color) {
+export function postArea(newArea) {
   return async function (dispatch) {
     try {
       const response = await axios.post(`/values/areas`, {
-        name: name.name,
-        color: color,
+        name: newArea.name,
+        color: newArea.color,
       });
       return dispatch({
         type: POST_AREA,

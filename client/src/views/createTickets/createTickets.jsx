@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { HexColorPicker } from "react-colorful";
 import {
   postArea,
   postCategory,
@@ -26,10 +27,12 @@ const CreateTickets = (props) => {
   const allCategories = useSelector((state) => state.someReducer.allCategories);
   const allStatus = useSelector((state) => state.someReducer.allStatus);
   const allPriorities = useSelector((state) => state.someReducer.allPriorities);
-  const [newArea, setNewArea] = useState({ name: "" });
+  const [newArea, setNewArea] = useState({ name: "", color: "" });
   const [newCategory, setNewCategory] = useState({ name: "" });
   const [newStatus, setNewStatus] = useState({ name: "" });
   const [newPriority, setNewPriority] = useState({ name: "" });
+  const [color, setColor] = useState("#ffffff");
+  const [creating, setCreating] = useState(false);
 
   CreateTickets.propTypes = {
     rol: PropTypes.string.isRequired,
@@ -51,10 +54,14 @@ const CreateTickets = (props) => {
 
     try {
       await dispatch(postArea(newArea));
-      setNewArea({ name: "" });
+      setNewArea({ name: "", color: "" });
     } catch (error) {
       console.error("Error al agregar el Area:", error);
     }
+  };
+
+  const handleAdd = () => {
+    setCreating(!creating);
   };
 
   const handleSubmitCategory = async (e) => {
@@ -97,6 +104,11 @@ const CreateTickets = (props) => {
     } catch (error) {
       console.error("Error al agregar la Prioridad:", error);
     }
+  };
+
+  const handleColorChangeArea = (newColor) => {
+    setColor(newColor);
+    setNewArea((prevArea) => ({ ...prevArea, color: newColor }));
   };
 
   const handleInputChangeCategory = (e) => {
@@ -150,7 +162,10 @@ const CreateTickets = (props) => {
                 {allAreas.length > 0 ? (
                   <ol>
                     {allAreas?.map((area, index) => (
-                      <li key={area.id || index}>
+                      <li
+                        key={area.id || index}
+                        style={{ color: area.color || "black" }}
+                      >
                         {area.name}
                         <button onClick={() => handleDelete(area.id, "area")}>
                           eliminar
@@ -162,14 +177,30 @@ const CreateTickets = (props) => {
                   <p>Cargando areas...</p>
                 )}
                 <form onSubmit={handleSubmitArea}>
-                  <input
-                    type="text"
-                    name="name"
-                    placeholder="nueva area"
-                    onChange={handleInputChangeArea}
-                    value={newArea.name}
-                  />
-                  <button type="submit">agregar</button>
+                  <button onClick={handleAdd}>
+                    {creating ? "cancelar" : "añadir area"}
+                  </button>
+                  {creating && (
+                    <>
+                      <input
+                        type="text"
+                        name="name"
+                        placeholder="nueva area"
+                        onChange={handleInputChangeArea}
+                        value={newArea.name}
+                      />
+                      <div>
+                        <HexColorPicker
+                          color={color}
+                          onChange={handleColorChangeArea}
+                        />
+                        <h5>
+                          Selected Color: <p style={{ color: color }}>Color</p>
+                        </h5>
+                      </div>
+                      <button type="submit">agregar</button>
+                    </>
+                  )}
                 </form>
               </div>
               <div>
