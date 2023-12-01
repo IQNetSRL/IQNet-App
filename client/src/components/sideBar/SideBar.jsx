@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { IoIosHome } from "react-icons/io";
 import { RiAdminFill } from "react-icons/ri";
@@ -9,12 +9,27 @@ import PropTypes from "prop-types";
 import styles from "./SideBar.module.scss";
 
 const SideBar = (props) => {
+  const sideBar = useRef(null);
   const navigate = useNavigate();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   SideBar.propTypes = {
     rol: PropTypes.string.isRequired,
   };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (sideBar.current && !sideBar.current.contains(event.target)) {
+        setIsSidebarOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const handleNavigate = (dir) => {
     dir === "create"
@@ -32,6 +47,7 @@ const SideBar = (props) => {
   return (
     <>
       <section
+        ref={sideBar}
         className={`${styles.hiddeBar} ${isSidebarOpen ? styles.open : ""}`}
       >
         <button className={styles.toggleButton} onClick={toggleSidebar}>
@@ -85,7 +101,6 @@ const SideBar = (props) => {
             <span>
               <IoIosHome />
             </span>
-            <p>Home</p>
           </button>
           <button
             className={styles.newTicketButton}
@@ -94,7 +109,6 @@ const SideBar = (props) => {
             <span>
               <IoTicket />
             </span>
-            <p>Nuevo Ticket</p>
           </button>
           {props.rol === "admin" && (
             <button
@@ -104,7 +118,6 @@ const SideBar = (props) => {
               <span>
                 <RiAdminFill />
               </span>
-              <p>Administracion</p>
             </button>
           )}
         </div>
