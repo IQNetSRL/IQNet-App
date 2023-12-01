@@ -1,24 +1,23 @@
 /* eslint-disable no-unused-vars */
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { IoTicket } from "react-icons/io5";
 import PropTypes from "prop-types";
 import Ticket from "../../components/ticket/Ticket.jsx";
 import styles from "./Home.module.scss";
 
 const Home = (props) => {
-  const navigate = useNavigate();
-
   Home.propTypes = {
     rol: PropTypes.string.isRequired,
   };
 
-  const handleNavigate = () => {
-    navigate("/admin");
-  };
-
   return (
     <section className={styles.sectionHome}>
-      <h2>Lista de Tickets</h2>
+      <div className={styles.titleContainer}>
+        <h2 className={styles.title}>Lista de Tickets</h2>
+        <span className={styles.ticketIcon}>
+          <IoTicket />
+        </span>
+      </div>
       <Ticket rol={props.rol} />
     </section>
   );

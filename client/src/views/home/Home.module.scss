@@ -1,0 +1,24 @@
+@import "../../styles/variables.scss";
+@import "../../styles/mixins.scss";
+
+.sectionHome {
+  .titleContainer {
+    @include centerFlex(flex, row, center, center, 0.5rem);
+    @include height(4rem, 4rem);
+    background-color: $white-200;
+    .title {
+      font-size: 2rem;
+      cursor: default;
+    }
+    .ticketIcon {
+      @include centerFlex(flex, row, center, center, 0);
+      @include height(3rem, 3rem);
+      @include width(3rem, 3rem);
+      color: $pumpkin-600;
+      svg {
+        @include height(2rem, 2rem);
+        @include width(2rem, 2rem);
+      }
+    }
+  }
+}

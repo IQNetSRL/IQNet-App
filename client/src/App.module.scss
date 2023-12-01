@@ -18,11 +18,16 @@ main {
   @include centerFlex(flex, row, space-between, center, 0);
   @include width(100%, 100%);
   @include height(4rem, 4rem);
+  z-index: 2;
   background-color: $white-100;
+  -webkit-box-shadow: 0px 2px 11px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 2px 11px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 2px 11px 0px rgba(0, 0, 0, 0.75);
   h2 {
     padding: 1rem;
     font-size: 2.3rem;
     color: $pumpkin-600;
+    cursor: default;
   }
   .profileContainer {
     @include centerFlex(flex, row, space-between, center, 1rem);
