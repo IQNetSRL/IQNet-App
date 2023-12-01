@@ -1,0 +1,31 @@
+@import "../../styles/variables.scss";
+@import "../../styles/mixins.scss";
+
+.sectionTicket {
+  @include width(100%, 100%);
+  .renderList {
+    @include centerFlex(flex, column, center, center, 0);
+    @include width(9rem, 9rem);
+    div {
+      @include centerFlex(flex, column, center, center, 0);
+      .list {
+        @include centerFlex(flex, row, center, center, 0);
+        @include width(100%, 100%);
+      }
+    }
+  }
+  .ticketList {
+    thead {
+      th {
+        @include width(6rem, 6rem);
+      }
+    }
+    tbody {
+      td {
+      }
+    }
+    .ticketInfo {
+      font-size: 0.85rem;
+    }
+  }
+}

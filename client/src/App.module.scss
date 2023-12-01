@@ -8,7 +8,8 @@ main {
     @include width(100%, 100%);
     position: relative;
     .mainSection {
-      margin-left: 5rem;
+      @include width(100%, 100%);
+      padding-left: 3.5rem;
     }
   }
 }

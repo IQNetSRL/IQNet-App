@@ -10,6 +10,8 @@ import {
   getTickets as getTicketsAction,
   getTicketById,
 } from "../../redux/actions.js";
+import { MdCheckBox } from "react-icons/md";
+import { MdCheckBoxOutlineBlank } from "react-icons/md";
 import PropTypes from "prop-types";
 import DatePicker from "react-datepicker";
 import * as XLSX from "xlsx";
@@ -34,8 +36,22 @@ const Ticket = (props) => {
   const [filters, setFilters] = useState({});
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+  const [showOptions, setShowOptions] = useState(false);
   const [rol, setRol] = useState("");
-  const [rolFilter, setRolFilter] = useState([]);
+
+  const [visibleColumns, setVisibleColumns] = useState({
+    area: { name: "Área", isVisible: true },
+    category: { name: "Categoría", isVisible: true },
+    status: { name: "Estado", isVisible: true },
+    priority: { name: "Prioridad", isVisible: true },
+    operator: { name: "Operador", isVisible: true },
+    responsable: { name: "Encargado", isVisible: true },
+    client: { name: "Cliente", isVisible: false },
+    address: { name: "Dirección", isVisible: false },
+    text: { name: "Descripción", isVisible: false },
+    elapsedTime: { name: "Tiempo transcurrido", isVisible: false },
+    actions: { name: "Acciones", isVisible: true },
+  });
 
   Ticket.propTypes = {
     rol: PropTypes.string.isRequired,
@@ -106,6 +122,21 @@ const Ticket = (props) => {
     fetchData();
   }, [rol, allTickets, allAreas, sortOrder]);
 
+  const toggleColumnVisibility = (column) => {
+    setVisibleColumns((prevVisibleColumns) => {
+      const updatedColumns = { ...prevVisibleColumns };
+      updatedColumns[column] = {
+        ...updatedColumns[column],
+        isVisible: !updatedColumns[column].isVisible,
+      };
+      return updatedColumns;
+    });
+  };
+
+  const handleShowOptions = () => {
+    setShowOptions(!showOptions);
+  };
+
   const handleExportToExcel = () => {
     const sheetData = sortedTickets.map((ticket) => [
       getValueNameById(ticket.AreaId, allAreas),
@@ -125,7 +156,7 @@ const Ticket = (props) => {
     XLSX.utils.book_append_sheet(wb, ws, "Tickets");
     XLSX.writeFile(wb, "tickets.xlsx");
   };
-
+  console.log(visibleColumns);
   const headerRow = [
     "Área",
     "Categoría",
@@ -204,100 +235,137 @@ const Ticket = (props) => {
         {isReady ? (
           <>
             <button onClick={handleExportToExcel}>Exportar a Excel</button>
+            <div className={styles.renderList}>
+              <button onClick={handleShowOptions}>Columnas</button>
+              {showOptions && (
+                <div>
+                  {Object.keys(visibleColumns).map((column) => (
+                    <div key={column} className={styles.list}>
+                      <span>
+                        <MdCheckBox />
+                      </span>
+                      <button
+                        onClick={() => toggleColumnVisibility(column)}
+                        style={{
+                          fontWeight: visibleColumns[column].isVisible
+                            ? "bold"
+                            : "normal",
+                        }}
+                      >
+                        {visibleColumns[column].name}
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
             <table>
               <thead>
                 <tr>
-                  <th>
-                    Área
-                    {rol === "admin" && (
+                  {visibleColumns.responsable.isVisible && <th>Operador</th>}
+                  {visibleColumns.operator.isVisible && (
+                    <th>
+                      Encargado
                       <select
-                        name="AreaId"
-                        value={filters.AreaId || ""}
+                        name="Responsable"
+                        value={filters.Responsable || ""}
                         onChange={handleFilterChange}
                       >
-                        <option value="">Todas</option>
-                        {allAreas.map((area) => (
-                          <option key={area.id} value={area.id}>
-                            {area.name}
+                        <option value="">Todos</option>
+                        {allAccounts.map((account) => (
+                          <option key={account.id} value={account.name}>
+                            {account.name}
                           </option>
                         ))}
                       </select>
-                    )}
-                  </th>
-                  <th>
-                    Categoría
-                    <select
-                      name="CategoryId"
-                      value={filters.CategoryId || ""}
-                      onChange={handleFilterChange}
-                    >
-                      <option value="">Todas</option>
-                      {allCategories.map((category) => (
-                        <option key={category.id} value={category.id}>
-                          {category.name}
-                        </option>
-                      ))}
-                    </select>
-                  </th>
-                  <th>
-                    Estado
-                    <select
-                      name="StatusId"
-                      value={filters.StatusId || ""}
-                      onChange={handleFilterChange}
-                    >
-                      <option value="">Todos</option>
-                      {allStatus.map((status) => (
-                        <option key={status.id} value={status.id}>
-                          {status.name}
-                        </option>
-                      ))}
-                    </select>
-                  </th>
-                  <th>
-                    Prioridad
-                    <select
-                      name="PriorityId"
-                      value={filters.PriorityId || ""}
-                      onChange={handleFilterChange}
-                    >
-                      <option value="">Todas</option>
-                      {allPriorities.map((priority) => (
-                        <option key={priority.id} value={priority.id}>
-                          {priority.name}
-                        </option>
-                      ))}
-                    </select>
-                  </th>
-                  <th>Operador</th>
-                  <th>
-                    Encargado
-                    <select
-                      name="Responsable"
-                      value={filters.Responsable || ""}
-                      onChange={handleFilterChange}
-                    >
-                      <option value="">Todos</option>
-                      {allAccounts.map((account) => (
-                        <option key={account.id} value={account.name}>
-                          {account.name}
-                        </option>
-                      ))}
-                    </select>
-                  </th>
-                  <th>Cliente</th>
-                  <th>Dirección</th>
-                  <th>Descripción</th>
-                  <th>
-                    Tiempo transcurrido
-                    <button onClick={toggleSortOrder}>
-                      {sortOrder === "asc" ? "↓" : "↑"}
-                    </button>
-                  </th>
-                  {props.rol === "admin" && <th>Acciones</th>}
+                    </th>
+                  )}
+                  {visibleColumns.area.isVisible && (
+                    <th>
+                      Área
+                      {rol === "admin" && (
+                        <select
+                          name="AreaId"
+                          value={filters.AreaId || ""}
+                          onChange={handleFilterChange}
+                        >
+                          <option value="">Todas</option>
+                          {allAreas.map((area) => (
+                            <option key={area.id} value={area.id}>
+                              {area.name}
+                            </option>
+                          ))}
+                        </select>
+                      )}
+                    </th>
+                  )}
+                  {visibleColumns.category.isVisible && (
+                    <th>
+                      Categoría
+                      <select
+                        name="CategoryId"
+                        value={filters.CategoryId || ""}
+                        onChange={handleFilterChange}
+                      >
+                        <option value="">Todas</option>
+                        {allCategories.map((category) => (
+                          <option key={category.id} value={category.id}>
+                            {category.name}
+                          </option>
+                        ))}
+                      </select>
+                    </th>
+                  )}
+                  {visibleColumns.status.isVisible && (
+                    <th>
+                      Estado
+                      <select
+                        name="StatusId"
+                        value={filters.StatusId || ""}
+                        onChange={handleFilterChange}
+                      >
+                        <option value="">Todos</option>
+                        {allStatus.map((status) => (
+                          <option key={status.id} value={status.id}>
+                            {status.name}
+                          </option>
+                        ))}
+                      </select>
+                    </th>
+                  )}
+                  {visibleColumns.priority.isVisible && (
+                    <th>
+                      Prioridad
+                      <select
+                        name="PriorityId"
+                        value={filters.PriorityId || ""}
+                        onChange={handleFilterChange}
+                      >
+                        <option value="">Todas</option>
+                        {allPriorities.map((priority) => (
+                          <option key={priority.id} value={priority.id}>
+                            {priority.name}
+                          </option>
+                        ))}
+                      </select>
+                    </th>
+                  )}
+                  {visibleColumns.client.isVisible && <th>Cliente</th>}
+                  {visibleColumns.address.isVisible && <th>Direccion</th>}
+                  {visibleColumns.text.isVisible && <th>Comentarios</th>}
+                  {visibleColumns.elapsedTime.isVisible && (
+                    <th>
+                      Tiempo transcurrido
+                      <button onClick={toggleSortOrder}>
+                        {sortOrder === "asc" ? "↑" : "↓"}
+                      </button>
+                    </th>
+                  )}
+                  {visibleColumns.actions.isVisible &&
+                    props.rol === "admin" && <th>Acciones</th>}
                 </tr>
               </thead>
-              <tbody>
+              <tbody className={styles.ticketInfo}>
                 {sortedTickets
                   .filter((ticket) =>
                     isProfile ? ticket.responsable === user.name : true
@@ -315,31 +383,50 @@ const Ticket = (props) => {
                       key={ticket.id}
                       onClick={() => handleTicketInfo(ticket.id)}
                     >
-                      <td>{getValueNameById(ticket.AreaId, allAreas)}</td>
-                      <td>
-                        {getValueNameById(ticket.CategoryId, allCategories)}
-                      </td>
-                      <td>{getValueNameById(ticket.StatusId, allStatus)}</td>
-                      <td>
-                        {getValueNameById(ticket.PriorityId, allPriorities)}
-                      </td>
-                      <td>{ticket.username}</td>
-                      <td>{ticket.responsable}</td>
-                      <td>{ticket.client}</td>
-                      <td>{ticket.address}</td>
-                      <td>{ticket.text}</td>
-                      <td>
-                        {calculateDaysSinceCreation(ticket.createdAt)} días
-                      </td>
-                      {props.rol === "admin" && (
+                      {visibleColumns.operator.isVisible && (
+                        <td>{ticket.username}</td>
+                      )}
+                      {visibleColumns.responsable.isVisible && (
+                        <td>{ticket.responsable}</td>
+                      )}
+                      {visibleColumns.area.isVisible && (
+                        <td>{getValueNameById(ticket.AreaId, allAreas)}</td>
+                      )}
+                      {visibleColumns.category.isVisible && (
                         <td>
-                          <button
-                            onClick={(e) => handleDeleteTicket(ticket.id, e)}
-                          >
-                            Eliminar Ticket
-                          </button>
+                          {getValueNameById(ticket.CategoryId, allCategories)}
                         </td>
                       )}
+                      {visibleColumns.status.isVisible && (
+                        <td>{getValueNameById(ticket.StatusId, allStatus)}</td>
+                      )}
+                      {visibleColumns.priority.isVisible && (
+                        <td>
+                          {getValueNameById(ticket.PriorityId, allPriorities)}
+                        </td>
+                      )}
+                      {visibleColumns.client.isVisible && (
+                        <td>{ticket.client}</td>
+                      )}
+                      {visibleColumns.address.isVisible && (
+                        <td>{ticket.address}</td>
+                      )}
+                      {visibleColumns.text.isVisible && <td>{ticket.text}</td>}
+                      {visibleColumns.elapsedTime.isVisible && (
+                        <td>
+                          {calculateDaysSinceCreation(ticket.createdAt)} días
+                        </td>
+                      )}
+                      {visibleColumns.actions.isVisible &&
+                        props.rol === "admin" && (
+                          <td>
+                            <button
+                              onClick={(e) => handleDeleteTicket(ticket.id, e)}
+                            >
+                              Eliminar Ticket
+                            </button>
+                          </td>
+                        )}
                     </tr>
                   ))}
               </tbody>
