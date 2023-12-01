@@ -14,6 +14,9 @@ import { MdCheckBox } from "react-icons/md";
 import { MdCheckBoxOutlineBlank } from "react-icons/md";
 import { IoFilter } from "react-icons/io5";
 import { MdOutlineClose } from "react-icons/md";
+import { MdDelete, MdEdit } from "react-icons/md";
+import { MdFormatListBulletedAdd } from "react-icons/md";
+import { RiFileExcel2Fill } from "react-icons/ri";
 import PropTypes from "prop-types";
 import DatePicker from "react-datepicker";
 import * as XLSX from "xlsx";
@@ -226,61 +229,77 @@ const Ticket = (props) => {
 
   return (
     <section className={styles.sectionTicket}>
+      <section className={styles.topOptions}>
+        <div className={styles.dateContainer}>
+          <div>
+            <h3>Desde</h3>
+            <DatePicker
+              selected={startDate}
+              onChange={handleStartDateChange}
+              selectsStart
+              startDate={startDate}
+              endDate={endDate}
+            />
+          </div>
+          <div>
+            <h3>Hasta</h3>
+            <DatePicker
+              selected={endDate}
+              onChange={handleEndDateChange}
+              selectsEnd
+              startDate={startDate}
+              endDate={endDate}
+              minDate={startDate}
+            />
+          </div>
+        </div>
+        <section className={styles.leftSection}>
+          <div className={styles.renderList}>
+            <button
+              className={styles.columnsButton}
+              onClick={handleShowOptions}
+            >
+              <MdFormatListBulletedAdd />
+            </button>
+            {showOptions && (
+              <div>
+                {Object.keys(visibleColumns).map((column) => (
+                  <div key={column} className={styles.list}>
+                    {visibleColumns[column].isVisible ? (
+                      <span>
+                        <MdCheckBox />
+                      </span>
+                    ) : (
+                      <span>
+                        <MdCheckBoxOutlineBlank />
+                      </span>
+                    )}
+                    <button
+                      onClick={() => toggleColumnVisibility(column)}
+                      style={{
+                        fontWeight: visibleColumns[column].isVisible
+                          ? "bold"
+                          : "normal",
+                      }}
+                    >
+                      {visibleColumns[column].name}
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+          <button className={styles.excelButton} onClick={handleExportToExcel}>
+            <span>
+              <RiFileExcel2Fill />
+            </span>
+            Excel
+          </button>
+        </section>
+      </section>
       <div className={styles.ticketList}>
-        <div>
-          Desde
-          <DatePicker
-            selected={startDate}
-            onChange={handleStartDateChange}
-            selectsStart
-            startDate={startDate}
-            endDate={endDate}
-          />
-        </div>
-        <div>
-          Hasta
-          <DatePicker
-            selected={endDate}
-            onChange={handleEndDateChange}
-            selectsEnd
-            startDate={startDate}
-            endDate={endDate}
-            minDate={startDate}
-          />
-        </div>
         {isReady ? (
           <>
-            <button onClick={handleExportToExcel}>Exportar a Excel</button>
-            <div className={styles.renderList}>
-              <button onClick={handleShowOptions}>Columnas</button>
-              {showOptions && (
-                <div>
-                  {Object.keys(visibleColumns).map((column) => (
-                    <div key={column} className={styles.list}>
-                      {visibleColumns[column].isVisible ? (
-                        <span>
-                          <MdCheckBox />
-                        </span>
-                      ) : (
-                        <span>
-                          <MdCheckBoxOutlineBlank />
-                        </span>
-                      )}
-                      <button
-                        onClick={() => toggleColumnVisibility(column)}
-                        style={{
-                          fontWeight: visibleColumns[column].isVisible
-                            ? "bold"
-                            : "normal",
-                        }}
-                      >
-                        {visibleColumns[column].name}
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
             <section className={styles.tableSection}>
               <table>
                 <thead>
@@ -332,11 +351,7 @@ const Ticket = (props) => {
                           "Área"
                         )}
                         <button onClick={() => handleShowFilter("area")}>
-                          {showFilter.area ? (
-                            <MdOutlineClose />
-                          ) : (
-                            <IoFilter />
-                          )}
+                          {showFilter.area ? <MdOutlineClose /> : <IoFilter />}
                         </button>
                       </th>
                     )}
@@ -433,7 +448,9 @@ const Ticket = (props) => {
                       </th>
                     )}
                     {visibleColumns.actions.isVisible &&
-                      props.rol === "admin" && <th>Acciones</th>}
+                      props.rol === "admin" && (
+                        <div className={styles.actions}>Acciones</div>
+                      )}
                   </tr>
                 </thead>
                 <tbody className={styles.ticketInfo}>
@@ -450,10 +467,7 @@ const Ticket = (props) => {
                       );
                     })
                     .map((ticket) => (
-                      <tr
-                        key={ticket.id}
-                        onClick={() => handleTicketInfo(ticket.id)}
-                      >
+                      <tr key={ticket.id}>
                         {visibleColumns.operator.isVisible && (
                           <td>{ticket.username}</td>
                         )}
@@ -494,15 +508,24 @@ const Ticket = (props) => {
                         )}
                         {visibleColumns.actions.isVisible &&
                           props.rol === "admin" && (
-                            <td>
-                              <button
-                                onClick={(e) =>
-                                  handleDeleteTicket(ticket.id, e)
-                                }
-                              >
-                                Eliminar Ticket
-                              </button>
-                            </td>
+                            <div className={styles.actions}>
+                              <div>
+                                <button
+                                  className={styles.delete}
+                                  onClick={(e) =>
+                                    handleDeleteTicket(ticket.id, e)
+                                  }
+                                >
+                                  <MdDelete />
+                                </button>
+                                <button
+                                  className={styles.edit}
+                                  onClick={() => handleTicketInfo(ticket.id)}
+                                >
+                                  <MdEdit />
+                                </button>
+                              </div>
+                            </div>
                           )}
                       </tr>
                     ))}

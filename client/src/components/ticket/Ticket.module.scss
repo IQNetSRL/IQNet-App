@@ -3,6 +3,61 @@
 
 .sectionTicket {
   @include width(100%, 100%);
+  .topOptions {
+    @include centerFlex(flex, row, space-between, center, 0);
+    .dateContainer {
+      @include centerFlex(flex, row, center, center, 1rem);
+      padding: 0.5rem;
+      div {
+        h3 {
+          color: $pumpkin-400;
+          font-size: 1rem;
+          padding-bottom: 0.2rem;
+        }
+      }
+    }
+    .leftSection {
+      @include centerFlex(flex, row, center, center, 0.5rem);
+      padding-right: 0.6rem;
+      margin-top: 0.5rem;
+      .renderList {
+        @include width(2.5rem, 2.5rem);
+        .columnsButton {
+          @include centerFlex(flex, row, center, center, 0);
+          @include button($pumpkin-600, none);
+          @include width(2.5rem, 2.5rem);
+          @include height(2rem, 2rem);
+          border-radius: 0.2rem;
+          color: $pumpkin-950;
+          transition: 0.2s ease;
+          svg {
+            @include width(2rem, 2rem);
+            @include height(1.5rem, 1.5rem);
+          }
+          &:hover {
+            color: $white-100;
+          }
+        }
+      }
+      .excelButton {
+        @include centerFlex(flex, row, center, center, 0.1rem);
+        @include button(rgb(9, 117, 9), none);
+        @include width(7rem, 7rem);
+        @include height(2rem, 2rem);
+        border-radius: 0.2rem;
+        font-size: 1rem;
+        color: $white-100;
+        transition: 0.2s ease;
+        span {
+          @include centerFlex(flex, row, center, center, 0);
+        }
+        &:hover {
+          background-color: $white-200;
+          color: rgb(9, 117, 9);
+        }
+      }
+    }
+  }
   .renderList {
     @include centerFlex(flex, column, center, center, 0);
     @include width(9rem, 9rem);
@@ -16,9 +71,11 @@
   }
   .ticketList {
     @include width(100%, 100%);
+    padding: 0 0.5rem;
     .tableSection {
       overflow-x: scroll;
       table {
+        cursor: default;
         @include width(100%, 100%);
         thead {
           tr {
@@ -66,6 +123,38 @@
     }
     .ticketInfo {
       font-size: 0.85rem;
+    }
+  }
+}
+
+.actions {
+  @include centerFlex(flex, row, center, center, 0);
+  @include width(100%, 100%);
+  height: 3rem;
+  font-size: 1rem;
+  font-weight: bold;
+  div {
+    @include centerFlex(flex, row, center, center, 0.5rem);
+    @include width(100%, 100%);
+    height: 3rem;
+    .delete {
+      @include button(rgb(253, 89, 89), none);
+    }
+    .edit {
+      @include button(rgb(89, 160, 253), none);
+    }
+    button {
+      @include width(1.5rem, 1.5rem);
+      height: 1.5rem;
+      border-radius: 0.2rem;
+      transition: 0.2s ease;
+      svg {
+        @include width(1rem, 1rem);
+        height: 1rem;
+      }
+      &:hover {
+        background-color: $white-100;
+      }
     }
   }
 }
