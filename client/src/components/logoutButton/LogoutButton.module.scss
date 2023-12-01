@@ -1,0 +1,27 @@
+@import "../../styles/variables.scss";
+@import "../../styles/mixins.scss";
+
+.logoutButton {
+  @include centerFlex(flex, row, center, center, 0.5rem);
+  @include button($white-900, none);
+  padding: 0.4rem 0.6rem;
+  font-size: 1rem;
+  color: $white-100;
+  border-radius: 0.6rem;
+  transition: 0.2s ease;
+  span {
+    @include width(1.5rem, 1.5rem);
+    @include height(1.5rem, 1.5rem);
+    svg {
+      @include width(100%, 100%);
+      @include height(1.5rem, 1.5rem);
+    }
+  }
+  &:hover {
+    color: $pumpkin-600;
+    background-color: $white-100;
+    -webkit-box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.75);
+  }
+}
