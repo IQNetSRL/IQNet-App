@@ -12,6 +12,8 @@ import {
 } from "../../redux/actions.js";
 import { MdCheckBox } from "react-icons/md";
 import { MdCheckBoxOutlineBlank } from "react-icons/md";
+import { IoFilter } from "react-icons/io5";
+import { MdOutlineClose } from "react-icons/md";
 import PropTypes from "prop-types";
 import DatePicker from "react-datepicker";
 import * as XLSX from "xlsx";
@@ -37,6 +39,13 @@ const Ticket = (props) => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [showOptions, setShowOptions] = useState(false);
+  const [showFilter, setShowFilter] = useState({
+    responsable: false,
+    area: false,
+    category: false,
+    status: false,
+    priority: false,
+  });
   const [rol, setRol] = useState("");
 
   const [visibleColumns, setVisibleColumns] = useState({
@@ -135,6 +144,13 @@ const Ticket = (props) => {
 
   const handleShowOptions = () => {
     setShowOptions(!showOptions);
+  };
+
+  const handleShowFilter = (column) => {
+    setShowFilter((prevShowFilter) => ({
+      ...prevShowFilter,
+      [column]: !prevShowFilter[column],
+    }));
   };
 
   const handleExportToExcel = () => {
@@ -241,9 +257,15 @@ const Ticket = (props) => {
                 <div>
                   {Object.keys(visibleColumns).map((column) => (
                     <div key={column} className={styles.list}>
-                      <span>
-                        <MdCheckBox />
-                      </span>
+                      {visibleColumns[column].isVisible ? (
+                        <span>
+                          <MdCheckBox />
+                        </span>
+                      ) : (
+                        <span>
+                          <MdCheckBoxOutlineBlank />
+                        </span>
+                      )}
                       <button
                         onClick={() => toggleColumnVisibility(column)}
                         style={{
@@ -259,178 +281,234 @@ const Ticket = (props) => {
                 </div>
               )}
             </div>
-            <table>
-              <thead>
-                <tr>
-                  {visibleColumns.responsable.isVisible && <th>Operador</th>}
-                  {visibleColumns.operator.isVisible && (
-                    <th>
-                      Encargado
-                      <select
-                        name="Responsable"
-                        value={filters.Responsable || ""}
-                        onChange={handleFilterChange}
-                      >
-                        <option value="">Todos</option>
-                        {allAccounts.map((account) => (
-                          <option key={account.id} value={account.name}>
-                            {account.name}
-                          </option>
-                        ))}
-                      </select>
-                    </th>
-                  )}
-                  {visibleColumns.area.isVisible && (
-                    <th>
-                      Área
-                      {rol === "admin" && (
-                        <select
-                          name="AreaId"
-                          value={filters.AreaId || ""}
-                          onChange={handleFilterChange}
-                        >
-                          <option value="">Todas</option>
-                          {allAreas.map((area) => (
-                            <option key={area.id} value={area.id}>
-                              {area.name}
-                            </option>
-                          ))}
-                        </select>
-                      )}
-                    </th>
-                  )}
-                  {visibleColumns.category.isVisible && (
-                    <th>
-                      Categoría
-                      <select
-                        name="CategoryId"
-                        value={filters.CategoryId || ""}
-                        onChange={handleFilterChange}
-                      >
-                        <option value="">Todas</option>
-                        {allCategories.map((category) => (
-                          <option key={category.id} value={category.id}>
-                            {category.name}
-                          </option>
-                        ))}
-                      </select>
-                    </th>
-                  )}
-                  {visibleColumns.status.isVisible && (
-                    <th>
-                      Estado
-                      <select
-                        name="StatusId"
-                        value={filters.StatusId || ""}
-                        onChange={handleFilterChange}
-                      >
-                        <option value="">Todos</option>
-                        {allStatus.map((status) => (
-                          <option key={status.id} value={status.id}>
-                            {status.name}
-                          </option>
-                        ))}
-                      </select>
-                    </th>
-                  )}
-                  {visibleColumns.priority.isVisible && (
-                    <th>
-                      Prioridad
-                      <select
-                        name="PriorityId"
-                        value={filters.PriorityId || ""}
-                        onChange={handleFilterChange}
-                      >
-                        <option value="">Todas</option>
-                        {allPriorities.map((priority) => (
-                          <option key={priority.id} value={priority.id}>
-                            {priority.name}
-                          </option>
-                        ))}
-                      </select>
-                    </th>
-                  )}
-                  {visibleColumns.client.isVisible && <th>Cliente</th>}
-                  {visibleColumns.address.isVisible && <th>Direccion</th>}
-                  {visibleColumns.text.isVisible && <th>Comentarios</th>}
-                  {visibleColumns.elapsedTime.isVisible && (
-                    <th>
-                      Tiempo transcurrido
-                      <button onClick={toggleSortOrder}>
-                        {sortOrder === "asc" ? "↑" : "↓"}
-                      </button>
-                    </th>
-                  )}
-                  {visibleColumns.actions.isVisible &&
-                    props.rol === "admin" && <th>Acciones</th>}
-                </tr>
-              </thead>
-              <tbody className={styles.ticketInfo}>
-                {sortedTickets
-                  .filter((ticket) =>
-                    isProfile ? ticket.responsable === user.name : true
-                  )
-                  .filter((ticket) => {
-                    const ticketDate = new Date(ticket.createdAt);
+            <section className={styles.tableSection}>
+              <table>
+                <thead>
+                  <tr>
+                    {visibleColumns.responsable.isVisible && <th>Operador</th>}
+                    {visibleColumns.operator.isVisible && (
+                      <th>
+                        {showFilter.responsable ? (
+                          <select
+                            name="Responsable"
+                            value={filters.Responsable || ""}
+                            onChange={handleFilterChange}
+                          >
+                            <option value="">Todos</option>
+                            {allAccounts.map((account) => (
+                              <option key={account.id} value={account.name}>
+                                {account.name}
+                              </option>
+                            ))}
+                          </select>
+                        ) : (
+                          "Encargado"
+                        )}
+                        <button onClick={() => handleShowFilter("responsable")}>
+                          {showFilter.responsable ? (
+                            <MdOutlineClose />
+                          ) : (
+                            <IoFilter />
+                          )}
+                        </button>
+                      </th>
+                    )}
+                    {visibleColumns.area.isVisible && (
+                      <th>
+                        {showFilter.area && rol === "admin" ? (
+                          <select
+                            name="AreaId"
+                            value={filters.AreaId || ""}
+                            onChange={handleFilterChange}
+                          >
+                            <option value="">Todas</option>
+                            {allAreas.map((area) => (
+                              <option key={area.id} value={area.id}>
+                                {area.name}
+                              </option>
+                            ))}
+                          </select>
+                        ) : (
+                          "Área"
+                        )}
+                        <button onClick={() => handleShowFilter("area")}>
+                          {showFilter.area ? (
+                            <MdOutlineClose />
+                          ) : (
+                            <IoFilter />
+                          )}
+                        </button>
+                      </th>
+                    )}
+                    {visibleColumns.category.isVisible && (
+                      <th>
+                        {showFilter.category ? (
+                          <select
+                            name="CategoryId"
+                            value={filters.CategoryId || ""}
+                            onChange={handleFilterChange}
+                          >
+                            <option value="">Todas</option>
+                            {allCategories.map((category) => (
+                              <option key={category.id} value={category.id}>
+                                {category.name}
+                              </option>
+                            ))}
+                          </select>
+                        ) : (
+                          "Categoría"
+                        )}
+                        <button onClick={() => handleShowFilter("category")}>
+                          {showFilter.category ? (
+                            <MdOutlineClose />
+                          ) : (
+                            <IoFilter />
+                          )}
+                        </button>
+                      </th>
+                    )}
+                    {visibleColumns.status.isVisible && (
+                      <th>
+                        {showFilter.status ? (
+                          <select
+                            name="StatusId"
+                            value={filters.StatusId || ""}
+                            onChange={handleFilterChange}
+                          >
+                            <option value="">Todos</option>
+                            {allStatus.map((status) => (
+                              <option key={status.id} value={status.id}>
+                                {status.name}
+                              </option>
+                            ))}
+                          </select>
+                        ) : (
+                          "Estado"
+                        )}
+                        <button onClick={() => handleShowFilter("status")}>
+                          {showFilter.status ? (
+                            <MdOutlineClose />
+                          ) : (
+                            <IoFilter />
+                          )}
+                        </button>
+                      </th>
+                    )}
+                    {visibleColumns.priority.isVisible && (
+                      <th>
+                        {showFilter.priority ? (
+                          <select
+                            name="PriorityId"
+                            value={filters.PriorityId || ""}
+                            onChange={handleFilterChange}
+                          >
+                            <option value="">Todas</option>
+                            {allPriorities.map((priority) => (
+                              <option key={priority.id} value={priority.id}>
+                                {priority.name}
+                              </option>
+                            ))}
+                          </select>
+                        ) : (
+                          "Prioridad"
+                        )}
+                        <button onClick={() => handleShowFilter("priority")}>
+                          {showFilter.priority ? (
+                            <MdOutlineClose />
+                          ) : (
+                            <IoFilter />
+                          )}
+                        </button>
+                      </th>
+                    )}
+                    {visibleColumns.client.isVisible && <th>Cliente</th>}
+                    {visibleColumns.address.isVisible && <th>Direccion</th>}
+                    {visibleColumns.text.isVisible && <th>Comentarios</th>}
+                    {visibleColumns.elapsedTime.isVisible && (
+                      <th>
+                        Tiempo transcurrido
+                        <button onClick={toggleSortOrder}>
+                          {sortOrder === "asc" ? "↑" : "↓"}
+                        </button>
+                      </th>
+                    )}
+                    {visibleColumns.actions.isVisible &&
+                      props.rol === "admin" && <th>Acciones</th>}
+                  </tr>
+                </thead>
+                <tbody className={styles.ticketInfo}>
+                  {sortedTickets
+                    .filter((ticket) =>
+                      isProfile ? ticket.responsable === user.name : true
+                    )
+                    .filter((ticket) => {
+                      const ticketDate = new Date(ticket.createdAt);
 
-                    return (
-                      (!startDate || ticketDate >= startDate) &&
-                      (!endDate || ticketDate <= endDate)
-                    );
-                  })
-                  .map((ticket) => (
-                    <tr
-                      key={ticket.id}
-                      onClick={() => handleTicketInfo(ticket.id)}
-                    >
-                      {visibleColumns.operator.isVisible && (
-                        <td>{ticket.username}</td>
-                      )}
-                      {visibleColumns.responsable.isVisible && (
-                        <td>{ticket.responsable}</td>
-                      )}
-                      {visibleColumns.area.isVisible && (
-                        <td>{getValueNameById(ticket.AreaId, allAreas)}</td>
-                      )}
-                      {visibleColumns.category.isVisible && (
-                        <td>
-                          {getValueNameById(ticket.CategoryId, allCategories)}
-                        </td>
-                      )}
-                      {visibleColumns.status.isVisible && (
-                        <td>{getValueNameById(ticket.StatusId, allStatus)}</td>
-                      )}
-                      {visibleColumns.priority.isVisible && (
-                        <td>
-                          {getValueNameById(ticket.PriorityId, allPriorities)}
-                        </td>
-                      )}
-                      {visibleColumns.client.isVisible && (
-                        <td>{ticket.client}</td>
-                      )}
-                      {visibleColumns.address.isVisible && (
-                        <td>{ticket.address}</td>
-                      )}
-                      {visibleColumns.text.isVisible && <td>{ticket.text}</td>}
-                      {visibleColumns.elapsedTime.isVisible && (
-                        <td>
-                          {calculateDaysSinceCreation(ticket.createdAt)} días
-                        </td>
-                      )}
-                      {visibleColumns.actions.isVisible &&
-                        props.rol === "admin" && (
+                      return (
+                        (!startDate || ticketDate >= startDate) &&
+                        (!endDate || ticketDate <= endDate)
+                      );
+                    })
+                    .map((ticket) => (
+                      <tr
+                        key={ticket.id}
+                        onClick={() => handleTicketInfo(ticket.id)}
+                      >
+                        {visibleColumns.operator.isVisible && (
+                          <td>{ticket.username}</td>
+                        )}
+                        {visibleColumns.responsable.isVisible && (
+                          <td>{ticket.responsable}</td>
+                        )}
+                        {visibleColumns.area.isVisible && (
+                          <td>{getValueNameById(ticket.AreaId, allAreas)}</td>
+                        )}
+                        {visibleColumns.category.isVisible && (
                           <td>
-                            <button
-                              onClick={(e) => handleDeleteTicket(ticket.id, e)}
-                            >
-                              Eliminar Ticket
-                            </button>
+                            {getValueNameById(ticket.CategoryId, allCategories)}
                           </td>
                         )}
-                    </tr>
-                  ))}
-              </tbody>
-            </table>
+                        {visibleColumns.status.isVisible && (
+                          <td>
+                            {getValueNameById(ticket.StatusId, allStatus)}
+                          </td>
+                        )}
+                        {visibleColumns.priority.isVisible && (
+                          <td>
+                            {getValueNameById(ticket.PriorityId, allPriorities)}
+                          </td>
+                        )}
+                        {visibleColumns.client.isVisible && (
+                          <td>{ticket.client}</td>
+                        )}
+                        {visibleColumns.address.isVisible && (
+                          <td>{ticket.address}</td>
+                        )}
+                        {visibleColumns.text.isVisible && (
+                          <td>{ticket.text}</td>
+                        )}
+                        {visibleColumns.elapsedTime.isVisible && (
+                          <td>
+                            {calculateDaysSinceCreation(ticket.createdAt)} días
+                          </td>
+                        )}
+                        {visibleColumns.actions.isVisible &&
+                          props.rol === "admin" && (
+                            <td>
+                              <button
+                                onClick={(e) =>
+                                  handleDeleteTicket(ticket.id, e)
+                                }
+                              >
+                                Eliminar Ticket
+                              </button>
+                            </td>
+                          )}
+                      </tr>
+                    ))}
+                </tbody>
+              </table>
+            </section>
           </>
         ) : (
           <div>Cargando Tickets...</div>
