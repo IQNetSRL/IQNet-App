@@ -101,7 +101,7 @@ function App() {
       )}
       <div className={styles.mainContainer}>
         {!isLogin && <SideBar rol={rol}/>}
-        <section>
+        <section className={styles.mainSection}>
           <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/profile" element={<Profile rol={rol} />} />

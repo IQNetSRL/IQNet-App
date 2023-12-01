@@ -7,14 +7,20 @@ main {
     @include centerFlex(flex, row, space-between, center, 0);
     @include width(100%, 100%);
     position: relative;
+    .mainSection {
+      margin-left: 5rem;
+    }
   }
 }
 
 .navBar {
   @include centerFlex(flex, row, space-between, center, 0);
   @include width(100%, 100%);
+  @include height(5rem, 5rem);
   background-color: $white-100;
   h2 {
+    padding: 1rem;
+    font-size: 2.3rem;
     color: $pumpkin-600;
   }
   div {
