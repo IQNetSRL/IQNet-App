@@ -81,6 +81,64 @@
   }
 }
 
-.open {
+.hiddeBar {
+  @include centerFlex(flex, column, flex-start, center, 0);
+  @include height(100%, 100%);
   @include width(10rem, 10rem);
+  position: fixed;
+  top: 4rem;
+  left: -10rem;
+  background-color: $pumpkin-700;
+  transition: 0.3s ease;
+  z-index: 999;
+  .toggleButton {
+    @include centerFlex(flex, row, flex-end, center, 0);
+    @include button($pumpkin-800, none);
+    @include width(100%, 100%);
+    @include height(2.5rem, 2.5rem);
+    padding: 0.2rem 0.8rem;
+    transition: 0.2s ease;
+    z-index: 1;
+    transform: scaleX(-1);
+    span {
+      @include width(1.5rem, 1.5rem);
+      color: $white-100;
+      svg {
+        @include width(1.5rem, 1.5rem);
+        @include height(2.5rem, 2.5rem);
+        transition: 0.2s ease;
+      }
+    }
+  }
+  .navigateButtons {
+    @include centerFlex(flex, column, flex-start, center, 0.5rem);
+    @include width(100%, 100%);
+    padding: 0.4rem 0.3rem;
+    button {
+      @include centerFlex(flex, row, flex-start, center, 1rem);
+      @include width(100%, 100%);
+      @include height(2.5rem, 2.5rem);
+      @include button(transparent, none);
+      border-radius: 0.5rem;
+      transition: 0.2s ease;
+      padding: 0 0.5rem;
+      color: $white-100;
+      span {
+        @include width(1.5rem, 1.5rem);
+        @include height(2.5rem, 2.5rem);
+        svg {
+          @include width(1.5rem, 1.5rem);
+          @include height(2.5rem, 2.5rem);
+          transition: 0.05s ease;
+        }
+      }
+      &:hover {
+        background-color: $pumpkin-800;
+      }
+    }
+  }
+}
+
+.open {
+  left: 0;
 }

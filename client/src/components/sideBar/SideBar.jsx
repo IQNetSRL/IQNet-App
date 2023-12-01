@@ -30,55 +30,86 @@ const SideBar = (props) => {
   };
 
   return (
-    <section
-      className={`${styles.sectionSideBar} ${isSidebarOpen ? styles.open : ""}`}
-    >
-      <button
-        className={`${styles.toggleButton} ${
-          isSidebarOpen ? styles.isOpen : ""
-        }`}
-        onClick={toggleSidebar}
+    <>
+      <section
+        className={`${styles.hiddeBar} ${isSidebarOpen ? styles.open : ""}`}
       >
-        <span>
-          <TbLayoutSidebarLeftExpandFilled />
-        </span>
-      </button>
-      <div
-        className={`${styles.navigateButtons} ${
-          isSidebarOpen ? styles.openIcons : ""
-        }`}
-      >
-        <button
-          className={styles.homeButton}
-          onClick={() => handleNavigate("home")}
-        >
+        <button className={styles.toggleButton} onClick={toggleSidebar}>
           <span>
-            <IoIosHome />
+            <TbLayoutSidebarLeftExpandFilled />
           </span>
-          <p>Home</p>
         </button>
-        <button
-          className={styles.newTicketButton}
-          onClick={() => handleNavigate("create")}
-        >
-          <span>
-            <IoTicket />
-          </span>
-          <p>Nuevo Ticket</p>
-        </button>
-        {props.rol === "admin" && (
+        <div className={styles.navigateButtons}>
           <button
-            className={styles.adminButton}
-            onClick={() => handleNavigate("admin")}
+            className={styles.homeButton}
+            onClick={() => handleNavigate("home")}
           >
             <span>
-              <RiAdminFill />
+              <IoIosHome />
             </span>
-            <p>Administracion</p>
+            <p>Home</p>
           </button>
-        )}
-      </div>
-    </section>
+          <button
+            className={styles.newTicketButton}
+            onClick={() => handleNavigate("create")}
+          >
+            <span>
+              <IoTicket />
+            </span>
+            <p>Nuevo Ticket</p>
+          </button>
+          {props.rol === "admin" && (
+            <button
+              className={styles.adminButton}
+              onClick={() => handleNavigate("admin")}
+            >
+              <span>
+                <RiAdminFill />
+              </span>
+              <p>Administracion</p>
+            </button>
+          )}
+        </div>
+      </section>
+      <section className={styles.sectionSideBar}>
+        <button className={styles.toggleButton} onClick={toggleSidebar}>
+          <span>
+            <TbLayoutSidebarLeftExpandFilled />
+          </span>
+        </button>
+        <div className={styles.navigateButtons}>
+          <button
+            className={styles.homeButton}
+            onClick={() => handleNavigate("home")}
+          >
+            <span>
+              <IoIosHome />
+            </span>
+            <p>Home</p>
+          </button>
+          <button
+            className={styles.newTicketButton}
+            onClick={() => handleNavigate("create")}
+          >
+            <span>
+              <IoTicket />
+            </span>
+            <p>Nuevo Ticket</p>
+          </button>
+          {props.rol === "admin" && (
+            <button
+              className={styles.adminButton}
+              onClick={() => handleNavigate("admin")}
+            >
+              <span>
+                <RiAdminFill />
+              </span>
+              <p>Administracion</p>
+            </button>
+          )}
+        </div>
+      </section>
+    </>
   );
 };
 
