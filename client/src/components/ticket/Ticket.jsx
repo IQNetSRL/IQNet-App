@@ -10,6 +10,7 @@ import {
   getTickets as getTicketsAction,
   getTicketById,
 } from "../../redux/actions.js";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { MdCheckBox } from "react-icons/md";
 import { MdCheckBoxOutlineBlank } from "react-icons/md";
 import { IoFilter } from "react-icons/io5";
@@ -28,6 +29,7 @@ const Ticket = (props) => {
   const location = useLocation();
   const navigate = useNavigate();
   const { user, isLoading } = useAuth0();
+  const { parent } = useAutoAnimate;
   const isProfile = location.pathname === "/profile";
   const allTickets = useSelector((state) => state.someReducer.allTickets);
   const allAreas = useSelector((state) => state.someReducer.allAreas);
@@ -175,7 +177,7 @@ const Ticket = (props) => {
     XLSX.utils.book_append_sheet(wb, ws, "Tickets");
     XLSX.writeFile(wb, "tickets.xlsx");
   };
-  console.log(visibleColumns);
+
   const headerRow = [
     "Área",
     "Categoría",
@@ -254,40 +256,43 @@ const Ticket = (props) => {
           </div>
         </div>
         <section className={styles.leftSection}>
-          <div className={styles.renderList}>
+          <div className={styles.renderList} ref={parent}>
             <button
               className={styles.columnsButton}
               onClick={handleShowOptions}
             >
               <MdFormatListBulletedAdd />
             </button>
-            {showOptions && (
-              <div>
-                {Object.keys(visibleColumns).map((column) => (
-                  <div key={column} className={styles.list}>
-                    {visibleColumns[column].isVisible ? (
-                      <span>
-                        <MdCheckBox />
-                      </span>
-                    ) : (
-                      <span>
-                        <MdCheckBoxOutlineBlank />
-                      </span>
-                    )}
-                    <button
-                      onClick={() => toggleColumnVisibility(column)}
-                      style={{
-                        fontWeight: visibleColumns[column].isVisible
-                          ? "bold"
-                          : "normal",
-                      }}
-                    >
-                      {visibleColumns[column].name}
-                    </button>
-                  </div>
-                ))}
-              </div>
-            )}
+
+            <div
+              className={`${styles.options} ${
+                showOptions ? styles.show : ""
+              }`}
+            >
+              {Object.keys(visibleColumns).map((column) => (
+                <div key={column} className={styles.list}>
+                  {visibleColumns[column].isVisible ? (
+                    <span>
+                      <MdCheckBox />
+                    </span>
+                  ) : (
+                    <span>
+                      <MdCheckBoxOutlineBlank />
+                    </span>
+                  )}
+                  <button
+                    onClick={() => toggleColumnVisibility(column)}
+                    style={{
+                      fontWeight: visibleColumns[column].isVisible
+                        ? "bold"
+                        : "normal",
+                    }}
+                  >
+                    {visibleColumns[column].name}
+                  </button>
+                </div>
+              ))}
+            </div>
           </div>
           <button className={styles.excelButton} onClick={handleExportToExcel}>
             <span>
