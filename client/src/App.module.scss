@@ -16,7 +16,7 @@ main {
 .navBar {
   @include centerFlex(flex, row, space-between, center, 0);
   @include width(100%, 100%);
-  @include height(5rem, 5rem);
+  @include height(4rem, 4rem);
   background-color: $white-100;
   h2 {
     padding: 1rem;
