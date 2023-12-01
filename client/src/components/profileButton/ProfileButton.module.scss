@@ -1,0 +1,17 @@
+@import "../../styles/variables.scss";
+@import "../../styles/mixins.scss";
+
+.sectionProfileButton {
+  @include height(3rem, 3rem);
+  @include width(3rem, 3rem);
+  button {
+    @include height(3rem, 3rem);
+    @include width(3rem, 3rem);
+    @include button(transparent, none);
+    border-radius: 50%;
+    overflow: hidden;
+    img {
+      @include width(100%, 100%);
+    }
+  }
+}
