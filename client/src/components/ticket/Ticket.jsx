@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
@@ -25,6 +25,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import styles from "./Ticket.module.scss";
 
 const Ticket = (props) => {
+  const optionsRef = useRef(null);
+  const optionsButton = useRef(null);
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
@@ -70,6 +72,24 @@ const Ticket = (props) => {
   Ticket.propTypes = {
     rol: PropTypes.string.isRequired,
   };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        optionsRef.current &&
+        !optionsRef.current.contains(event.target) &&
+        !optionsButton.current.contains(event.target)
+      ) {
+        setShowOptions(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -258,6 +278,7 @@ const Ticket = (props) => {
         <section className={styles.leftSection}>
           <div className={styles.renderList} ref={parent}>
             <button
+              ref={optionsButton}
               className={`${styles.columnsButton} ${
                 showOptions ? styles.selected : ""
               }`}
@@ -267,6 +288,7 @@ const Ticket = (props) => {
             </button>
 
             <div
+              ref={optionsRef}
               className={`${styles.options} ${showOptions ? styles.show : ""}`}
             >
               {Object.keys(visibleColumns).map((column) => (
