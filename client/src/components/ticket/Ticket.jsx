@@ -258,16 +258,16 @@ const Ticket = (props) => {
         <section className={styles.leftSection}>
           <div className={styles.renderList} ref={parent}>
             <button
-              className={styles.columnsButton}
+              className={`${styles.columnsButton} ${
+                showOptions ? styles.selected : ""
+              }`}
               onClick={handleShowOptions}
             >
               <MdFormatListBulletedAdd />
             </button>
 
             <div
-              className={`${styles.options} ${
-                showOptions ? styles.show : ""
-              }`}
+              className={`${styles.options} ${showOptions ? styles.show : ""}`}
             >
               {Object.keys(visibleColumns).map((column) => (
                 <div key={column} className={styles.list}>
