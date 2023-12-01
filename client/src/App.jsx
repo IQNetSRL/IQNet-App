@@ -93,7 +93,7 @@ function App() {
       {!isLogin && (
         <section className={styles.navBar}>
           <h2>IQNet</h2>
-          <div>
+          <div className={styles.profileContainer}>
             <LogoutButton />
             <ProfileButton />
           </div>

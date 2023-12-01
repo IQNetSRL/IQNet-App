@@ -1,11 +1,21 @@
 @import "../../styles/variables.scss";
 @import "../../styles/mixins.scss";
 
+
 .sectionSideBar {
-  @include centerFlex(flex, column, center, center, 0);
+  @include centerFlex(flex, column, flex-start, center, 0);
   @include height(100%, 100%);
   @include width(5rem, 5rem);
   position: fixed;
   top: 5rem;
   background-color: $white-400;
+  transition: 0.2s ease;
+  .toggleButton {
+    @include button($white-400, none);
+    z-index: 1;
+  }
+}
+
+.open {
+  @include width(7.5rem, 7.5rem);
 }

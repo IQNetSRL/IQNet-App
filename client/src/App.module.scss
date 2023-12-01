@@ -23,7 +23,8 @@ main {
     font-size: 2.3rem;
     color: $pumpkin-600;
   }
-  div {
-    @include centerFlex(flex, row, space-between, center, 0);
+  .profileContainer {
+    @include centerFlex(flex, row, space-between, center, 1rem);
+    padding-right: 1rem;
   }
 }
