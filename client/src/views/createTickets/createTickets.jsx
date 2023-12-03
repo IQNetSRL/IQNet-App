@@ -36,7 +36,7 @@ const CreateTickets = (props) => {
   const [newCategory, setNewCategory] = useState({ name: "" });
   const [newStatus, setNewStatus] = useState({ name: "" });
   const [newPriority, setNewPriority] = useState({ name: "" });
-  const [color, setColor] = useState("#ffffff");
+  const [color, setColor] = useState("#000000");
   const [creatingArea, setCreatingArea] = useState(false);
   const [creatingCategory, setCreatingCategory] = useState(false);
   const [creatingStatus, setCreatingStatus] = useState(false);
@@ -228,7 +228,7 @@ const CreateTickets = (props) => {
                       </button>
                     </li>
                   ))}
-                  <li>
+                  <li className={styles.liForm}>
                     <button
                       className={styles.addButton}
                       onClick={() => handleAdd("area")}
@@ -248,6 +248,7 @@ const CreateTickets = (props) => {
                             type="text"
                             name="name"
                             placeholder="nueva area"
+                            style={{ color: color }}
                             onChange={handleInputChangeArea}
                             value={newArea.name}
                           />
@@ -256,10 +257,6 @@ const CreateTickets = (props) => {
                               color={color}
                               onChange={handleColorChangeArea}
                             />
-                            <h5>
-                              Selected Color:
-                              <p style={{ color: color }}>{color}</p>
-                            </h5>
                           </div>
                           <button type="submit">agregar</button>
                         </>
@@ -296,7 +293,7 @@ const CreateTickets = (props) => {
                       </button>
                     </li>
                   ))}
-                  <li>
+                  <li className={styles.liForm}>
                     <button
                       className={styles.addButton}
                       onClick={() => handleAdd("category")}
@@ -324,10 +321,6 @@ const CreateTickets = (props) => {
                               color={color}
                               onChange={handleColorChangeCategory}
                             />
-                            <h5>
-                              Selected Color:
-                              <p style={{ color: color }}>{color}</p>
-                            </h5>
                           </div>
                           <button type="submit">agregar</button>
                         </>
@@ -364,7 +357,7 @@ const CreateTickets = (props) => {
                       </button>
                     </li>
                   ))}
-                  <li>
+                  <li className={styles.liForm}>
                     <button
                       className={styles.addButton}
                       onClick={() => handleAdd("status")}
@@ -392,10 +385,6 @@ const CreateTickets = (props) => {
                               color={color}
                               onChange={handleColorChangeStatus}
                             />
-                            <h5>
-                              Selected Color:
-                              <p style={{ color: color }}>{color}</p>
-                            </h5>
                           </div>
                           <button type="submit">agregar</button>
                         </>
@@ -432,7 +421,7 @@ const CreateTickets = (props) => {
                       </button>
                     </li>
                   ))}
-                  <li>
+                  <li className={styles.liForm}>
                     <button
                       className={styles.addButton}
                       onClick={() => handleAdd("priority")}
@@ -460,10 +449,6 @@ const CreateTickets = (props) => {
                               color={color}
                               onChange={handleColorChangePriority}
                             />
-                            <h5>
-                              Selected Color:
-                              <p style={{ color: color }}>{color}</p>
-                            </h5>
                           </div>
                           <button type="submit">agregar</button>
                         </>

@@ -37,14 +37,53 @@
               @include height(2rem, 2rem);
             }
             .addButton {
-              @include centerFlex(flex, row, center, center, 0);
+              @include centerFlex(flex, row, center, center, 0.1rem);
               @include button($white-100, 0.2rem solid $pumpkin-600);
               @include width(100%, 100%);
               @include height(3rem, 3rem);
               color: $pumpkin-600;
+              font-size: 1.1rem;
+              svg {
+                @include width(1.4rem, 1.4rem);
+                @include height(1.4rem, 1.4rem);
+              }
               &:hover {
                 background-color: $pumpkin-600;
                 color: $white-100;
+              }
+            }
+          }
+          .liForm {
+            @include centerFlex(flex, column, center, center, 1rem);
+            @include width(100%, 100%);
+            padding-bottom: 0.7rem;
+            form {
+              @include centerFlex(flex, column, center, center, 1rem);
+              @include width(100%, 100%);
+              input {
+                @include width(100%, 100%);
+                @include height(2.2rem, 2.2rem);
+                font-size: 1rem;
+                padding: 0.2rem 0.4rem;
+                border: 0.15rem solid $white-950;
+                border-radius: 0.2rem;
+              }
+              div {
+                position: relative;
+                z-index: 9999;
+                div {
+                  div {
+                    div {
+                      @include height(100%, 100%);
+                    }
+                  }
+                }
+              }
+              button {
+                @include centerFlex(flex, row, center, center, 0);
+                @include button(rgb(27, 126, 27), none);
+                border-radius: 0.4rem;
+                font-size: 1.1rem;
               }
             }
           }

@@ -9,7 +9,7 @@
   top: 4rem;
   background-color: $pumpkin-700;
   transition: 0.2s ease;
-  z-index: 99;
+  z-index: 1000;
   .toggleButton {
     @include centerFlex(flex, row, center, center, 0);
     @include button($pumpkin-800, none);
@@ -90,7 +90,7 @@
   left: -10rem;
   background-color: $pumpkin-700;
   transition: 0.3s ease;
-  z-index: 999;
+  z-index: 1003;
   .toggleButton {
     @include centerFlex(flex, row, flex-end, center, 0);
     @include button($pumpkin-800, none);
