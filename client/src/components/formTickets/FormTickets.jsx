@@ -122,7 +122,10 @@ const FormTickets = () => {
   };
 
   return (
-    <section className={styles.sectionFormTickets}>
+    <section
+      className={styles.sectionFormTickets}
+      style={{ position: "relative", zIndex: -1 }}
+    >
       <h1>Crear Ticket</h1>
       <form onSubmit={handleSubmit}>
         <select

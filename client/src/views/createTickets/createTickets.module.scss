@@ -16,6 +16,28 @@
         @include height(4rem, 4rem);
         background-color: $white-200;
         border-radius: 0.4rem;
+        position: relative;
+        z-index: 99;
+        ol {
+          background-color: $white-200;
+          position: relative;
+          z-index: 99;
+          padding: 0.4rem 0;
+          border: 0.2rem solid $pumpkin-700;
+          border-radius: 0 0 0.4rem 0.4rem;
+          li {
+            @include centerFlex(flex, row, space-between, center, 2rem);
+            @include width(100%, 100%);
+            padding: 0.5rem 1rem;
+            cursor: default;
+            .deleteButton {
+              @include centerFlex(flex, row, center, center, 0);
+              @include button(rgb(255, 44, 44), none);
+              @include width(2rem, 2rem);
+              @include height(2rem, 2rem);
+            }
+          }
+        }
         button {
           @include centerFlex(flex, row, space-between, center, 0);
           @include width(100%, 100%);
@@ -41,6 +63,10 @@
             background-color: $pumpkin-700;
             color: $white-100;
           }
+        }
+        div {
+          position: relative;
+          z-index: -1;
         }
       }
     }

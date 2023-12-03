@@ -5,6 +5,7 @@ import { HexColorPicker } from "react-colorful";
 import { Accordion, AccordionItem } from "@szhsin/react-accordion";
 import { RiEdit2Fill } from "react-icons/ri";
 import { MdOutlineClose } from "react-icons/md";
+import { MdDelete } from "react-icons/md";
 import {
   postArea,
   postCategory,
@@ -207,6 +208,7 @@ const CreateTickets = (props) => {
               header={() => handleRenderHeader("area")}
               className={styles.accordionArea}
               onClick={() => handleOpen("area")}
+              style={{ zIndex: 999 }}
             >
               {allAreas.length > 0 ? (
                 <ol>
@@ -216,41 +218,50 @@ const CreateTickets = (props) => {
                       style={{ color: area.color || "black" }}
                     >
                       {area.name}
-                      <button onClick={() => handleDelete(area.id, "area")}>
-                        eliminar
+                      <button
+                        className={styles.deleteButton}
+                        onClick={() => handleDelete(area.id, "area")}
+                      >
+                        <MdDelete />
                       </button>
                     </li>
                   ))}
+                  <li>
+                    <button
+                      className={styles.addButton}
+                      onClick={() => handleAdd("area")}
+                    >
+                      {creatingArea ? "cancelar" : "añadir area"}
+                    </button>
+                    <form onSubmit={handleSubmitArea}>
+                      {creatingArea && (
+                        <>
+                          <input
+                            type="text"
+                            name="name"
+                            placeholder="nueva area"
+                            onChange={handleInputChangeArea}
+                            value={newArea.name}
+                          />
+                          <div>
+                            <HexColorPicker
+                              color={color}
+                              onChange={handleColorChangeArea}
+                            />
+                            <h5>
+                              Selected Color:{" "}
+                              <p style={{ color: color }}>{color}</p>
+                            </h5>
+                          </div>
+                          <button type="submit">agregar</button>
+                        </>
+                      )}
+                    </form>
+                  </li>
                 </ol>
               ) : (
                 <p>Cargando areas...</p>
               )}
-              <button onClick={() => handleAdd("area")}>
-                {creatingArea ? "cancelar" : "añadir area"}
-              </button>
-              <form onSubmit={handleSubmitArea}>
-                {creatingArea && (
-                  <>
-                    <input
-                      type="text"
-                      name="name"
-                      placeholder="nueva area"
-                      onChange={handleInputChangeArea}
-                      value={newArea.name}
-                    />
-                    <div>
-                      <HexColorPicker
-                        color={color}
-                        onChange={handleColorChangeArea}
-                      />
-                      <h5>
-                        Selected Color: <p style={{ color: color }}>{color}</p>
-                      </h5>
-                    </div>
-                    <button type="submit">agregar</button>
-                  </>
-                )}
-              </form>
             </AccordionItem>
           </Accordion>
           <Accordion className={styles.area}>
@@ -258,6 +269,7 @@ const CreateTickets = (props) => {
               header={() => handleRenderHeader("category")}
               className={styles.accordionArea}
               onClick={() => handleOpen("category")}
+              style={{ zIndex: 998 }}
             >
               {allCategories.length > 0 ? (
                 <ol>
@@ -268,9 +280,10 @@ const CreateTickets = (props) => {
                     >
                       {category.name}
                       <button
+                        className={styles.deleteButton}
                         onClick={() => handleDelete(category.id, "category")}
                       >
-                        eliminar
+                        <MdDelete />
                       </button>
                     </li>
                   ))}
@@ -278,7 +291,10 @@ const CreateTickets = (props) => {
               ) : (
                 <p>Cargando categorias...</p>
               )}
-              <button onClick={() => handleAdd("category")}>
+              <button
+                className={styles.addButton}
+                onClick={() => handleAdd("category")}
+              >
                 {creatingCategory ? "cancelar" : "añadir categoria"}
               </button>
               <form onSubmit={handleSubmitCategory}>
@@ -311,6 +327,7 @@ const CreateTickets = (props) => {
               header={() => handleRenderHeader("status")}
               className={styles.accordionArea}
               onClick={() => handleOpen("status")}
+              style={{ zIndex: 997 }}
             >
               {allStatus.length > 0 ? (
                 <ol>
@@ -320,8 +337,11 @@ const CreateTickets = (props) => {
                       style={{ color: status.color || "black" }}
                     >
                       {status.name}
-                      <button onClick={() => handleDelete(status.id, "status")}>
-                        eliminar
+                      <button
+                        className={styles.deleteButton}
+                        onClick={() => handleDelete(status.id, "status")}
+                      >
+                        <MdDelete />
                       </button>
                     </li>
                   ))}
@@ -329,7 +349,10 @@ const CreateTickets = (props) => {
               ) : (
                 <p>Cargando estatus...</p>
               )}
-              <button onClick={() => handleAdd("status")}>
+              <button
+                className={styles.addButton}
+                onClick={() => handleAdd("status")}
+              >
                 {creatingStatus ? "cancelar" : "añadir status"}
               </button>
               <form onSubmit={handleSubmitStatus}>
@@ -362,6 +385,7 @@ const CreateTickets = (props) => {
               header={() => handleRenderHeader("priority")}
               className={styles.accordionArea}
               onClick={() => handleOpen("priority")}
+              style={{ zIndex: 996 }}
             >
               {allPriorities.length > 0 ? (
                 <ol>
@@ -372,9 +396,10 @@ const CreateTickets = (props) => {
                     >
                       {priority.name}
                       <button
+                        className={styles.deleteButton}
                         onClick={() => handleDelete(priority.id, "priority")}
                       >
-                        eliminar
+                        <MdDelete />
                       </button>
                     </li>
                   ))}
@@ -382,7 +407,10 @@ const CreateTickets = (props) => {
               ) : (
                 <p>Cargando prioridades...</p>
               )}
-              <button onClick={() => handleAdd("priority")}>
+              <button
+                className={styles.addButton}
+                onClick={() => handleAdd("priority")}
+              >
                 {creatingPriority ? "cancelar" : "añadir prioridad"}
               </button>
               <form onSubmit={handleSubmitPriority}>
