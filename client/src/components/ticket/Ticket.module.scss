@@ -133,6 +133,10 @@
     @include width(100%, 100%);
     padding: 0 0.5rem;
     .tableSection {
+      @include centerFlex(flex, row, center, center, 0);
+      margin-top: 1rem;
+      overflow-x: auto;
+      overflow-y: hidden;
       table {
         @include centerFlex(inline-flex, column, center, center, 0.1rem);
         @include width(auto, auto);
@@ -145,6 +149,7 @@
             @include centerFlex(flex, row, flex-start, center, 0);
             @include height(3.5rem, 3.5rem);
             th {
+              @include centerFlex(flex, row, flex-start, center, 0);
               @include width(8.66rem, 8.66rem);
               @include height(3.5rem, 3.5rem);
               border: 0.2rem solid $white-950;
@@ -190,14 +195,15 @@
         tbody {
           @include width(100%, 100%);
           tr {
-            @include centerFlex(flex, row, center, center, 0);
+            @include centerFlex(flex, row, flex-start, center, 0);
             @include height(3rem, 3rem);
             @include width(auto, auto);
             background-color: transparent;
             z-index: 3;
             margin-bottom: 0.2rem;
             td {
-              @include width(8.66rem, 8.66rem);
+              @include centerFlex(flex, row, flex-start, center, 0);
+              @include width(8.63rem, 8.63rem);
               height: 3rem;
               padding: 0.5rem 0 0.5rem 0.5rem;
               background-color: $white-300;
@@ -206,7 +212,7 @@
             }
             .actionsButtons {
               @include centerFlex(flex, row, center, center, 0);
-              @include width(4.8rem, 4.8rem);
+              flex: 1;
               @include height(3rem, 3rem);
               background-color: $white-300;
               div {
@@ -220,6 +226,7 @@
                   @include button(rgb(89, 160, 253), none);
                 }
                 button {
+                  @include centerFlex(flex, row, center, center, 0);
                   @include width(1.5rem, 1.5rem);
                   height: 1.5rem;
                   border-radius: 0.2rem;
