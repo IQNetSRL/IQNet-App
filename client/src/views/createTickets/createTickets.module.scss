@@ -54,19 +54,20 @@
           @include width(100%, 100%);
           @include height(3rem, 3rem);
           @include button(transparent, none);
-          font-size: 1.2rem;
+          font-size: 1rem;
           border-radius: 0.4rem;
           transition: 0.1s ease;
           h2 {
             @include centerFlex(flex, row, space-between, center, 0);
             @include width(100%, 100%);
+            @include height(3rem, 3rem);
             padding: 0 1rem;
             span {
               @include centerFlex(flex, row, center, center, 0);
               margin-top: 0.2rem;
               svg {
-                @include width(2rem, 2rem);
-                @include height(2rem, 2rem);
+                @include width(1.5rem, 1.5rem);
+                @include height(1.5rem, 1.5rem);
               }
             }
           }
@@ -78,6 +79,28 @@
         div {
           position: relative;
           z-index: -1;
+        }
+      }
+      .open {
+        border-radius: 0.4rem 0.4rem 0 0;
+        button {
+          border-radius: 0.4rem 0.4rem 0 0;
+          background-color: $pumpkin-700;
+          color: $white-100;
+        }
+        ol {
+          li {
+            .deleteButton {
+              color: $black;
+              border-radius: 0.4rem;
+              &:hover {
+                color: $white-100;
+              }
+            }
+            .addButton {
+              border-radius: 0.4rem;
+            }
+          }
         }
       }
     }

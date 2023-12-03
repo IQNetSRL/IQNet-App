@@ -207,7 +207,9 @@ const CreateTickets = (props) => {
           <Accordion className={styles.area}>
             <AccordionItem
               header={() => handleRenderHeader("area")}
-              className={styles.accordionArea}
+              className={`${styles.accordionArea} ${
+                isOpen.area && styles.open
+              }`}
               style={{ zIndex: 999 }}
             >
               {allAreas.length > 0 ? (
@@ -273,7 +275,9 @@ const CreateTickets = (props) => {
           <Accordion className={styles.area}>
             <AccordionItem
               header={() => handleRenderHeader("category")}
-              className={styles.accordionArea}
+              className={`${styles.accordionArea} ${
+                isOpen.category && styles.open
+              }`}
               style={{ zIndex: 998 }}
             >
               {allCategories.length > 0 ? (
@@ -339,7 +343,9 @@ const CreateTickets = (props) => {
           <Accordion className={styles.area}>
             <AccordionItem
               header={() => handleRenderHeader("status")}
-              className={styles.accordionArea}
+              className={`${styles.accordionArea} ${
+                isOpen.status && styles.open
+              }`}
               style={{ zIndex: 997 }}
             >
               {allStatus.length > 0 ? (
@@ -405,7 +411,9 @@ const CreateTickets = (props) => {
           <Accordion className={styles.area}>
             <AccordionItem
               header={() => handleRenderHeader("priority")}
-              className={styles.accordionArea}
+              className={`${styles.accordionArea} ${
+                isOpen.priority && styles.open
+              }`}
               style={{ zIndex: 996 }}
             >
               {allPriorities.length > 0 ? (
