@@ -232,6 +232,11 @@ const Ticket = (props) => {
     return value ? value.name : "";
   };
 
+  const getValueColorById = (id, state) => {
+    const value = state.find((priority) => priority.id === id);
+    return value ? value.color : "";
+  };
+
   const handleDeleteTicket = (id, e) => {
     e.stopPropagation();
     dispatch(deleteTicket(id));
@@ -506,7 +511,15 @@ const Ticket = (props) => {
                       );
                     })
                     .map((ticket) => (
-                      <tr key={ticket.id}>
+                      <tr
+                        key={ticket.id}
+                        style={{
+                          border: `0.2rem solid ${
+                            getValueColorById(ticket.StatusId, allStatus) ||
+                            "black"
+                          }`, borderRight: "none",
+                        }}
+                      >
                         {visibleColumns.operator.isVisible && (
                           <td>{ticket.username}</td>
                         )}
@@ -514,20 +527,50 @@ const Ticket = (props) => {
                           <td>{ticket.responsable}</td>
                         )}
                         {visibleColumns.area.isVisible && (
-                          <td>{getValueNameById(ticket.AreaId, allAreas)}</td>
+                          <td
+                            style={{
+                              color:
+                                getValueColorById(ticket.AreaId, allAreas) ||
+                                "black",
+                            }}
+                          >
+                            {getValueNameById(ticket.AreaId, allAreas)}
+                          </td>
                         )}
                         {visibleColumns.category.isVisible && (
-                          <td>
+                          <td
+                            style={{
+                              color:
+                                getValueColorById(
+                                  ticket.CategoryId,
+                                  allCategories
+                                ) || "black",
+                            }}
+                          >
                             {getValueNameById(ticket.CategoryId, allCategories)}
                           </td>
                         )}
                         {visibleColumns.status.isVisible && (
-                          <td>
+                          <td
+                            style={{
+                              color:
+                                getValueColorById(ticket.StatusId, allStatus) ||
+                                "black",
+                            }}
+                          >
                             {getValueNameById(ticket.StatusId, allStatus)}
                           </td>
                         )}
                         {visibleColumns.priority.isVisible && (
-                          <td>
+                          <td
+                            style={{
+                              color:
+                                getValueColorById(
+                                  ticket.PriorityId,
+                                  allPriorities
+                                ) || "black",
+                            }}
+                          >
                             {getValueNameById(ticket.PriorityId, allPriorities)}
                           </td>
                         )}
@@ -547,7 +590,17 @@ const Ticket = (props) => {
                         )}
                         {visibleColumns.actions.isVisible &&
                           props.rol === "admin" && (
-                            <div className={styles.actions}>
+                            <div
+                              className={styles.actionsButtons}
+                              style={{
+                                border: `0.2rem solid ${
+                                  getValueColorById(
+                                    ticket.StatusId,
+                                    allStatus
+                                  ) || "black"
+                                }`,
+                              }}
+                            >
                               <div>
                                 <button
                                   className={styles.delete}
