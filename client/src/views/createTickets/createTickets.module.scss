@@ -1,0 +1,48 @@
+@import "../../styles/variables.scss";
+@import "../../styles/mixins.scss";
+
+.sectionCreateTickets {
+  @include width(100%, 100%);
+  .accordionSection {
+    @include centerFlex(flex, column, center, center, 2rem);
+    @include width(auto, 42rem);
+    @include height(12rem, 12rem);
+    margin: 0.3rem 0 0 1rem;
+    flex-wrap: wrap;
+    background-color: $white-900;
+    .area {
+      @include width(20rem, 20rem);
+      .accordionArea {
+        @include height(4rem, 4rem);
+        background-color: $white-200;
+        border-radius: 0.4rem;
+        button {
+          @include centerFlex(flex, row, space-between, center, 0);
+          @include width(100%, 100%);
+          @include height(4rem, 4rem);
+          @include button(transparent, none);
+          font-size: 1.2rem;
+          border-radius: 0.4rem;
+          transition: 0.1s ease;
+          h2 {
+            @include centerFlex(flex, row, space-between, center, 0);
+            @include width(100%, 100%);
+            padding: 0 1rem;
+            span {
+              @include centerFlex(flex, row, center, center, 0);
+              margin-top: 0.2rem;
+              svg {
+                @include width(2rem, 2rem);
+                @include height(2rem, 2rem);
+              }
+            }
+          }
+          &:hover {
+            background-color: $pumpkin-700;
+            color: $white-100;
+          }
+        }
+      }
+    }
+  }
+}

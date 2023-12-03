@@ -2,6 +2,9 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { HexColorPicker } from "react-colorful";
+import { Accordion, AccordionItem } from "@szhsin/react-accordion";
+import { RiEdit2Fill } from "react-icons/ri";
+import { MdOutlineClose } from "react-icons/md";
 import {
   postArea,
   postCategory,
@@ -36,6 +39,12 @@ const CreateTickets = (props) => {
   const [creatingCategory, setCreatingCategory] = useState(false);
   const [creatingStatus, setCreatingStatus] = useState(false);
   const [creatingPriority, setCreatingPriority] = useState(false);
+  const [isOpen, setIsOpen] = useState({
+    area: false,
+    category: false,
+    status: false,
+    priority: false,
+  });
 
   CreateTickets.propTypes = {
     rol: PropTypes.string.isRequired,
@@ -155,10 +164,6 @@ const CreateTickets = (props) => {
     setNewPriority({ ...newPriority, [name]: value });
   };
 
-  const handleNavigateBack = () => {
-    window.history.back();
-  };
-
   const handleDelete = (id, value) => {
     if (value === "area") {
       dispatch(deleteArea(id));
@@ -174,206 +179,238 @@ const CreateTickets = (props) => {
     }
   };
 
+  const handleOpen = (value) => {
+    setIsOpen((prevIsOpen) => ({ ...prevIsOpen, [value]: !prevIsOpen[value] }));
+  };
+
+  const handleRenderHeader = (value) => {
+    return (
+      <h2>
+        {value === "area"
+          ? "Area"
+          : value === "category"
+          ? "Categoria"
+          : value === "status"
+          ? "Estatus"
+          : value === "priority" && "Prioridad"}
+        <span>{!isOpen[value] ? <RiEdit2Fill /> : <MdOutlineClose />}</span>
+      </h2>
+    );
+  };
+
   return (
     <section className={styles.sectionCreateTickets}>
-      <button onClick={handleNavigateBack}>Volver</button>
       {props.rol === "admin" && (
-        <>
-          <div>
-            <section>
-              <div>
-                <h3>Areas</h3>
-                {allAreas.length > 0 ? (
-                  <ol>
-                    {allAreas?.map((area, index) => (
-                      <li
-                        key={area.id || index}
-                        style={{ color: area.color || "black" }}
-                      >
-                        {area.name}
-                        <button onClick={() => handleDelete(area.id, "area")}>
-                          eliminar
-                        </button>
-                      </li>
-                    ))}
-                  </ol>
-                ) : (
-                  <p>Cargando areas...</p>
-                )}
-                <button onClick={() => handleAdd("area")}>
-                  {creatingArea ? "cancelar" : "añadir area"}
-                </button>
-                <form onSubmit={handleSubmitArea}>
-                  {creatingArea && (
-                    <>
-                      <input
-                        type="text"
-                        name="name"
-                        placeholder="nueva area"
-                        onChange={handleInputChangeArea}
-                        value={newArea.name}
-                      />
-                      <div>
-                        <HexColorPicker
-                          color={color}
-                          onChange={handleColorChangeArea}
-                        />
-                        <h5>
-                          Selected Color:{" "}
-                          <p style={{ color: color }}>{color}</p>
-                        </h5>
-                      </div>
-                      <button type="submit">agregar</button>
-                    </>
-                  )}
-                </form>
-              </div>
-              <div>
-                <h3>Categorias</h3>
-                {allCategories.length > 0 ? (
-                  <ol>
-                    {allCategories?.map((category, index) => (
-                      <li
-                        key={category.id || index}
-                        style={{ color: category.color || "black" }}
-                      >
-                        {category.name}
-                        <button
-                          onClick={() => handleDelete(category.id, "category")}
-                        >
-                          eliminar
-                        </button>
-                      </li>
-                    ))}
-                  </ol>
-                ) : (
-                  <p>Cargando categorias...</p>
-                )}
-                <button onClick={() => handleAdd("category")}>
-                  {creatingCategory ? "cancelar" : "añadir categoria"}
-                </button>
-                <form onSubmit={handleSubmitCategory}>
-                  {creatingCategory && (
-                    <>
-                      <input
-                        type="text"
-                        name="name"
-                        placeholder="nueva categoria"
-                        onChange={handleInputChangeCategory}
-                        value={newCategory.name}
-                      />
-                      <div>
-                        <HexColorPicker
-                          color={color}
-                          onChange={handleColorChangeCategory}
-                        />
-                        <h5>
-                          Selected Color:{" "}
-                          <p style={{ color: color }}>{color}</p>
-                        </h5>
-                      </div>
-                      <button type="submit">agregar</button>
-                    </>
-                  )}
-                </form>
-              </div>
-            </section>
-          </div>
-          <div>
-            <h3>Estatus</h3>
-            {allStatus.length > 0 ? (
-              <ol>
-                {allStatus?.map((status, index) => (
-                  <li
-                    key={status.id || index}
-                    style={{ color: status.color || "black" }}
-                  >
-                    {status.name}
-                    <button onClick={() => handleDelete(status.id, "status")}>
-                      eliminar
-                    </button>
-                  </li>
-                ))}
-              </ol>
-            ) : (
-              <p>Cargando estatus...</p>
-            )}
-            <button onClick={() => handleAdd("status")}>
-              {creatingStatus ? "cancelar" : "añadir status"}
-            </button>
-            <form onSubmit={handleSubmitStatus}>
-              {creatingStatus && (
-                <>
-                  <input
-                    type="text"
-                    name="name"
-                    placeholder="nuevo estatus"
-                    onChange={handleInputChangeStatus}
-                    value={newStatus.name}
-                  />
-                  <div>
-                    <HexColorPicker
-                      color={color}
-                      onChange={handleColorChangeStatus}
-                    />
-                    <h5>
-                      Selected Color: <p style={{ color: color }}>{color}</p>
-                    </h5>
-                  </div>
-                  <button type="submit">agregar</button>
-                </>
-              )}
-            </form>
-          </div>
-          <div>
-            <h3>Prioridades</h3>
-            {allPriorities.length > 0 ? (
-              <ol>
-                {allPriorities?.map((priority, index) => (
-                  <li
-                    key={priority.id || index}
-                    style={{ color: priority.color || "black" }}
-                  >
-                    {priority.name}
-                    <button
-                      onClick={() => handleDelete(priority.id, "priority")}
+        <section className={styles.accordionSection}>
+          <Accordion className={styles.area}>
+            <AccordionItem
+              header={() => handleRenderHeader("area")}
+              className={styles.accordionArea}
+              onClick={() => handleOpen("area")}
+            >
+              {allAreas.length > 0 ? (
+                <ol>
+                  {allAreas?.map((area, index) => (
+                    <li
+                      key={area.id || index}
+                      style={{ color: area.color || "black" }}
                     >
-                      eliminar
-                    </button>
-                  </li>
-                ))}
-              </ol>
-            ) : (
-              <p>Cargando prioridades...</p>
-            )}
-            <button onClick={() => handleAdd("priority")}>
-              {creatingPriority ? "cancelar" : "añadir prioridad"}
-            </button>
-            <form onSubmit={handleSubmitPriority}>
-              {creatingPriority && (
-                <>
-                  <input
-                    type="text"
-                    name="name"
-                    placeholder="nueva prioridad"
-                    onChange={handleInputChangePriority}
-                    value={newPriority.name}
-                  />
-                  <div>
-                    <HexColorPicker
-                      color={color}
-                      onChange={handleColorChangePriority}
-                    />
-                    <h5>
-                      Selected Color: <p style={{ color: color }}>{color}</p>
-                    </h5>
-                  </div>
-                  <button type="submit">agregar</button>
-                </>
+                      {area.name}
+                      <button onClick={() => handleDelete(area.id, "area")}>
+                        eliminar
+                      </button>
+                    </li>
+                  ))}
+                </ol>
+              ) : (
+                <p>Cargando areas...</p>
               )}
-            </form>
-          </div>
-        </>
+              <button onClick={() => handleAdd("area")}>
+                {creatingArea ? "cancelar" : "añadir area"}
+              </button>
+              <form onSubmit={handleSubmitArea}>
+                {creatingArea && (
+                  <>
+                    <input
+                      type="text"
+                      name="name"
+                      placeholder="nueva area"
+                      onChange={handleInputChangeArea}
+                      value={newArea.name}
+                    />
+                    <div>
+                      <HexColorPicker
+                        color={color}
+                        onChange={handleColorChangeArea}
+                      />
+                      <h5>
+                        Selected Color: <p style={{ color: color }}>{color}</p>
+                      </h5>
+                    </div>
+                    <button type="submit">agregar</button>
+                  </>
+                )}
+              </form>
+            </AccordionItem>
+          </Accordion>
+          <Accordion className={styles.area}>
+            <AccordionItem
+              header={() => handleRenderHeader("category")}
+              className={styles.accordionArea}
+              onClick={() => handleOpen("category")}
+            >
+              {allCategories.length > 0 ? (
+                <ol>
+                  {allCategories?.map((category, index) => (
+                    <li
+                      key={category.id || index}
+                      style={{ color: category.color || "black" }}
+                    >
+                      {category.name}
+                      <button
+                        onClick={() => handleDelete(category.id, "category")}
+                      >
+                        eliminar
+                      </button>
+                    </li>
+                  ))}
+                </ol>
+              ) : (
+                <p>Cargando categorias...</p>
+              )}
+              <button onClick={() => handleAdd("category")}>
+                {creatingCategory ? "cancelar" : "añadir categoria"}
+              </button>
+              <form onSubmit={handleSubmitCategory}>
+                {creatingCategory && (
+                  <>
+                    <input
+                      type="text"
+                      name="name"
+                      placeholder="nueva categoria"
+                      onChange={handleInputChangeCategory}
+                      value={newCategory.name}
+                    />
+                    <div>
+                      <HexColorPicker
+                        color={color}
+                        onChange={handleColorChangeCategory}
+                      />
+                      <h5>
+                        Selected Color: <p style={{ color: color }}>{color}</p>
+                      </h5>
+                    </div>
+                    <button type="submit">agregar</button>
+                  </>
+                )}
+              </form>
+            </AccordionItem>
+          </Accordion>
+          <Accordion className={styles.area}>
+            <AccordionItem
+              header={() => handleRenderHeader("status")}
+              className={styles.accordionArea}
+              onClick={() => handleOpen("status")}
+            >
+              {allStatus.length > 0 ? (
+                <ol>
+                  {allStatus?.map((status, index) => (
+                    <li
+                      key={status.id || index}
+                      style={{ color: status.color || "black" }}
+                    >
+                      {status.name}
+                      <button onClick={() => handleDelete(status.id, "status")}>
+                        eliminar
+                      </button>
+                    </li>
+                  ))}
+                </ol>
+              ) : (
+                <p>Cargando estatus...</p>
+              )}
+              <button onClick={() => handleAdd("status")}>
+                {creatingStatus ? "cancelar" : "añadir status"}
+              </button>
+              <form onSubmit={handleSubmitStatus}>
+                {creatingStatus && (
+                  <>
+                    <input
+                      type="text"
+                      name="name"
+                      placeholder="nuevo estatus"
+                      onChange={handleInputChangeStatus}
+                      value={newStatus.name}
+                    />
+                    <div>
+                      <HexColorPicker
+                        color={color}
+                        onChange={handleColorChangeStatus}
+                      />
+                      <h5>
+                        Selected Color: <p style={{ color: color }}>{color}</p>
+                      </h5>
+                    </div>
+                    <button type="submit">agregar</button>
+                  </>
+                )}
+              </form>
+            </AccordionItem>
+          </Accordion>
+          <Accordion className={styles.area}>
+            <AccordionItem
+              header={() => handleRenderHeader("priority")}
+              className={styles.accordionArea}
+              onClick={() => handleOpen("priority")}
+            >
+              {allPriorities.length > 0 ? (
+                <ol>
+                  {allPriorities?.map((priority, index) => (
+                    <li
+                      key={priority.id || index}
+                      style={{ color: priority.color || "black" }}
+                    >
+                      {priority.name}
+                      <button
+                        onClick={() => handleDelete(priority.id, "priority")}
+                      >
+                        eliminar
+                      </button>
+                    </li>
+                  ))}
+                </ol>
+              ) : (
+                <p>Cargando prioridades...</p>
+              )}
+              <button onClick={() => handleAdd("priority")}>
+                {creatingPriority ? "cancelar" : "añadir prioridad"}
+              </button>
+              <form onSubmit={handleSubmitPriority}>
+                {creatingPriority && (
+                  <>
+                    <input
+                      type="text"
+                      name="name"
+                      placeholder="nueva prioridad"
+                      onChange={handleInputChangePriority}
+                      value={newPriority.name}
+                    />
+                    <div>
+                      <HexColorPicker
+                        color={color}
+                        onChange={handleColorChangePriority}
+                      />
+                      <h5>
+                        Selected Color: <p style={{ color: color }}>{color}</p>
+                      </h5>
+                    </div>
+                    <button type="submit">agregar</button>
+                  </>
+                )}
+              </form>
+            </AccordionItem>
+          </Accordion>
+        </section>
       )}
       <FormTickets />
     </section>

@@ -10,6 +10,7 @@ main {
     .mainSection {
       @include width(100%, 100%);
       padding-left: 3.5rem;
+      margin-top: 4rem;
     }
   }
 }
@@ -18,6 +19,8 @@ main {
   @include centerFlex(flex, row, space-between, center, 0);
   @include width(100%, 100%);
   @include height(4rem, 4rem);
+  position: fixed;
+  top: 0;
   z-index: 2;
   background-color: $white-100;
   -webkit-box-shadow: 0px 2px 11px 0px rgba(0, 0, 0, 0.75);
