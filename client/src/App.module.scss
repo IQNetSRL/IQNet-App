@@ -21,7 +21,7 @@ main {
   @include height(4rem, 4rem);
   position: fixed;
   top: 0;
-  z-index: 2;
+  z-index: 1000;
   background-color: $white-100;
   -webkit-box-shadow: 0px 2px 11px 0px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: 0px 2px 11px 0px rgba(0, 0, 0, 0.75);

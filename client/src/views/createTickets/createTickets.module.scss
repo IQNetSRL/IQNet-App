@@ -6,14 +6,14 @@
   .accordionSection {
     @include centerFlex(flex, column, center, center, 2rem);
     @include width(auto, 42rem);
-    @include height(12rem, 12rem);
+    @include height(9rem, 9rem);
     margin: 0.3rem 0 0 1rem;
     flex-wrap: wrap;
     background-color: $white-900;
     .area {
       @include width(20rem, 20rem);
       .accordionArea {
-        @include height(4rem, 4rem);
+        @include height(3rem, 3rem);
         background-color: $white-200;
         border-radius: 0.4rem;
         position: relative;
@@ -22,7 +22,7 @@
           background-color: $white-200;
           position: relative;
           z-index: 99;
-          padding: 0.4rem 0;
+          padding: 0.4rem 0 0 0;
           border: 0.2rem solid $pumpkin-700;
           border-radius: 0 0 0.4rem 0.4rem;
           li {
@@ -36,12 +36,23 @@
               @include width(2rem, 2rem);
               @include height(2rem, 2rem);
             }
+            .addButton {
+              @include centerFlex(flex, row, center, center, 0);
+              @include button($white-100, 0.2rem solid $pumpkin-600);
+              @include width(100%, 100%);
+              @include height(3rem, 3rem);
+              color: $pumpkin-600;
+              &:hover {
+                background-color: $pumpkin-600;
+                color: $white-100;
+              }
+            }
           }
         }
         button {
           @include centerFlex(flex, row, space-between, center, 0);
           @include width(100%, 100%);
-          @include height(4rem, 4rem);
+          @include height(3rem, 3rem);
           @include button(transparent, none);
           font-size: 1.2rem;
           border-radius: 0.4rem;

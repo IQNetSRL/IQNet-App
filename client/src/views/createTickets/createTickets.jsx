@@ -6,6 +6,7 @@ import { Accordion, AccordionItem } from "@szhsin/react-accordion";
 import { RiEdit2Fill } from "react-icons/ri";
 import { MdOutlineClose } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
+import { IoAdd } from "react-icons/io5";
 import {
   postArea,
   postCategory,
@@ -186,7 +187,7 @@ const CreateTickets = (props) => {
 
   const handleRenderHeader = (value) => {
     return (
-      <h2>
+      <h2 onClick={() => handleOpen(value)}>
         {value === "area"
           ? "Area"
           : value === "category"
@@ -207,7 +208,6 @@ const CreateTickets = (props) => {
             <AccordionItem
               header={() => handleRenderHeader("area")}
               className={styles.accordionArea}
-              onClick={() => handleOpen("area")}
               style={{ zIndex: 999 }}
             >
               {allAreas.length > 0 ? (
@@ -231,7 +231,13 @@ const CreateTickets = (props) => {
                       className={styles.addButton}
                       onClick={() => handleAdd("area")}
                     >
-                      {creatingArea ? "cancelar" : "añadir area"}
+                      {creatingArea ? (
+                        "cancelar"
+                      ) : (
+                        <>
+                          <span>añadir area</span> <IoAdd />
+                        </>
+                      )}
                     </button>
                     <form onSubmit={handleSubmitArea}>
                       {creatingArea && (
@@ -249,7 +255,7 @@ const CreateTickets = (props) => {
                               onChange={handleColorChangeArea}
                             />
                             <h5>
-                              Selected Color:{" "}
+                              Selected Color:
                               <p style={{ color: color }}>{color}</p>
                             </h5>
                           </div>
@@ -268,7 +274,6 @@ const CreateTickets = (props) => {
             <AccordionItem
               header={() => handleRenderHeader("category")}
               className={styles.accordionArea}
-              onClick={() => handleOpen("category")}
               style={{ zIndex: 998 }}
             >
               {allCategories.length > 0 ? (
@@ -287,46 +292,54 @@ const CreateTickets = (props) => {
                       </button>
                     </li>
                   ))}
+                  <li>
+                    <button
+                      className={styles.addButton}
+                      onClick={() => handleAdd("category")}
+                    >
+                      {creatingCategory ? (
+                        "cancelar"
+                      ) : (
+                        <>
+                          <span>añadir categoria</span> <IoAdd />
+                        </>
+                      )}
+                    </button>
+                    <form onSubmit={handleSubmitCategory}>
+                      {creatingCategory && (
+                        <>
+                          <input
+                            type="text"
+                            name="name"
+                            placeholder="nueva categoria"
+                            onChange={handleInputChangeCategory}
+                            value={newCategory.name}
+                          />
+                          <div>
+                            <HexColorPicker
+                              color={color}
+                              onChange={handleColorChangeCategory}
+                            />
+                            <h5>
+                              Selected Color:
+                              <p style={{ color: color }}>{color}</p>
+                            </h5>
+                          </div>
+                          <button type="submit">agregar</button>
+                        </>
+                      )}
+                    </form>
+                  </li>
                 </ol>
               ) : (
                 <p>Cargando categorias...</p>
               )}
-              <button
-                className={styles.addButton}
-                onClick={() => handleAdd("category")}
-              >
-                {creatingCategory ? "cancelar" : "añadir categoria"}
-              </button>
-              <form onSubmit={handleSubmitCategory}>
-                {creatingCategory && (
-                  <>
-                    <input
-                      type="text"
-                      name="name"
-                      placeholder="nueva categoria"
-                      onChange={handleInputChangeCategory}
-                      value={newCategory.name}
-                    />
-                    <div>
-                      <HexColorPicker
-                        color={color}
-                        onChange={handleColorChangeCategory}
-                      />
-                      <h5>
-                        Selected Color: <p style={{ color: color }}>{color}</p>
-                      </h5>
-                    </div>
-                    <button type="submit">agregar</button>
-                  </>
-                )}
-              </form>
             </AccordionItem>
           </Accordion>
           <Accordion className={styles.area}>
             <AccordionItem
               header={() => handleRenderHeader("status")}
               className={styles.accordionArea}
-              onClick={() => handleOpen("status")}
               style={{ zIndex: 997 }}
             >
               {allStatus.length > 0 ? (
@@ -345,46 +358,54 @@ const CreateTickets = (props) => {
                       </button>
                     </li>
                   ))}
+                  <li>
+                    <button
+                      className={styles.addButton}
+                      onClick={() => handleAdd("status")}
+                    >
+                      {creatingStatus ? (
+                        "cancelar"
+                      ) : (
+                        <>
+                          <span>añadir estatus</span> <IoAdd />
+                        </>
+                      )}
+                    </button>
+                    <form onSubmit={handleSubmitStatus}>
+                      {creatingStatus && (
+                        <>
+                          <input
+                            type="text"
+                            name="name"
+                            placeholder="nuevo estatus"
+                            onChange={handleInputChangeStatus}
+                            value={newStatus.name}
+                          />
+                          <div>
+                            <HexColorPicker
+                              color={color}
+                              onChange={handleColorChangeStatus}
+                            />
+                            <h5>
+                              Selected Color:
+                              <p style={{ color: color }}>{color}</p>
+                            </h5>
+                          </div>
+                          <button type="submit">agregar</button>
+                        </>
+                      )}
+                    </form>
+                  </li>
                 </ol>
               ) : (
                 <p>Cargando estatus...</p>
               )}
-              <button
-                className={styles.addButton}
-                onClick={() => handleAdd("status")}
-              >
-                {creatingStatus ? "cancelar" : "añadir status"}
-              </button>
-              <form onSubmit={handleSubmitStatus}>
-                {creatingStatus && (
-                  <>
-                    <input
-                      type="text"
-                      name="name"
-                      placeholder="nuevo estatus"
-                      onChange={handleInputChangeStatus}
-                      value={newStatus.name}
-                    />
-                    <div>
-                      <HexColorPicker
-                        color={color}
-                        onChange={handleColorChangeStatus}
-                      />
-                      <h5>
-                        Selected Color: <p style={{ color: color }}>{color}</p>
-                      </h5>
-                    </div>
-                    <button type="submit">agregar</button>
-                  </>
-                )}
-              </form>
             </AccordionItem>
           </Accordion>
           <Accordion className={styles.area}>
             <AccordionItem
               header={() => handleRenderHeader("priority")}
               className={styles.accordionArea}
-              onClick={() => handleOpen("priority")}
               style={{ zIndex: 996 }}
             >
               {allPriorities.length > 0 ? (
@@ -403,39 +424,48 @@ const CreateTickets = (props) => {
                       </button>
                     </li>
                   ))}
+                  <li>
+                    <button
+                      className={styles.addButton}
+                      onClick={() => handleAdd("priority")}
+                    >
+                      {creatingPriority ? (
+                        "cancelar"
+                      ) : (
+                        <>
+                          <span>añadir prioridad</span> <IoAdd />
+                        </>
+                      )}
+                    </button>
+                    <form onSubmit={handleSubmitPriority}>
+                      {creatingPriority && (
+                        <>
+                          <input
+                            type="text"
+                            name="name"
+                            placeholder="nueva prioridad"
+                            onChange={handleInputChangePriority}
+                            value={newPriority.name}
+                          />
+                          <div>
+                            <HexColorPicker
+                              color={color}
+                              onChange={handleColorChangePriority}
+                            />
+                            <h5>
+                              Selected Color:
+                              <p style={{ color: color }}>{color}</p>
+                            </h5>
+                          </div>
+                          <button type="submit">agregar</button>
+                        </>
+                      )}
+                    </form>
+                  </li>
                 </ol>
               ) : (
                 <p>Cargando prioridades...</p>
               )}
-              <button
-                className={styles.addButton}
-                onClick={() => handleAdd("priority")}
-              >
-                {creatingPriority ? "cancelar" : "añadir prioridad"}
-              </button>
-              <form onSubmit={handleSubmitPriority}>
-                {creatingPriority && (
-                  <>
-                    <input
-                      type="text"
-                      name="name"
-                      placeholder="nueva prioridad"
-                      onChange={handleInputChangePriority}
-                      value={newPriority.name}
-                    />
-                    <div>
-                      <HexColorPicker
-                        color={color}
-                        onChange={handleColorChangePriority}
-                      />
-                      <h5>
-                        Selected Color: <p style={{ color: color }}>{color}</p>
-                      </h5>
-                    </div>
-                    <button type="submit">agregar</button>
-                  </>
-                )}
-              </form>
             </AccordionItem>
           </Accordion>
         </section>
