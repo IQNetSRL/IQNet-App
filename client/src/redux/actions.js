@@ -146,12 +146,12 @@ export function postArea(newArea) {
   };
 }
 
-export function postPriority(name, color) {
+export function postPriority(newPriority) {
   return async function (dispatch) {
     try {
       const response = await axios.post(`/values/priorities`, {
-        name: name.name,
-        color: color,
+        name: newPriority.name,
+        color: newPriority.color,
       });
       return dispatch({
         type: POST_PRIORITY,
@@ -163,12 +163,12 @@ export function postPriority(name, color) {
   };
 }
 
-export function postCategory(name, color) {
+export function postCategory(newCategory) {
   return async function (dispatch) {
     try {
       const response = await axios.post(`/values/categories`, {
-        name: name.name,
-        color: color,
+        name: newCategory.name,
+        color: newCategory.color,
       });
       return dispatch({
         type: POST_CATEGORY,
@@ -180,12 +180,12 @@ export function postCategory(name, color) {
   };
 }
 
-export function postStatus(name, color) {
+export function postStatus(newStatus) {
   return async function (dispatch) {
     try {
       const response = await axios.post(`/values/status`, {
-        name: name.name,
-        color: color,
+        name: newStatus.name,
+        color: newStatus.color,
       });
       return dispatch({
         type: POST_STATUS,

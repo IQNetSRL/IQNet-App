@@ -32,7 +32,10 @@ const CreateTickets = (props) => {
   const [newStatus, setNewStatus] = useState({ name: "" });
   const [newPriority, setNewPriority] = useState({ name: "" });
   const [color, setColor] = useState("#ffffff");
-  const [creating, setCreating] = useState(false);
+  const [creatingArea, setCreatingArea] = useState(false);
+  const [creatingCategory, setCreatingCategory] = useState(false);
+  const [creatingStatus, setCreatingStatus] = useState(false);
+  const [creatingPriority, setCreatingPriority] = useState(false);
 
   CreateTickets.propTypes = {
     rol: PropTypes.string.isRequired,
@@ -60,8 +63,14 @@ const CreateTickets = (props) => {
     }
   };
 
-  const handleAdd = () => {
-    setCreating(!creating);
+  const handleAdd = (value) => {
+    value === "area"
+      ? setCreatingArea(!creatingArea)
+      : value === "category"
+      ? setCreatingCategory(!creatingCategory)
+      : value === "status"
+      ? setCreatingStatus(!creatingStatus)
+      : value === "priority" && setCreatingPriority(!creatingPriority);
   };
 
   const handleSubmitCategory = async (e) => {
@@ -72,7 +81,7 @@ const CreateTickets = (props) => {
 
     try {
       await dispatch(postCategory(newCategory));
-      setNewCategory({ name: "" });
+      setNewCategory({ name: "", color: "" });
     } catch (error) {
       console.error("Error al agregar la Categoria:", error);
     }
@@ -86,7 +95,7 @@ const CreateTickets = (props) => {
 
     try {
       await dispatch(postStatus(newStatus));
-      setNewStatus({ name: "" });
+      setNewStatus({ name: "", color: "" });
     } catch (error) {
       console.error("Error al agregar el Estatus:", error);
     }
@@ -100,7 +109,7 @@ const CreateTickets = (props) => {
 
     try {
       await dispatch(postPriority(newPriority));
-      setNewPriority({ name: "" });
+      setNewPriority({ name: "", color: "" });
     } catch (error) {
       console.error("Error al agregar la Prioridad:", error);
     }
@@ -109,6 +118,21 @@ const CreateTickets = (props) => {
   const handleColorChangeArea = (newColor) => {
     setColor(newColor);
     setNewArea((prevArea) => ({ ...prevArea, color: newColor }));
+  };
+
+  const handleColorChangeCategory = (newColor) => {
+    setColor(newColor);
+    setNewCategory((prevCategory) => ({ ...prevCategory, color: newColor }));
+  };
+
+  const handleColorChangeStatus = (newColor) => {
+    setColor(newColor);
+    setNewStatus((prevStatus) => ({ ...prevStatus, color: newColor }));
+  };
+
+  const handleColorChangePriority = (newColor) => {
+    setColor(newColor);
+    setNewPriority((prevPriority) => ({ ...prevPriority, color: newColor }));
   };
 
   const handleInputChangeCategory = (e) => {
@@ -176,11 +200,11 @@ const CreateTickets = (props) => {
                 ) : (
                   <p>Cargando areas...</p>
                 )}
+                <button onClick={() => handleAdd("area")}>
+                  {creatingArea ? "cancelar" : "añadir area"}
+                </button>
                 <form onSubmit={handleSubmitArea}>
-                  <button onClick={handleAdd}>
-                    {creating ? "cancelar" : "añadir area"}
-                  </button>
-                  {creating && (
+                  {creatingArea && (
                     <>
                       <input
                         type="text"
@@ -195,7 +219,8 @@ const CreateTickets = (props) => {
                           onChange={handleColorChangeArea}
                         />
                         <h5>
-                          Selected Color: <p style={{ color: color }}>Color</p>
+                          Selected Color:{" "}
+                          <p style={{ color: color }}>{color}</p>
                         </h5>
                       </div>
                       <button type="submit">agregar</button>
@@ -208,7 +233,10 @@ const CreateTickets = (props) => {
                 {allCategories.length > 0 ? (
                   <ol>
                     {allCategories?.map((category, index) => (
-                      <li key={category.id || index}>
+                      <li
+                        key={category.id || index}
+                        style={{ color: category.color || "black" }}
+                      >
                         {category.name}
                         <button
                           onClick={() => handleDelete(category.id, "category")}
@@ -221,15 +249,32 @@ const CreateTickets = (props) => {
                 ) : (
                   <p>Cargando categorias...</p>
                 )}
+                <button onClick={() => handleAdd("category")}>
+                  {creatingCategory ? "cancelar" : "añadir categoria"}
+                </button>
                 <form onSubmit={handleSubmitCategory}>
-                  <input
-                    type="text"
-                    name="name"
-                    placeholder="nueva categoria"
-                    onChange={handleInputChangeCategory}
-                    value={newCategory.name}
-                  />
-                  <button type="submit">agregar</button>
+                  {creatingCategory && (
+                    <>
+                      <input
+                        type="text"
+                        name="name"
+                        placeholder="nueva categoria"
+                        onChange={handleInputChangeCategory}
+                        value={newCategory.name}
+                      />
+                      <div>
+                        <HexColorPicker
+                          color={color}
+                          onChange={handleColorChangeCategory}
+                        />
+                        <h5>
+                          Selected Color:{" "}
+                          <p style={{ color: color }}>{color}</p>
+                        </h5>
+                      </div>
+                      <button type="submit">agregar</button>
+                    </>
+                  )}
                 </form>
               </div>
             </section>
@@ -239,7 +284,10 @@ const CreateTickets = (props) => {
             {allStatus.length > 0 ? (
               <ol>
                 {allStatus?.map((status, index) => (
-                  <li key={status.id || index}>
+                  <li
+                    key={status.id || index}
+                    style={{ color: status.color || "black" }}
+                  >
                     {status.name}
                     <button onClick={() => handleDelete(status.id, "status")}>
                       eliminar
@@ -250,15 +298,31 @@ const CreateTickets = (props) => {
             ) : (
               <p>Cargando estatus...</p>
             )}
+            <button onClick={() => handleAdd("status")}>
+              {creatingStatus ? "cancelar" : "añadir status"}
+            </button>
             <form onSubmit={handleSubmitStatus}>
-              <input
-                type="text"
-                name="name"
-                placeholder="nuevo estatus"
-                onChange={handleInputChangeStatus}
-                value={newStatus.name}
-              />
-              <button type="submit">agregar</button>
+              {creatingStatus && (
+                <>
+                  <input
+                    type="text"
+                    name="name"
+                    placeholder="nuevo estatus"
+                    onChange={handleInputChangeStatus}
+                    value={newStatus.name}
+                  />
+                  <div>
+                    <HexColorPicker
+                      color={color}
+                      onChange={handleColorChangeStatus}
+                    />
+                    <h5>
+                      Selected Color: <p style={{ color: color }}>{color}</p>
+                    </h5>
+                  </div>
+                  <button type="submit">agregar</button>
+                </>
+              )}
             </form>
           </div>
           <div>
@@ -266,7 +330,10 @@ const CreateTickets = (props) => {
             {allPriorities.length > 0 ? (
               <ol>
                 {allPriorities?.map((priority, index) => (
-                  <li key={priority.id || index}>
+                  <li
+                    key={priority.id || index}
+                    style={{ color: priority.color || "black" }}
+                  >
                     {priority.name}
                     <button
                       onClick={() => handleDelete(priority.id, "priority")}
@@ -279,15 +346,31 @@ const CreateTickets = (props) => {
             ) : (
               <p>Cargando prioridades...</p>
             )}
+            <button onClick={() => handleAdd("priority")}>
+              {creatingPriority ? "cancelar" : "añadir prioridad"}
+            </button>
             <form onSubmit={handleSubmitPriority}>
-              <input
-                type="text"
-                name="name"
-                placeholder="nueva prioridad"
-                onChange={handleInputChangePriority}
-                value={newPriority.name}
-              />
-              <button type="submit">agregar</button>
+              {creatingPriority && (
+                <>
+                  <input
+                    type="text"
+                    name="name"
+                    placeholder="nueva prioridad"
+                    onChange={handleInputChangePriority}
+                    value={newPriority.name}
+                  />
+                  <div>
+                    <HexColorPicker
+                      color={color}
+                      onChange={handleColorChangePriority}
+                    />
+                    <h5>
+                      Selected Color: <p style={{ color: color }}>{color}</p>
+                    </h5>
+                  </div>
+                  <button type="submit">agregar</button>
+                </>
+              )}
             </form>
           </div>
         </>
