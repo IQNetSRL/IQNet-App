@@ -22,6 +22,7 @@ const FormTickets = () => {
   const [selectedArea, setSelectedArea] = useState("Ninguna");
   const [isSelected, setIsSelected] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
+  const [isMapOpen, setIsMapOpen] = useState(false);
   const [newTicket, setNewTicket] = useState({
     username: "",
     AreaId: "",
@@ -126,6 +127,10 @@ const FormTickets = () => {
 
   const handleAdd = () => {
     setIsAdding(!isAdding);
+  };
+
+  const handleOpenMap = () => {
+    setIsMapOpen(!isMapOpen);
   };
 
   return (
@@ -293,40 +298,51 @@ const FormTickets = () => {
               />
             </div>
             <div className={styles.createButtonContainer}>
-            <button className={styles.createButton} type="submit">Crear</button>
+              <button className={styles.createButton} type="submit">
+                Crear
+              </button>
             </div>
           </form>
         )}
       </section>
-      <div style={{ height: "400px", width: "100%" }}>
-        <button>Ver Mapa</button>
-        <MapContainer
-          center={
-            newTicket.coordinates
-              ? newTicket.coordinates.split(",").map(Number)
-              : [-27.20789114815453, -54.975951133931545]
-          }
-          zoom={9}
-          style={{ height: "100%", width: "100%" }}
-          whenCreated={handleMapLoad}
-          onLoad={() =>
-            mapRef.current && mapRef.current.leafletElement.invalidateSize()
-          }
-        >
-          <TileLayer
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          />
-          {newTicket.coordinates && (
-            <Marker
-              position={newTicket.coordinates.split(",").map(Number)}
-              draggable={false}
-            >
-              <Popup>Tu ubicación ingresada aquí.</Popup>
-            </Marker>
-          )}
-        </MapContainer>
+      <div style={{ width: "100%" }}>
+        <button className={styles.showMapButton} onClick={handleOpenMap}>
+          <p> {isMapOpen ? "Ocultar" : "Ver Mapa"}</p>
+          <span>
+            <IoLocationSharp />
+          </span>
+        </button>
       </div>
+      {isMapOpen && (
+        <div style={{ height: "400px", width: "100%" }}>
+          <MapContainer
+            center={
+              newTicket.coordinates
+                ? newTicket.coordinates.split(",").map(Number)
+                : [-27.20789114815453, -54.975951133931545]
+            }
+            zoom={9}
+            style={{ height: "100%", width: "100%" }}
+            whenCreated={handleMapLoad}
+            onLoad={() =>
+              mapRef.current && mapRef.current.leafletElement.invalidateSize()
+            }
+          >
+            <TileLayer
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            />
+            {newTicket.coordinates && (
+              <Marker
+                position={newTicket.coordinates.split(",").map(Number)}
+                draggable={false}
+              >
+                <Popup>Tu ubicación ingresada aquí.</Popup>
+              </Marker>
+            )}
+          </MapContainer>
+        </div>
+      )}
     </section>
   );
 };
