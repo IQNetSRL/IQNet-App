@@ -1,0 +1,54 @@
+@import "../../styles/variables.scss";
+@import "../../styles/mixins.scss";
+
+.sectionProfile {
+  h1 {
+    @include centerFlex(flex, row, flex-start, center, 0.5rem);
+    @include height(4rem, 4rem);
+    background-color: $white-200;
+    padding: 1rem;
+    font-size: 1.8rem;
+    cursor: default;
+    span {
+      @include centerFlex(flex, row, center, center, 0);
+    }
+  }
+  .infoSection {
+    @include centerFlex(flex, row, flex-start, flex-start, 1rem);
+    background-color: $white-500;
+    padding: 1rem;
+    img {
+      border: 0.2rem solid $white-950;
+      border-radius: 0.2rem;
+    }
+    .nameSection {
+      @include centerFlex(flex, column, flex-start, flex-start, 0.5rem);
+      cursor: default;
+      h3 {
+        color: $white-950;
+      }
+      h5 {
+        color: $white-900;
+      }
+    }
+  }
+  .titleContainer {
+    @include centerFlex(flex, row, center, center, 0.5rem);
+    @include height(4.5rem, 4.5rem);
+    background-color: $white-200;
+    .title {
+      font-size: 2rem;
+      cursor: default;
+    }
+    .ticketIcon {
+      @include centerFlex(flex, row, center, center, 0);
+      @include height(3rem, 3rem);
+      @include width(3rem, 3rem);
+      color: $pumpkin-600;
+      svg {
+        @include height(2rem, 2rem);
+        @include width(2rem, 2rem);
+      }
+    }
+  }
+}
