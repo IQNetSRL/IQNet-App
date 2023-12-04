@@ -6,6 +6,7 @@ import { RiUserFollowFill } from "react-icons/ri";
 import { RiFileExcel2Fill } from "react-icons/ri";
 import { FaCity } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
+import { IoEye } from "react-icons/io5";
 import {
   getUsers,
   getCities,
@@ -24,6 +25,7 @@ const Administrator = () => {
   const allCities = useSelector((state) => state.someReducer.allCities);
   const allAccounts = useSelector((state) => state.someReducer.allAccounts);
   const [isEditing, setIsEditing] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const [newCity, setNewCity] = useState({ name: "" });
   const [level, setLevel] = useState("");
   const [newLevel, setNewLevel] = useState({
@@ -118,6 +120,10 @@ const Administrator = () => {
     setNewCity({ ...newCity, [name]: value });
   };
 
+  const handleShowCities = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
     <section className={styles.sectionAdministrator}>
       <h1>
@@ -185,22 +191,35 @@ const Administrator = () => {
             <FaCity />
           </span>
         </h2>
-        <div className={styles.olContainer}>
-          {allCities.length > 0 ? (
-            <ol>
-              {allCities?.map((city, index) => (
-                <li key={city.id || index}>
-                  {city.name}
-                  <button onClick={() => handleDeleteCity(city.id)}>
-                    <MdDelete />
-                  </button>
-                </li>
-              ))}
-            </ol>
-          ) : (
-            <p>Cargando ciudades...</p>
-          )}
+        <div>
+          <button
+            className={styles.showCitiesButton}
+            onClick={handleShowCities}
+          >
+            {isOpen ? "Ocultar" : "Mostrar"}
+            <span>
+              <IoEye />
+            </span>
+          </button>
         </div>
+        {isOpen && (
+          <div className={styles.olContainer}>
+            {allCities.length > 0 ? (
+              <ol>
+                {allCities?.map((city, index) => (
+                  <li key={city.id || index}>
+                    {city.name}
+                    <button onClick={() => handleDeleteCity(city.id)}>
+                      <MdDelete />
+                    </button>
+                  </li>
+                ))}
+              </ol>
+            ) : (
+              <p>Cargando ciudades...</p>
+            )}
+          </div>
+        )}
       </section>
       <section>
         <h3>Agregar Localidad</h3>

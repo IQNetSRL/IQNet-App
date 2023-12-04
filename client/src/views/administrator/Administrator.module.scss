@@ -132,6 +132,24 @@
         color: $pumpkin-600;
       }
     }
+    .showCitiesButton {
+      @include button(rgb(27, 81, 126), none);
+      @include centerFlex(flex, row, space-between, center, 0);
+      @include width(8rem, 8rem);
+      @include height(3rem, 3rem);
+      color: $white-100;
+      font-size: 1.1rem;
+      padding: 0.9rem;
+      margin: 1rem;
+      border-radius: 0.3rem;
+      transition: 0.1s ease;
+      span {
+        @include centerFlex(flex, row, center, center, 0);
+      }
+      &:hover {
+        transform: scale(1.05);
+      }
+    }
     .olContainer {
       @include centerFlex(flex, row, center, center, 0);
       @include width(100%, 100%);
