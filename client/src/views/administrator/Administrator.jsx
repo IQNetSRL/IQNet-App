@@ -132,10 +132,10 @@ const Administrator = () => {
       </h1>
       <section className={styles.clients}>
         <h2>
+          Prospectos
           <span>
             <RiUserFollowFill />
           </span>
-          Prospectos
         </h2>
         <div>
           <button className={styles.excelButton} onClick={handleExportToExcel}>
