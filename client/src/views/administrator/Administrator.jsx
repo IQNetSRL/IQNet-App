@@ -1,10 +1,11 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { MdAdminPanelSettings } from "react-icons/md";
 import { RiUserFollowFill } from "react-icons/ri";
 import { RiFileExcel2Fill } from "react-icons/ri";
+import { FaCity } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
 import {
   getUsers,
   getCities,
@@ -18,7 +19,6 @@ import * as XLSX from "xlsx";
 import styles from "./Administrator.module.scss";
 
 const Administrator = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const allUsers = useSelector((state) => state.someReducer.allUsers);
   const allCities = useSelector((state) => state.someReducer.allCities);
@@ -62,10 +62,6 @@ const Administrator = () => {
     "Dirección",
     "Consulta",
   ];
-
-  const handleNavigate = () => {
-    navigate("/home");
-  };
 
   const handleEdit = (id, level) => {
     setIsEditing(true);
@@ -182,22 +178,29 @@ const Administrator = () => {
           </section>
         </div>
       </section>
-      <section>
-        <h2>Localidades</h2>
-        {allCities.length > 0 ? (
-          <ol>
-            {allCities?.map((city, index) => (
-              <li key={city.id || index}>
-                {city.name}
-                <button onClick={() => handleDeleteCity(city.id)}>
-                  eliminar
-                </button>
-              </li>
-            ))}
-          </ol>
-        ) : (
-          <p>Cargando ciudades...</p>
-        )}
+      <section className={styles.citiesSection}>
+        <h2>
+          Localidades
+          <span>
+            <FaCity />
+          </span>
+        </h2>
+        <div className={styles.olContainer}>
+          {allCities.length > 0 ? (
+            <ol>
+              {allCities?.map((city, index) => (
+                <li key={city.id || index}>
+                  {city.name}
+                  <button onClick={() => handleDeleteCity(city.id)}>
+                    <MdDelete />
+                  </button>
+                </li>
+              ))}
+            </ol>
+          ) : (
+            <p>Cargando ciudades...</p>
+          )}
+        </div>
       </section>
       <section>
         <h3>Agregar Localidad</h3>
@@ -250,7 +253,6 @@ const Administrator = () => {
           </div>
         )}
       </section>
-      <button onClick={handleNavigate}>ir a home</button>
     </section>
   );
 };
