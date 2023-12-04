@@ -1,0 +1,95 @@
+@import "../../styles/variables.scss";
+@import "../../styles/mixins.scss";
+
+.sectionFormTickets {
+  @include centerFlex(flex, column, center, center, 0);
+  position: relative;
+  z-index: 1;
+  .titleContainer {
+    @include centerFlex(flex, row, center, center, 0.5rem);
+    @include width(100%, 100%);
+    @include height(4.5rem, 4.5rem);
+    background-color: $white-100;
+    .title {
+      font-size: 2rem;
+      cursor: default;
+    }
+    .ticketIcon {
+      @include centerFlex(flex, row, center, center, 0);
+      @include height(3rem, 3rem);
+      @include width(3rem, 3rem);
+      color: $pumpkin-600;
+      svg {
+        @include height(2rem, 2rem);
+        @include width(2rem, 2rem);
+      }
+    }
+  }
+  section {
+    @include width(100%, 100%);
+    padding: 1rem 1rem;
+    background-color: $white-500;
+    button {
+      @include centerFlex(flex, row, center, center, 0.1rem);
+      @include button($pumpkin-700, none);
+      @include width(10rem, 10rem);
+      @include height(3rem, 3rem);
+      color: $white-100;
+      font-size: 1.1rem;
+      padding: 1rem;
+      border-radius: 0.3rem;
+      transition: 0.1s ease;
+      &:hover {
+        border: 0.2rem solid $pumpkin-700;
+        color: $pumpkin-700;
+        background-color: $white-100;
+      }
+    }
+    form {
+      @include centerFlex(flex, row, space-between, center, 1rem);
+      @include width(100%, 100%);
+      flex-wrap: wrap;
+      margin-top: 1rem;
+      div {
+        @include centerFlex(flex, column, center, flex-start, 0.5rem);
+        @include width(10rem, 10rem);
+        font-size: 0.9rem;
+        select {
+          @include width(10rem, 10rem);
+          @include height(2.3rem, 2.3rem);
+          border-radius: 0.3rem;
+          padding: 0.2rem;
+          font-size: 0.9rem;
+          cursor: pointer;
+          option {
+            font-size: 0.9rem;
+            color: $white-950;
+            background-color: $white-200;
+          }
+        }
+      }
+      div {
+        input {
+          @include width(10rem, 10rem);
+          @include height(2.3rem, 2.3rem);
+          border-radius: 0.3rem;
+          padding: 0.6rem;
+          border: 0.15rem solid $white-950;
+        }
+      }
+      .createButtonContainer {
+        @include centerFlex(flex, row, center, flex-end, 0);
+        @include height(3.925rem, 3.925rem);
+        .createButton {
+          @include button(rgb(27, 126, 27), none);
+          transition: 0.1s ease;
+          &:hover {
+            background-color: $white-100;
+            color: rgb(27, 126, 27);
+            border: 0.2rem solid rgb(27, 126, 27);
+          }
+        }
+      }
+    }
+  }
+}

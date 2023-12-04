@@ -3,6 +3,8 @@ import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useAuth0 } from "@auth0/auth0-react";
 import { postTicket } from "../../redux/actions.js";
+import { IoTicket } from "react-icons/io5";
+import { IoLocationSharp } from "react-icons/io5";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import styles from "./FormTickets.module.scss";
@@ -19,6 +21,7 @@ const FormTickets = () => {
   const [map, setMap] = useState(null);
   const [selectedArea, setSelectedArea] = useState("Ninguna");
   const [isSelected, setIsSelected] = useState(false);
+  const [isAdding, setIsAdding] = useState(false);
   const [newTicket, setNewTicket] = useState({
     username: "",
     AreaId: "",
@@ -121,133 +124,182 @@ const FormTickets = () => {
     setMap(map);
   };
 
+  const handleAdd = () => {
+    setIsAdding(!isAdding);
+  };
+
   return (
-    <section
-      className={styles.sectionFormTickets}
-      style={{ position: "relative", zIndex: -1 }}
-    >
-      <h1>Crear Ticket</h1>
-      <form onSubmit={handleSubmit}>
-        <select
-          name="areas"
-          value={newTicket.AreaId}
-          onChange={(e) => handleSelectChange("AreaId", e.target.value)}
-        >
-          <option value="">Ninguna</option>
-          {allAreas?.map((area, index) => (
-            <option key={area.id || index} value={area.id}>
-              {area.name}
-            </option>
-          ))}
-        </select>
-        <select
-          name="categories"
-          value={newTicket.CategoryId}
-          onChange={(e) => handleSelectChange("CategoryId", e.target.value)}
-        >
-          <option value="">Ninguna</option>
-          {allCategories?.map((category, index) => (
-            <option key={category.id || index} value={category.id}>
-              {category.name}
-            </option>
-          ))}
-        </select>
-        <select
-          name="status"
-          value={newTicket.StatusId}
-          onChange={(e) => handleSelectChange("StatusId", e.target.value)}
-        >
-          <option value="">Ninguno</option>
-          {allStatus?.map((status, index) => (
-            <option key={status.id || index} value={status.id}>
-              {status.name}
-            </option>
-          ))}
-        </select>
-        <select
-          name="priorities"
-          value={newTicket.PriorityId}
-          onChange={(e) => handleSelectChange("PriorityId", e.target.value)}
-        >
-          <option value="">Ninguna</option>
-          {allPriorities?.map((priority, index) => (
-            <option key={priority.id || index} value={priority.id}>
-              {priority.name}
-            </option>
-          ))}
-        </select>
-        <select
-          name="responsable"
-          value={newTicket.responsable}
-          disabled={isSelected ? false : true}
-          onChange={(e) => handleSelectChange("responsable", e.target.value)}
-        >
-          <option value="">Ninguno</option>
-          {selectedArea === "administracion" &&
-            allAccounts
-              .filter((account) => account.level === "admin")
-              .map((adminAccount, index) => (
-                <option
-                  key={adminAccount.id || index}
-                  value={adminAccount.name}
-                >
-                  {adminAccount.name}
-                </option>
-              ))}
-          {selectedArea === "ventas" &&
-            allAccounts
-              .filter((account) => account.level === "sales")
-              .map((adminAccount, index) => (
-                <option
-                  key={adminAccount.id || index}
-                  value={adminAccount.name}
-                >
-                  {adminAccount.name}
-                </option>
-              ))}
-          {selectedArea === "servicio técnico" &&
-            allAccounts
-              .filter((account) => account.level === "support")
-              .map((adminAccount, index) => (
-                <option
-                  key={adminAccount.id || index}
-                  value={adminAccount.name}
-                >
-                  {adminAccount.name}
-                </option>
-              ))}
-        </select>
-        <input
-          type="text"
-          name="text"
-          placeholder="descripcion"
-          value={newTicket.text}
-          onChange={(e) => handleSelectChange("text", e.target.value)}
-        />
-        <input
-          type="text"
-          name="client"
-          placeholder="cliente"
-          value={newTicket.client}
-          onChange={(e) => handleSelectChange("client", e.target.value)}
-        />
-        <input
-          type="text"
-          name="address"
-          placeholder="direccion"
-          value={newTicket.address}
-          onChange={(e) => handleSelectChange("address", e.target.value)}
-        />
-        <input
-          type="text"
-          name="coordinates"
-          placeholder="Coordenadas"
-          value={newTicket.coordinates}
-          onChange={(e) => handleCoordinatesChange(e.target.value)}
-        />
-        <button type="submit">Crear</button>
-      </form>
+    <section className={styles.sectionFormTickets}>
+      <div className={styles.titleContainer}>
+        <h2 className={styles.title}>Ticket</h2>
+        <span className={styles.ticketIcon}>
+          <IoTicket />
+        </span>
+      </div>
+      <section>
+        <button onClick={handleAdd}>
+          {isAdding ? "Cancelar" : "Cargar Ticket"}
+        </button>
+        {isAdding && (
+          <form onSubmit={handleSubmit}>
+            <div>
+              <label>-Seleccionar Area</label>
+              <select
+                name="areas"
+                value={newTicket.AreaId}
+                onChange={(e) => handleSelectChange("AreaId", e.target.value)}
+              >
+                <option value="">Ninguna</option>
+                {allAreas?.map((area, index) => (
+                  <option key={area.id || index} value={area.id}>
+                    {area.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label>-Seleccionar Categoria</label>
+              <select
+                name="categories"
+                value={newTicket.CategoryId}
+                onChange={(e) =>
+                  handleSelectChange("CategoryId", e.target.value)
+                }
+              >
+                <option value="">Ninguna</option>
+                {allCategories?.map((category, index) => (
+                  <option key={category.id || index} value={category.id}>
+                    {category.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label>-Seleccionar Estado</label>
+              <select
+                name="status"
+                value={newTicket.StatusId}
+                onChange={(e) => handleSelectChange("StatusId", e.target.value)}
+              >
+                <option value="">Ninguno</option>
+                {allStatus?.map((status, index) => (
+                  <option key={status.id || index} value={status.id}>
+                    {status.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label>-Seleccionar Prioridad</label>
+              <select
+                name="priorities"
+                value={newTicket.PriorityId}
+                onChange={(e) =>
+                  handleSelectChange("PriorityId", e.target.value)
+                }
+              >
+                <option value="">Ninguna</option>
+                {allPriorities?.map((priority, index) => (
+                  <option key={priority.id || index} value={priority.id}>
+                    {priority.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label>-Asignar a</label>
+              <select
+                name="responsable"
+                value={newTicket.responsable}
+                disabled={isSelected ? false : true}
+                onChange={(e) =>
+                  handleSelectChange("responsable", e.target.value)
+                }
+              >
+                <option value="">Ninguno</option>
+                {selectedArea === "administracion" &&
+                  allAccounts
+                    .filter((account) => account.level === "admin")
+                    .map((adminAccount, index) => (
+                      <option
+                        key={adminAccount.id || index}
+                        value={adminAccount.name}
+                      >
+                        {adminAccount.name}
+                      </option>
+                    ))}
+                {selectedArea === "ventas" &&
+                  allAccounts
+                    .filter((account) => account.level === "sales")
+                    .map((adminAccount, index) => (
+                      <option
+                        key={adminAccount.id || index}
+                        value={adminAccount.name}
+                      >
+                        {adminAccount.name}
+                      </option>
+                    ))}
+                {selectedArea === "servicio técnico" &&
+                  allAccounts
+                    .filter((account) => account.level === "support")
+                    .map((adminAccount, index) => (
+                      <option
+                        key={adminAccount.id || index}
+                        value={adminAccount.name}
+                      >
+                        {adminAccount.name}
+                      </option>
+                    ))}
+              </select>
+            </div>
+            <div>
+              <label>-Descripcion</label>
+              <input
+                type="text"
+                name="text"
+                placeholder="descripcion"
+                value={newTicket.text}
+                onChange={(e) => handleSelectChange("text", e.target.value)}
+              />
+            </div>
+            <div>
+              <label>-Cliente</label>
+              <input
+                type="text"
+                name="client"
+                placeholder="cliente"
+                value={newTicket.client}
+                onChange={(e) => handleSelectChange("client", e.target.value)}
+              />
+            </div>
+            <div>
+              <label>-Direccion</label>
+              <input
+                type="text"
+                name="address"
+                placeholder="direccion"
+                value={newTicket.address}
+                onChange={(e) => handleSelectChange("address", e.target.value)}
+              />
+            </div>
+            <div>
+              <label>-Coordenadas</label>
+              <input
+                type="text"
+                name="coordinates"
+                placeholder="Coordenadas"
+                value={newTicket.coordinates}
+                onChange={(e) => handleCoordinatesChange(e.target.value)}
+              />
+            </div>
+            <div className={styles.createButtonContainer}>
+            <button className={styles.createButton} type="submit">Crear</button>
+            </div>
+          </form>
+        )}
+      </section>
       <div style={{ height: "400px", width: "100%" }}>
+        <button>Ver Mapa</button>
         <MapContainer
           center={
             newTicket.coordinates

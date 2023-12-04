@@ -188,7 +188,7 @@
             div {
               @include width(5rem, 5rem);
               @include height(3.5rem, 3.5rem);
-              background-color: $white-100;
+              background-color: $white-200;
               border: 0.2rem solid $white-950;
             }
           }
@@ -207,7 +207,7 @@
               @include width(8.63rem, 8.63rem);
               height: 3rem;
               padding: 0.5rem 0 0.5rem 0.5rem;
-              background-color: $white-300;
+              background-color: $white-100;
               text-align: left;
               z-index: -1;
             }
@@ -215,7 +215,7 @@
               @include centerFlex(flex, row, center, center, 0);
               flex: 1;
               @include height(3rem, 3rem);
-              background-color: $white-300;
+              background-color: $white-200;
               div {
                 @include centerFlex(flex, row, center, center, 0.5rem);
                 @include width(100%, 100%);
