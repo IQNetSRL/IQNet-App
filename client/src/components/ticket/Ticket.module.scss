@@ -8,7 +8,7 @@
     @include centerFlex(flex, row, space-between, center, 0);
     .dateContainer {
       @include centerFlex(flex, row, center, flex-end, 1rem);
-      padding: 0.5rem;
+      padding: 0.5rem 0.5rem 0.5rem 1rem;
       div {
         h3 {
           color: $pumpkin-400;
@@ -37,7 +37,7 @@
     }
     .leftSection {
       @include centerFlex(flex, row, center, center, 0.5rem);
-      padding-right: 0.6rem;
+      padding-right: 1rem;
       margin-top: 0.6rem;
       .renderList {
         @include centerFlex(flex, column, center, center, 0);

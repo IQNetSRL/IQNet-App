@@ -2,6 +2,9 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { MdAdminPanelSettings } from "react-icons/md";
+import { RiUserFollowFill } from "react-icons/ri";
+import { RiFileExcel2Fill } from "react-icons/ri";
 import {
   getUsers,
   getCities,
@@ -121,42 +124,63 @@ const Administrator = () => {
 
   return (
     <section className={styles.sectionAdministrator}>
-      <h1>Administrator</h1>
-      <section>
-        <h2>Prospectos</h2>
-        <button onClick={handleExportToExcel}>Exportar a Excel</button>
-        <table>
-          <thead>
-            <tr>
-              <th>Nombre</th>
-              <th>Apellido</th>
-              <th>localidad</th>
-              <th>numero telefonico</th>
-              <th>email</th>
-              <th>direccion</th>
-              <th>consulta</th>
-              <th>acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            {allUsers?.map((user) => (
-              <tr key={user.id}>
-                <td>{user.name}</td>
-                <td>{user.lastName}</td>
-                <td>{user.city}</td>
-                <td>{user.phoneNumber}</td>
-                <td>{user.emailAddress}</td>
-                <td>{user.address}</td>
-                <td>{user.consult}</td>
-                <td>
-                  <button onClick={() => handleDeleteUser(user.id)}>
-                    eliminar
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <h1>
+        <span>
+          <MdAdminPanelSettings />
+        </span>
+        Administración
+      </h1>
+      <section className={styles.clients}>
+        <h2>
+          <span>
+            <RiUserFollowFill />
+          </span>
+          Prospectos
+        </h2>
+        <div>
+          <button className={styles.excelButton} onClick={handleExportToExcel}>
+            <span>
+              <RiFileExcel2Fill />
+            </span>
+            Excel
+          </button>
+        </div>
+        <div className={styles.tableContainerTwo}>
+          <section className={styles.tableContainer}>
+            <table>
+              <thead>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Apellido</th>
+                  <th>Localidad</th>
+                  <th>Número telefonico</th>
+                  <th>Email</th>
+                  <th>Dirección</th>
+                  <th>Consulta</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                {allUsers?.map((user) => (
+                  <tr key={user.id}>
+                    <td>{user.name}</td>
+                    <td>{user.lastName}</td>
+                    <td>{user.city}</td>
+                    <td>{user.phoneNumber}</td>
+                    <td>{user.emailAddress}</td>
+                    <td>{user.address}</td>
+                    <td>{user.consult}</td>
+                    <td>
+                      <button onClick={() => handleDeleteUser(user.id)}>
+                        eliminar
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </section>
+        </div>
       </section>
       <section>
         <h2>Localidades</h2>

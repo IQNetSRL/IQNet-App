@@ -1,0 +1,114 @@
+@import "../../styles/variables.scss";
+@import "../../styles/mixins.scss";
+
+.sectionAdministrator {
+  @include centerFlex(flex, column, flex-start, center, 0.5rem);
+  @include width(100%, 100%);
+  h1 {
+    @include centerFlex(flex, row, flex-start, center, 0.5rem);
+    @include height(4rem, 4rem);
+    @include width(100%, 100%);
+    background-color: $white-200;
+    padding: 1rem;
+    font-size: 1.8rem;
+    cursor: default;
+    span {
+      @include centerFlex(flex, row, center, center, 0);
+    }
+  }
+  .clients {
+    @include width(100%, 100%);
+    h2 {
+      @include centerFlex(flex, row, flex-start, center, 0.5rem);
+      @include height(4rem, 4rem);
+      @include width(100%, 100%);
+      background-color: $white-200;
+      padding: 1rem;
+      font-size: 1.8rem;
+      cursor: default;
+      span {
+        @include centerFlex(flex, row, center, center, 0);
+      }
+    }
+    div {
+      @include centerFlex(flex, row, flex-end, center, 0.1rem);
+      @include width(100%, 100%);
+      padding: 1.5rem 1rem;
+      .excelButton {
+        @include centerFlex(flex, row, center, center, 0.1rem);
+        @include button(rgb(9, 117, 9), none);
+        @include width(7rem, 7rem);
+        @include height(2rem, 2rem);
+        border-radius: 0.2rem;
+        font-size: 1rem;
+        color: $white-100;
+        transition: 0.2s ease;
+        span {
+          @include centerFlex(flex, row, center, center, 0);
+        }
+        &:hover {
+          background-color: $white-200;
+          color: rgb(9, 117, 9);
+        }
+      }
+    }
+    .tableContainerTwo {
+      @include centerFlex(flex, row, center, center, 0);
+      @include width(100%, 100%);
+      padding: 0 1rem;
+      background-color: $white-500;
+      .tableContainer {
+        @include centerFlex(flex, row, flex-start, center, 0);
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding: 0;
+        table {
+          @include centerFlex(inline-flex, column, center, center, 0.1rem);
+          @include width(auto, auto);
+          @include height(100%, 100%);
+          border-collapse: collapse;
+          cursor: default;
+          thead {
+            @include width(100%, 100%);
+            tr {
+              @include centerFlex(flex, row, flex-start, center, 0);
+              @include height(3.5rem, 3.5rem);
+              th {
+                @include centerFlex(flex, row, flex-start, center, 0);
+                @include width(8.66rem, 8.66rem);
+                @include height(3.5rem, 3.5rem);
+                border: 0.2rem solid $white-950;
+                background-color: $white-100;
+                position: relative;
+                height: 3rem;
+                padding: 0.5rem;
+                text-align: left;
+                font-size: 1rem;
+              }
+            }
+          }
+          tbody {
+            @include width(100%, 100%);
+            tr {
+              @include centerFlex(flex, row, flex-start, center, 0);
+              @include height(3rem, 3rem);
+              @include width(auto, auto);
+              background-color: transparent;
+              z-index: 3;
+              background-color: $white-100;
+              border-radius: 0.7rem;
+              margin-bottom: 0.2rem;
+              td {
+                @include centerFlex(flex, row, flex-start, center, 0);
+                @include width(8.63rem, 8.63rem);
+                height: 3rem;
+                padding: 0.5rem 0 0.5rem 0.5rem;
+                text-align: left;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
