@@ -7,6 +7,7 @@ import { RiFileExcel2Fill } from "react-icons/ri";
 import { FaCity } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { IoEye } from "react-icons/io5";
+import { IoAdd } from "react-icons/io5";
 import {
   getUsers,
   getCities,
@@ -26,6 +27,7 @@ const Administrator = () => {
   const allAccounts = useSelector((state) => state.someReducer.allAccounts);
   const [isEditing, setIsEditing] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [isAdding, setIsAdding] = useState(false);
   const [newCity, setNewCity] = useState({ name: "" });
   const [level, setLevel] = useState("");
   const [newLevel, setNewLevel] = useState({
@@ -122,6 +124,10 @@ const Administrator = () => {
 
   const handleShowCities = () => {
     setIsOpen(!isOpen);
+  };
+
+  const handleAddCities = () => {
+    setIsAdding(!isAdding);
   };
 
   return (
@@ -221,18 +227,27 @@ const Administrator = () => {
           </div>
         )}
       </section>
-      <section>
-        <h3>Agregar Localidad</h3>
-        <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            name="name"
-            placeholder="localidad"
-            onChange={handleInputChange}
-            value={newCity.name}
-          />
-          <button type="submit">agregar</button>
-        </form>
+      <section className={styles.addCitySection}>
+        <div>
+          <button className={styles.addCityButton} onClick={handleAddCities}>
+            {isAdding ? "Cancelar" : "Agregar"}
+            <span>
+              <IoAdd />
+            </span>
+          </button>
+        </div>
+        {isAdding && (
+          <form onSubmit={handleSubmit}>
+            <input
+              type="text"
+              name="name"
+              placeholder="localidad"
+              onChange={handleInputChange}
+              value={newCity.name}
+            />
+            <button type="submit">agregar</button>
+          </form>
+        )}
       </section>
       <section>
         <h2>Usuarios</h2>

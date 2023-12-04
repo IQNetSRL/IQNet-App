@@ -186,4 +186,35 @@
       }
     }
   }
+  .addCitySection {
+    @include centerFlex(flex, row, center, center, 0);
+    @include width(100%, 100%);
+    div {
+      @include centerFlex(flex, row, flex-start, center, 0);
+      @include width(100%, 100%);
+      .addCityButton {
+        @include button(rgb(9, 117, 9), none);
+        @include centerFlex(flex, row, space-between, center, 0);
+        @include width(8rem, 8rem);
+        @include height(3rem, 3rem);
+        color: $white-100;
+        font-size: 1.1rem;
+        padding: 0.9rem;
+        margin: 0.5rem 1rem;
+        border-radius: 0.3rem;
+        transition: 0.1s ease;
+        span {
+          @include centerFlex(flex, row, center, center, 0);
+          margin-left: 0.3rem;
+          svg {
+            @include width(1.5rem, 1.5rem);
+            @include height(1.5rem, 1.5rem);
+          }
+        }
+        &:hover {
+          transform: scale(1.05);
+        }
+      }
+    }
+  }
 }
