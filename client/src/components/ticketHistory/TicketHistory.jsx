@@ -22,46 +22,50 @@ const TicketHistory = (props) => {
   return (
     <section className={styles.sectionTicketInfo}>
       <h1>Historial</h1>
-      <div>
-        <table>
-          <thead>
-            <tr>
-              <th>Operador</th>
-              <th>Área</th>
-              <th>Categoría</th>
-              <th>Estado</th>
-              <th>Prioridad</th>
-              <th>Encargado</th>
-              <th>Cliente</th>
-              <th>Dirección</th>
-              <th>Descripción</th>
-              <th>Coordenadas</th>
-              <th>Creación</th>
-            </tr>
-          </thead>
-          <tbody>
-            {props.TicketById.history &&
-              props.TicketById.history.map((historyEntry) => (
-                <tr key={historyEntry.id}>
-                  <td>{historyEntry.user}</td>
-                  <td>{getValueNameById(historyEntry.AreaId, allAreas)}</td>
-                  <td>
-                    {getValueNameById(historyEntry.CategoryId, allCategories)}
-                  </td>
-                  <td>{getValueNameById(historyEntry.StatusId, allStatus)}</td>
-                  <td>
-                    {getValueNameById(historyEntry.PriorityId, allPriorities)}
-                  </td>
-                  <td>{historyEntry.responsable}</td>
-                  <td>{historyEntry.client}</td>
-                  <td>{historyEntry.address}</td>
-                  <td>{historyEntry.text}</td>
-                  <td>{historyEntry.coordinates}</td>
-                  <td>{historyEntry.createdAt}</td>
-                </tr>
-              ))}
-          </tbody>
-        </table>
+      <div className={styles.ticketList}>
+        <section className={styles.tableSection}>
+          <table>
+            <thead>
+              <tr>
+                <th>Operador</th>
+                <th>Área</th>
+                <th>Categoría</th>
+                <th>Estado</th>
+                <th>Prioridad</th>
+                <th>Encargado</th>
+                <th>Cliente</th>
+                <th>Dirección</th>
+                <th>Descripción</th>
+                <th>Coordenadas</th>
+                <th>Creación</th>
+              </tr>
+            </thead>
+            <tbody>
+              {props.TicketById.history &&
+                props.TicketById.history.map((historyEntry) => (
+                  <tr key={historyEntry.id}>
+                    <td>{historyEntry.user}</td>
+                    <td>{getValueNameById(historyEntry.AreaId, allAreas)}</td>
+                    <td>
+                      {getValueNameById(historyEntry.CategoryId, allCategories)}
+                    </td>
+                    <td>
+                      {getValueNameById(historyEntry.StatusId, allStatus)}
+                    </td>
+                    <td>
+                      {getValueNameById(historyEntry.PriorityId, allPriorities)}
+                    </td>
+                    <td>{historyEntry.responsable}</td>
+                    <td>{historyEntry.client}</td>
+                    <td>{historyEntry.address}</td>
+                    <td>{historyEntry.text}</td>
+                    <td>{historyEntry.coordinates}</td>
+                    <td>{historyEntry.createdAt}</td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+        </section>
       </div>
     </section>
   );

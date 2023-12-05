@@ -209,8 +209,6 @@ const TicketInfo = (props) => {
       <h1>Ticket</h1>
       <button onClick={handleNavigate}>volver</button>
       <button onClick={handleEdit}>Editar</button>
-      {/* borrar esto */}
-      <br />
       {isEditing && (
         <>
           <button onClick={handleSubmit}>Aceptar</button>

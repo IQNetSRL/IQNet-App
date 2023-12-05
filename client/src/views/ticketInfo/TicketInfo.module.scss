@@ -88,4 +88,8 @@
       font-size: 0.85rem;
     }
   }
+  .historySection {
+    @include centerFlex(flex, row, center, center, 0);
+    @include width(100%, 100%);
+  }
 }
