@@ -162,13 +162,40 @@
           @include centerFlex(flex, column, flex-start, flex-start, 0.5rem);
           padding: 0.5rem;
           p {
-            span{
+            span {
               font-weight: bold;
               color: $white-950;
             }
             color: $white-950;
           }
         }
+      }
+    }
+  }
+  .clientSection {
+    @include centerFlex(flex, column, flex-start, flex-start, 0rem);
+    @include width(100%, 100%);
+    h3 {
+      @include centerFlex(flex, row, center, center, 0.5rem);
+      @include width(100%, 100%);
+      background-color: $white-100;
+      color: $pumpkin-700;
+      padding: 0.5rem;
+      span {
+        @include centerFlex(flex, row, center, center, 0);
+        color: $black;
+      }
+    }
+    div {
+      @include centerFlex(flex, column, flex-start, flex-start, 0.5rem);
+      padding: 0.5rem;
+      background-color: $white-200;
+      p {
+        span {
+          font-weight: bold;
+          color: $white-950;
+        }
+        color: $white-950;
       }
     }
   }

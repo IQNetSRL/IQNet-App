@@ -380,18 +380,16 @@ const TicketInfo = (props) => {
               </>
             )}
             {view.client && (
-              <section>
+              <section className={styles.clientSection}>
+                <h3>Cliente</h3>
                 <div>
-                  <h3>Cliente</h3>
-                  <div>
-                    <p>
-                      <span>Nombre: </span>
-                      {TicketById.client}
-                    </p>
-                    <p>
-                      <span>Direccion: </span> {TicketById.address}
-                    </p>
-                  </div>
+                  <p>
+                    <span>Nombre: </span>
+                    {TicketById.client}
+                  </p>
+                  <p>
+                    <span>Direccion: </span> {TicketById.address}
+                  </p>
                 </div>
               </section>
             )}
