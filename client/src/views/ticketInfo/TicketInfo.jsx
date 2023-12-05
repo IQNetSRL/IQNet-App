@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useAuth0 } from "@auth0/auth0-react";
 import { differenceInDays } from "date-fns";
-import { deleteTicket, putTicket, getTicketById } from "../../redux/actions.js";
+import { putTicket, getTicketById } from "../../redux/actions.js";
 import { GET_TICKET_BY_ID } from "../../redux/actionTypes.js";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { format } from "date-fns";
@@ -13,6 +13,7 @@ import { IoLocationSharp } from "react-icons/io5";
 import { BiCommentDetail } from "react-icons/bi";
 import { IoMdInformationCircleOutline } from "react-icons/io";
 import { CgDetailsMore } from "react-icons/cg";
+import { FaUserGear } from "react-icons/fa6";
 import PropTypes from "prop-types";
 import TicketHistory from "../../components/ticketHistory/TicketHistory.jsx";
 import L from "leaflet";
@@ -381,7 +382,12 @@ const TicketInfo = (props) => {
             )}
             {view.client && (
               <section className={styles.clientSection}>
-                <h3>Cliente</h3>
+                <h3>
+                  Cliente
+                  <span>
+                    <FaUserGear />
+                  </span>
+                </h3>
                 <div>
                   <p>
                     <span>Nombre: </span>
@@ -394,9 +400,14 @@ const TicketInfo = (props) => {
               </section>
             )}
             {view.map && (
-              <section>
-                <div>
-                  <h3>Mapa</h3>
+              <section className={styles.mapSection}>
+                <div className={styles.mapContainer}>
+                  <h3>
+                    Mapa
+                    <span>
+                      <IoLocationSharp />
+                    </span>
+                  </h3>
                   {isReady && view.map && (
                     <div style={{ height: "400px", width: "100%" }}>
                       <MapContainer

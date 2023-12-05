@@ -199,4 +199,22 @@
       }
     }
   }
+  .mapSection {
+    @include centerFlex(flex, column, center, center, 0);
+    @include width(100%, 100%);
+    .mapContainer {
+      @include width(100%, 100%);
+      h3 {
+        @include centerFlex(flex, row, center, center, 0.5rem);
+        @include width(100%, 100%);
+        background-color: $white-100;
+        color: $pumpkin-700;
+        padding: 0.5rem;
+        span {
+          @include centerFlex(flex, row, center, center, 0);
+          color: $black;
+        }
+      }
+    }
+  }
 }
