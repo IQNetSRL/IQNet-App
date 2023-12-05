@@ -6,6 +6,8 @@ import { differenceInDays } from "date-fns";
 import { deleteTicket, putTicket, getTicketById } from "../../redux/actions.js";
 import { GET_TICKET_BY_ID } from "../../redux/actionTypes.js";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { IoTicket } from "react-icons/io5";
+import { MdModeEdit } from "react-icons/md";
 import PropTypes from "prop-types";
 import TicketHistory from "../../components/ticketHistory/TicketHistory.jsx";
 import L from "leaflet";
@@ -189,11 +191,7 @@ const TicketInfo = (props) => {
   };
 
   const handleEdit = () => {
-    setIsEditing(true);
-  };
-
-  const handleCancelEdit = () => {
-    setIsEditing(false);
+    setIsEditing(!isEditing);
   };
 
   const handleMapLoad = (map) => {
@@ -206,15 +204,19 @@ const TicketInfo = (props) => {
 
   return (
     <section className={styles.sectionTicketInfo}>
-      <h1>Ticket</h1>
-      <button onClick={handleNavigate}>volver</button>
-      <button onClick={handleEdit}>Editar</button>
-      {isEditing && (
-        <>
-          <button onClick={handleSubmit}>Aceptar</button>
-          <button onClick={handleCancelEdit}>Cancelar</button>
-        </>
-      )}
+      <h1>
+        <span>
+          <IoTicket />
+        </span>
+        Ticket
+      </h1>
+      <div className={styles.editContainer}>
+        <button onClick={handleEdit} className={`${styles.editButton} ${isEditing && styles.cancel}`}>
+          {isEditing ? "Cancelar" : "Editar"}
+          <span>{!isEditing && <MdModeEdit />}</span>
+        </button>
+      </div>
+      {isEditing && <button onClick={handleSubmit}>Aceptar</button>}
       <div className={styles.tableContainerTwo}>
         {isReady && TicketById.comments ? (
           <>
@@ -436,11 +438,6 @@ const TicketInfo = (props) => {
           <div>Cargando Tickets...</div>
         )}
       </div>
-      {isReady && !isEditing ? (
-        <TicketHistory TicketById={TicketById} />
-      ) : (
-        <div>Cargando Historial...</div>
-      )}
       <button onClick={handleViewMap}>Ver Mapa</button>
       {isReady && viewMap && (
         <div style={{ height: "400px", width: "100%" }}>
@@ -478,6 +475,11 @@ const TicketInfo = (props) => {
             )}
           </MapContainer>
         </div>
+      )}
+      {isReady ? (
+        <TicketHistory TicketById={TicketById} />
+      ) : (
+        <div>Cargando Historial...</div>
       )}
     </section>
   );

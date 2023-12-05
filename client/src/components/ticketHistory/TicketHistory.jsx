@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React from "react";
 import { useSelector } from "react-redux";
+import { MdHistory } from "react-icons/md";
 import PropTypes from "prop-types";
 import styles from "./TicketHistory.module.scss";
 
@@ -20,8 +21,13 @@ const TicketHistory = (props) => {
   };
 
   return (
-    <section className={styles.sectionTicketInfo}>
-      <h1>Historial</h1>
+    <section className={styles.sectionHistory}>
+      <h1 className={styles.titleHistory}>
+        Historial
+        <span>
+          <MdHistory />
+        </span>
+      </h1>
       <div className={styles.tableContainerTwo}>
         <section className={styles.tableContainer}>
           <table>

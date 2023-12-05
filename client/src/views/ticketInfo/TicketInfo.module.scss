@@ -2,7 +2,7 @@
 @import "../../styles/mixins.scss";
 
 .sectionTicketInfo {
-  @include centerFlex(flex, column, flex-start, center, 0.5rem);
+  @include centerFlex(flex, column, flex-start, center, 2rem);
   @include width(100%, 100%);
   h1 {
     @include centerFlex(flex, row, flex-start, center, 0.5rem);
@@ -16,6 +16,32 @@
     span {
       @include centerFlex(flex, row, center, center, 0);
       color: $black;
+    }
+  }
+  .editContainer {
+    @include centerFlex(flex, row, flex-start, center, 0);
+    @include width(100%, 100%);
+    padding: 0 1rem;
+    .editButton {
+      @include button(rgb(27, 81, 126), none);
+      @include centerFlex(flex, row, space-between, center, 0);
+      @include width(8rem, 8rem);
+      @include height(3rem, 3rem);
+      color: $white-100;
+      font-size: 1.1rem;
+      padding: 0.9rem;
+      border-radius: 0.3rem;
+      transition: 0.1s ease;
+      span {
+        @include centerFlex(flex, row, center, center, 0);
+      }
+      &:hover {
+        transform: scale(1.05);
+      }
+    }
+    .cancel {
+      @include centerFlex(flex, row, center, center, 0);
+      background-color: rgb(247, 40, 40);
     }
   }
   .tableContainerTwo {
