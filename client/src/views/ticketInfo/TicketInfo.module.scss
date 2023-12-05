@@ -30,6 +30,9 @@
       padding: 0.5rem 0;
       div {
         @include centerFlex(flex, column, flex-start, flex-start, 1rem);
+        label {
+          color: $white-950;
+        }
         select {
           @include height(2.5rem, 2.5rem);
           @include width(10rem, 10rem);

@@ -405,7 +405,17 @@ const TicketInfo = (props) => {
               />
             </div>
             <div>
-              <label>-Coordenadas:</label>
+              {isEditing && (
+                <label>
+                  {allStatus?.find((elem) => elem.id === newTicket.StatusId)
+                    ?.name === "cerrado" &&
+                  allAccounts?.find(
+                    (elem) => elem.name === newTicket.responsable
+                  )?.level === "support"
+                    ? "* -Coordenadas: *"
+                    : "-Coordenadas:"}
+                </label>
+              )}
               <input
                 type="text"
                 name="coordinates"
