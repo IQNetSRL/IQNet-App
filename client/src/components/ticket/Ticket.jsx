@@ -259,6 +259,8 @@ const Ticket = (props) => {
   const handleResetFilters = () => {
     dispatch(getTicketsAction());
     setFilters({});
+    setStartDate(null);
+    setEndDate(null);
   };
 
   return (
@@ -517,7 +519,8 @@ const Ticket = (props) => {
                           border: `0.2rem solid ${
                             getValueColorById(ticket.StatusId, allStatus) ||
                             "black"
-                          }`, borderRight: "none",
+                          }`,
+                          borderRight: "none",
                         }}
                       >
                         {visibleColumns.operator.isVisible && (
