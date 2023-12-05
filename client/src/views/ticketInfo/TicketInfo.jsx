@@ -466,9 +466,9 @@ const TicketInfo = (props) => {
               </section>
             )}
             {view.history && (
-              <section>
-                <div>
+              <section className={styles.historySection}>
                   <h3>Historial</h3>
+                <div>
                   {isReady ? (
                     <TicketHistory TicketById={TicketById} />
                   ) : (
