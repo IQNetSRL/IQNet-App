@@ -14,6 +14,7 @@ import { BiCommentDetail } from "react-icons/bi";
 import { IoMdInformationCircleOutline } from "react-icons/io";
 import { CgDetailsMore } from "react-icons/cg";
 import { FaUserGear } from "react-icons/fa6";
+import { MdOutlineDescription } from "react-icons/md";
 import PropTypes from "prop-types";
 import TicketHistory from "../../components/ticketHistory/TicketHistory.jsx";
 import L from "leaflet";
@@ -452,12 +453,15 @@ const TicketInfo = (props) => {
               </section>
             )}
             {view.description && (
-              <section>
+              <section className={styles.descriptionSection}>
+                <h3>
+                  Descripción
+                  <span>
+                    <MdOutlineDescription />
+                  </span>
+                </h3>
                 <div>
-                  <h3>Descripción</h3>
-                  <div>
-                    <p>{TicketById.text}</p>
-                  </div>
+                  <p>{TicketById.text}</p>
                 </div>
               </section>
             )}
