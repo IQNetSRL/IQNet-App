@@ -89,25 +89,52 @@
                 text-align: left;
                 font-size: 1rem;
               }
+              .consult {
+                @include width(15rem, 15rem);
+              }
             }
           }
           tbody {
             @include width(100%, 100%);
             tr {
               @include centerFlex(flex, row, flex-start, center, 0);
-              @include height(3rem, 3rem);
+              @include height(3rem, auto);
               @include width(auto, auto);
-              background-color: transparent;
-              z-index: 3;
               background-color: $white-100;
               border-radius: 0.7rem;
               margin-bottom: 0.2rem;
+              border: 0.2rem solid $white-950;
               td {
                 @include centerFlex(flex, row, flex-start, center, 0);
                 @include width(8.63rem, 8.63rem);
-                height: 3rem;
-                padding: 0.5rem 0 0.5rem 0.5rem;
+                @include height(3rem, 3rem);
+                padding: 0.5rem 0.5rem 0.5rem 0.5rem;
                 text-align: left;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                div {
+                  @include centerFlex(flex, row, center, center, 0);
+                  button {
+                    @include centerFlex(flex, row, center, center, 0);
+                    @include button(rgb(253, 89, 89), none);
+                    @include width(1.5rem, 1.5rem);
+                    height: 1.5rem;
+                    border-radius: 0.2rem;
+                    transition: 0.2s ease;
+                    svg {
+                      @include width(1rem, 1rem);
+                      height: 1rem;
+                    }
+                    &:hover {
+                      background-color: rgb(250, 38, 38);
+                      color: $white-100;
+                    }
+                  }
+                }
+              }
+              .consult {
+                @include width(15rem, 15rem);
               }
             }
           }
@@ -217,6 +244,7 @@
         }
       }
       .cancel {
+        @include centerFlex(flex, row, center, center, 0);
         background-color: rgb(247, 40, 40);
       }
     }

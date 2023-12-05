@@ -168,7 +168,7 @@ const Administrator = () => {
                   <th>Número telefonico</th>
                   <th>Email</th>
                   <th>Dirección</th>
-                  <th>Consulta</th>
+                  <th className={styles.consult}>Consulta</th>
                   <th>Acciones</th>
                 </tr>
               </thead>
@@ -181,11 +181,13 @@ const Administrator = () => {
                     <td>{user.phoneNumber}</td>
                     <td>{user.emailAddress}</td>
                     <td>{user.address}</td>
-                    <td>{user.consult}</td>
+                    <td className={styles.consult}>{user.consult}</td>
                     <td>
-                      <button onClick={() => handleDeleteUser(user.id)}>
-                        eliminar
-                      </button>
+                      <div>
+                        <button onClick={() => handleDeleteUser(user.id)}>
+                          <MdDelete />
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))}
@@ -238,9 +240,11 @@ const Administrator = () => {
             onClick={handleAddCities}
           >
             {isAdding ? "Cancelar" : "Agregar"}
-            <span>
-              <IoAdd />
-            </span>
+            {!isAdding && (
+              <span>
+                <IoAdd />
+              </span>
+            )}
           </button>
         </div>
         {isAdding && (
@@ -305,7 +309,9 @@ const Administrator = () => {
                 {level !== "sales" && <option value="sales">Ventas</option>}
               </select>
               <div className={styles.buttons}>
-                <button className={styles.cancel} onClick={handleCancel}>cancelar</button>
+                <button className={styles.cancel} onClick={handleCancel}>
+                  cancelar
+                </button>
                 <button onClick={handleSubmitAccount}>aceptar</button>
               </div>
             </div>

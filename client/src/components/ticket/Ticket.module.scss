@@ -211,6 +211,9 @@
               height: 3rem;
               padding: 0.5rem 0 0.5rem 0.5rem;
               text-align: left;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
             }
             .actionsButtons {
               @include centerFlex(flex, row, center, center, 0);
