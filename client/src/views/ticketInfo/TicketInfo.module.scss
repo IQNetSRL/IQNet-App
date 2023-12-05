@@ -2,7 +2,7 @@
 @import "../../styles/mixins.scss";
 
 .sectionTicketInfo {
-  @include centerFlex(flex, column, flex-start, center, 2rem);
+  @include centerFlex(flex, column, flex-start, center, 1rem);
   @include width(100%, 100%);
   h1 {
     @include centerFlex(flex, row, flex-start, center, 0.5rem);
@@ -16,6 +16,36 @@
     span {
       @include centerFlex(flex, row, center, center, 0);
       color: $black;
+    }
+  }
+  .formEditSection {
+    @include centerFlex(flex, row, center, center, 0);
+    @include width(100%, 100%);
+    padding: 0.5rem 1rem;
+    background-color: $white-300;
+    form {
+      @include centerFlex(flex, row, flex-start, center, 1rem);
+      @include width(100%, 100%);
+      flex-wrap: wrap;
+      padding: 0.5rem 0;
+      div {
+        @include centerFlex(flex, column, flex-start, flex-start, 1rem);
+        select {
+          @include height(2.5rem, 2.5rem);
+          @include width(10rem, 10rem);
+          font-size: 0.9rem;
+          cursor: pointer;
+          option {
+            background-color: $pumpkin-300;
+          }
+        }
+        input {
+          @include height(2.5rem, 2.5rem);
+          @include width(10rem, 10rem);
+          font-size: 0.9rem;
+          padding: 0.5rem;
+        }
+      }
     }
   }
   .editContainer {

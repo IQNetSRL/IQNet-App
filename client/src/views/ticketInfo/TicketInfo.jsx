@@ -262,6 +262,161 @@ const TicketInfo = (props) => {
         </span>
         Ticket
       </h1>
+      <div className={styles.editContainer}>
+        <>
+          <button
+            onClick={handleEdit}
+            className={`${styles.editButton} ${isEditing && styles.cancel}`}
+          >
+            {isEditing ? "Cancelar" : "Editar"}
+            <span>{!isEditing && <MdModeEdit />}</span>
+          </button>
+          {isEditing && (
+            <button className={styles.aceptButton} onClick={handleSubmit}>
+              Aceptar
+            </button>
+          )}
+        </>
+      </div>
+      {isEditing && (
+        <section className={styles.formEditSection}>
+          <form>
+            <div>
+              <label>-Area:</label>
+              <select
+                name="areas"
+                value={newTicket.AreaId}
+                onChange={(e) => handleSelectChange("AreaId", e.target.value)}
+              >
+                <option value="">Ninguna</option>
+                {allAreas?.map((area, index) => (
+                  <option key={area.id || index} value={area.id}>
+                    {area.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label>-Categoria:</label>
+              <select
+                name="categories"
+                value={newTicket.CategoryId}
+                onChange={(e) =>
+                  handleSelectChange("CategoryId", e.target.value)
+                }
+              >
+                <option value="">Ninguna</option>
+                {allCategories?.map((category, index) => (
+                  <option key={category.id || index} value={category.id}>
+                    {category.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label>-Estatus:</label>
+              <select
+                name="status"
+                value={newTicket.StatusId}
+                onChange={(e) => handleSelectChange("StatusId", e.target.value)}
+              >
+                <option value="">Ninguno</option>
+                {allStatus?.map((status, index) => (
+                  <option key={status.id || index} value={status.id}>
+                    {status.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label>-Prioridad:</label>
+              <select
+                name="priorities"
+                value={newTicket.PriorityId}
+                onChange={(e) =>
+                  handleSelectChange("PriorityId", e.target.value)
+                }
+              >
+                <option value="">Ninguna</option>
+                {allPriorities?.map((priority, index) => (
+                  <option key={priority.id || index} value={priority.id}>
+                    {priority.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label>-Encargado:</label>
+              <select
+                name="responsable"
+                value={newTicket.responsable}
+                onChange={(e) =>
+                  handleSelectChange("responsable", e.target.value)
+                }
+              >
+                <option value="">Ninguno</option>
+                {allAccounts?.map((aaccount, index) => (
+                  <option key={aaccount.id || index} value={aaccount.name}>
+                    {aaccount.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label>-Cliente:</label>
+              <input
+                type="text"
+                name="client"
+                placeholder="cliente"
+                value={newTicket.client}
+                onChange={(e) => handleSelectChange("client", e.target.value)}
+              />
+            </div>
+            <div>
+              <label>-Direccion:</label>
+              <input
+                type="text"
+                name="address"
+                placeholder="direccion"
+                value={newTicket.address}
+                onChange={(e) => handleSelectChange("address", e.target.value)}
+              />
+            </div>
+            <div>
+              <label>Descripcion</label>
+              <input
+                type="text"
+                name="text"
+                placeholder="descripcion"
+                value={newTicket.text}
+                onChange={(e) => handleSelectChange("text", e.target.value)}
+              />
+            </div>
+            <div>
+              <label>-Comentario:</label>
+              <input
+                type="text"
+                name="commentText"
+                placeholder="comentario"
+                value={newTicket.commentText}
+                onChange={(e) =>
+                  handleSelectChange("commentText", e.target.value)
+                }
+              />
+            </div>
+            <div>
+              <label>-Coordenadas:</label>
+              <input
+                type="text"
+                name="coordinates"
+                placeholder="Coordenadas"
+                value={newTicket.coordinates}
+                onChange={(e) => handleCoordinatesChange(e.target.value)}
+              />
+            </div>
+          </form>
+        </section>
+      )}
       {isReady && TicketById.comments ? (
         <section className={styles.infoTicketSection}>
           <section className={styles.topInfoSection}>
@@ -467,7 +622,7 @@ const TicketInfo = (props) => {
             )}
             {view.history && (
               <section className={styles.historySection}>
-                  <h3>Historial</h3>
+                <h3>Historial</h3>
                 <div>
                   {isReady ? (
                     <TicketHistory TicketById={TicketById} />
@@ -482,152 +637,6 @@ const TicketInfo = (props) => {
       ) : (
         <div>Cargando Tickets...</div>
       )}
-      <div className={styles.editContainer}>
-        <>
-          <button
-            onClick={handleEdit}
-            className={`${styles.editButton} ${isEditing && styles.cancel}`}
-          >
-            {isEditing ? "Cancelar" : "Editar"}
-            <span>{!isEditing && <MdModeEdit />}</span>
-          </button>
-          {isEditing && (
-            <button className={styles.aceptButton} onClick={handleSubmit}>
-              Aceptar
-            </button>
-          )}
-        </>
-      </div>
-
-      <section>
-        {isEditing && (
-          <>
-            <td>
-              <select
-                name="areas"
-                value={newTicket.AreaId}
-                onChange={(e) => handleSelectChange("AreaId", e.target.value)}
-              >
-                <option value="">Ninguna</option>
-                {allAreas?.map((area, index) => (
-                  <option key={area.id || index} value={area.id}>
-                    {area.name}
-                  </option>
-                ))}
-              </select>
-            </td>
-            <td>
-              <select
-                name="categories"
-                value={newTicket.CategoryId}
-                onChange={(e) =>
-                  handleSelectChange("CategoryId", e.target.value)
-                }
-              >
-                <option value="">Ninguna</option>
-                {allCategories?.map((category, index) => (
-                  <option key={category.id || index} value={category.id}>
-                    {category.name}
-                  </option>
-                ))}
-              </select>
-            </td>
-            <td>
-              <select
-                name="status"
-                value={newTicket.StatusId}
-                onChange={(e) => handleSelectChange("StatusId", e.target.value)}
-              >
-                <option value="">Ninguno</option>
-                {allStatus?.map((status, index) => (
-                  <option key={status.id || index} value={status.id}>
-                    {status.name}
-                  </option>
-                ))}
-              </select>
-            </td>
-            <td>
-              <select
-                name="priorities"
-                value={newTicket.PriorityId}
-                onChange={(e) =>
-                  handleSelectChange("PriorityId", e.target.value)
-                }
-              >
-                <option value="">Ninguna</option>
-                {allPriorities?.map((priority, index) => (
-                  <option key={priority.id || index} value={priority.id}>
-                    {priority.name}
-                  </option>
-                ))}
-              </select>
-            </td>
-            <td>
-              <select
-                name="responsable"
-                value={newTicket.responsable}
-                onChange={(e) =>
-                  handleSelectChange("responsable", e.target.value)
-                }
-              >
-                <option value="">Ninguno</option>
-                {allAccounts?.map((aaccount, index) => (
-                  <option key={aaccount.id || index} value={aaccount.name}>
-                    {aaccount.name}
-                  </option>
-                ))}
-              </select>
-            </td>
-            <td>
-              <input
-                type="text"
-                name="client"
-                placeholder="cliente"
-                value={newTicket.client}
-                onChange={(e) => handleSelectChange("client", e.target.value)}
-              />
-            </td>
-            <td>
-              <input
-                type="text"
-                name="address"
-                placeholder="direccion"
-                value={newTicket.address}
-                onChange={(e) => handleSelectChange("address", e.target.value)}
-              />
-            </td>
-            <td>
-              <input
-                type="text"
-                name="text"
-                placeholder="descripcion"
-                value={newTicket.text}
-                onChange={(e) => handleSelectChange("text", e.target.value)}
-              />
-            </td>
-            <td>
-              <input
-                type="text"
-                name="commentText"
-                placeholder="comentario"
-                value={newTicket.commentText}
-                onChange={(e) =>
-                  handleSelectChange("commentText", e.target.value)
-                }
-              />
-            </td>
-            <td>
-              <input
-                type="text"
-                name="coordinates"
-                placeholder="Coordenadas"
-                value={newTicket.coordinates}
-                onChange={(e) => handleCoordinatesChange(e.target.value)}
-              />
-            </td>
-          </>
-        )}
-      </section>
     </section>
   );
 };
