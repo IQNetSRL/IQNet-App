@@ -263,46 +263,54 @@ const Administrator = () => {
             <FaUserGear />
           </span>
         </h2>
-        {allAccounts.length > 0 ? (
-          <ol>
-            {allAccounts?.map((account, index) => (
-              <li key={account.id || index}>
-                {account.name}
-                <button
-                  onClick={() =>
-                    handleEdit(account.id, account.name, account.level)
-                  }
-                >
-                  <MdModeEdit/>
-                </button>
-              </li>
-            ))}
-          </ol>
-        ) : (
-          <p>Cargando cuentas...</p>
-        )}
-        {isEditing && (
-          <div>
-            <label>{name}</label>
-            <select
-              name="level"
-              onChange={(e) => handleLevelChange(e.target.value)}
-            >
-              <option value={level}>
-                {level === "admin"
-                  ? "Administrador"
-                  : level === "sales"
-                  ? "Ventas"
-                  : level === "support" && "Técnico"}
-              </option>
-              <option value="admin">Administrador</option>
-              <option value="support">Técnico</option>
-              <option value="sales">Ventas</option>
-            </select>
-            <button onClick={handleCancel}>cancelar</button>
-            <button onClick={handleSubmitAccount}>aceptar</button>
-          </div>
-        )}
+        <div className={styles.editRolContainer}>
+          {allAccounts.length > 0 ? (
+            <ol>
+              {allAccounts?.map((account, index) => (
+                <li key={account.id || index}>
+                  {account.name}
+                  <button
+                    onClick={() =>
+                      handleEdit(account.id, account.name, account.level)
+                    }
+                  >
+                    <MdModeEdit />
+                  </button>
+                </li>
+              ))}
+            </ol>
+          ) : (
+            <p>Cargando cuentas...</p>
+          )}
+          {isEditing && (
+            <div className={styles.editContainer}>
+              <label>{name}</label>
+              <select
+                name="level"
+                onChange={(e) => handleLevelChange(e.target.value)}
+              >
+                <option value={level}>
+                  {level === "admin"
+                    ? "Administrador"
+                    : level === "sales"
+                    ? "Ventas"
+                    : level === "support" && "Técnico"}
+                </option>
+                {level !== "admin" && (
+                  <option value="admin">Administrador</option>
+                )}
+                {level !== "support" && (
+                  <option value="support">Técnico</option>
+                )}
+                {level !== "sales" && <option value="sales">Ventas</option>}
+              </select>
+              <div className={styles.buttons}>
+                <button className={styles.cancel} onClick={handleCancel}>cancelar</button>
+                <button onClick={handleSubmitAccount}>aceptar</button>
+              </div>
+            </div>
+          )}
+        </div>
       </section>
     </section>
   );

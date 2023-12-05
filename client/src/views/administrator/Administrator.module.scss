@@ -264,28 +264,80 @@
         color: $pumpkin-600;
       }
     }
-    ol {
-      @include centerFlex(flex, column, center, flex-start, 0.5rem);
-      margin: 1rem 1rem;
-      list-style: none;
+    .editRolContainer {
+      @include centerFlex(flex, row, flex-start, flex-start, 0);
+      @include width(100%, 100%);
+      flex-wrap: wrap;
+      ol {
+        @include centerFlex(flex, column, center, flex-start, 0.5rem);
+        margin: 1rem;
+        list-style: none;
+        background-color: $white-200;
+        padding: 0.5rem;
+        border-radius: 0.2rem;
+        li {
+          @include centerFlex(flex, row, space-between, center, 1rem);
+          @include width(100%, 100%);
+          button {
+            @include height(1.5rem, 1.5rem);
+            @include width(2rem, 2rem);
+            @include button($white-300, none);
+            border-radius: 0.2rem;
+            svg {
+              @include centerFlex(flex, row, center, center, 0);
+              @include width(100%, 100%);
+            }
+            &:hover {
+              background-color: $white-950;
+              color: $white-100;
+            }
+          }
+        }
+      }
+    }
+    .editContainer {
+      @include centerFlex(flex, column, flex-start, flex-start, 0.5rem);
+      margin: 1rem;
       background-color: $white-200;
       padding: 0.5rem;
       border-radius: 0.2rem;
-      li {
-        @include centerFlex(flex, row, space-between, center, 1rem);
+      select {
+        @include width(100%, 100%);
+        @include height(2.3rem, 2.3rem);
+        border-radius: 0.3rem;
+        padding: 0.2rem;
+        font-size: 0.9rem;
+        cursor: pointer;
+        option {
+          font-size: 0.9rem;
+          color: $white-950;
+          background-color: $pumpkin-300;
+        }
+      }
+      .buttons {
+        @include centerFlex(flex, row, center, center, 0.5rem);
         @include width(100%, 100%);
         button {
-          @include height(1.5rem, 1.5rem);
-          @include width(2rem, 2rem);
-          @include button($white-300, none);
-          border-radius: 0.2rem;
-          svg {
-            @include centerFlex(flex, row, center, center, 0);
-            @include width(100%, 100%);
-          }
+          @include centerFlex(flex, row, center, center, 0);
+          @include button(rgb(27, 81, 126), none);
+          @include width(5.5rem, 5.5rem);
+          @include height(2.2rem, 2.2rem);
+          flex: 1;
+          color: $white-100;
+          font-size: 1rem;
+          padding: 0.9rem;
+          border-radius: 0.3rem;
+          transition: 0.1s ease;
           &:hover {
-            background-color: $white-950;
-            color: $white-100;
+            background-color: $white-100;
+            color: rgb(27, 81, 126);
+          }
+        }
+        .cancel {
+          background-color: rgb(247, 40, 40);
+          &:hover {
+            background-color: $white-100;
+            color: rgb(247, 40, 40);
           }
         }
       }
