@@ -8,6 +8,7 @@ import { GET_TICKET_BY_ID } from "../../redux/actionTypes.js";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { IoTicket } from "react-icons/io5";
 import { MdModeEdit } from "react-icons/md";
+import { IoLocationSharp } from "react-icons/io5";
 import PropTypes from "prop-types";
 import TicketHistory from "../../components/ticketHistory/TicketHistory.jsx";
 import L from "leaflet";
@@ -211,12 +212,22 @@ const TicketInfo = (props) => {
         Ticket
       </h1>
       <div className={styles.editContainer}>
-        <button onClick={handleEdit} className={`${styles.editButton} ${isEditing && styles.cancel}`}>
-          {isEditing ? "Cancelar" : "Editar"}
-          <span>{!isEditing && <MdModeEdit />}</span>
-        </button>
+        <>
+          <button
+            onClick={handleEdit}
+            className={`${styles.editButton} ${isEditing && styles.cancel}`}
+          >
+            {isEditing ? "Cancelar" : "Editar"}
+            <span>{!isEditing && <MdModeEdit />}</span>
+          </button>
+          {isEditing && (
+            <button className={styles.aceptButton} onClick={handleSubmit}>
+              Aceptar
+            </button>
+          )}
+        </>
       </div>
-      {isEditing && <button onClick={handleSubmit}>Aceptar</button>}
+
       <div className={styles.tableContainerTwo}>
         {isReady && TicketById.comments ? (
           <>
@@ -438,7 +449,14 @@ const TicketInfo = (props) => {
           <div>Cargando Tickets...</div>
         )}
       </div>
-      <button onClick={handleViewMap}>Ver Mapa</button>
+      <div style={{ width: "100%", padding: "0 1rem" }}>
+        <button className={styles.showMapButton} onClick={handleViewMap}>
+          <p> {viewMap ? "Ocultar" : "Ver Mapa"}</p>
+          <span>
+            <IoLocationSharp />
+          </span>
+        </button>
+      </div>
       {isReady && viewMap && (
         <div style={{ height: "400px", width: "100%" }}>
           <MapContainer

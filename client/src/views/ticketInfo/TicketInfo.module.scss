@@ -19,7 +19,7 @@
     }
   }
   .editContainer {
-    @include centerFlex(flex, row, flex-start, center, 0);
+    @include centerFlex(flex, row, space-between, center, 0);
     @include width(100%, 100%);
     padding: 0 1rem;
     .editButton {
@@ -42,6 +42,21 @@
     .cancel {
       @include centerFlex(flex, row, center, center, 0);
       background-color: rgb(247, 40, 40);
+    }
+    .aceptButton {
+      @include centerFlex(flex, row, center, center, 0);
+      @include button(rgb(9, 117, 9), none);
+      @include width(8rem, 8rem);
+      @include height(3rem, 3rem);
+      color: $white-100;
+      font-size: 1.1rem;
+      padding: 0.9rem;
+      border-radius: 0.3rem;
+      transition: 0.1s ease;
+      &:hover {
+        background-color: $white-100;
+        color:rgb(9, 117, 9);
+      }
     }
   }
   .tableContainerTwo {
@@ -105,5 +120,22 @@
   .historySection {
     @include centerFlex(flex, row, center, center, 0);
     @include width(100%, 100%);
+  }
+  .showMapButton {
+    @include button(rgb(27, 81, 126), none);
+    @include centerFlex(flex, row, space-between, center, 0);
+    @include width(8rem, 8rem);
+    @include height(3rem, 3rem);
+    color: $white-100;
+    font-size: 1.1rem;
+    padding: 0.9rem;
+    border-radius: 0.3rem;
+    transition: 0.1s ease;
+    span {
+      @include centerFlex(flex, row, center, center, 0);
+    }
+    &:hover {
+      transform: scale(1.05);
+    }
   }
 }
