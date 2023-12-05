@@ -22,8 +22,8 @@ const TicketHistory = (props) => {
   return (
     <section className={styles.sectionTicketInfo}>
       <h1>Historial</h1>
-      <div className={styles.ticketList}>
-        <section className={styles.tableSection}>
+      <div className={styles.tableContainerTwo}>
+        <section className={styles.tableContainer}>
           <table>
             <thead>
               <tr>

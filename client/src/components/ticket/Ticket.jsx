@@ -484,7 +484,7 @@ const Ticket = (props) => {
                     )}
                     {visibleColumns.client.isVisible && <th>Cliente</th>}
                     {visibleColumns.address.isVisible && <th>Direccion</th>}
-                    {visibleColumns.text.isVisible && <th>Comentarios</th>}
+                    {visibleColumns.text.isVisible && <th>Descripción</th>}
                     {visibleColumns.elapsedTime.isVisible && (
                       <th>
                         Tiempo transcurrido

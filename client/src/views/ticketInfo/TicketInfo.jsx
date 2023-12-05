@@ -215,10 +215,10 @@ const TicketInfo = (props) => {
           <button onClick={handleCancelEdit}>Cancelar</button>
         </>
       )}
-      <div className={styles.ticketList}>
+      <div className={styles.tableContainerTwo}>
         {isReady && TicketById.comments ? (
           <>
-            <section className={styles.tableSection}>
+            <section className={styles.tableContainer}>
               <table>
                 <thead>
                   <tr>
@@ -232,10 +232,9 @@ const TicketInfo = (props) => {
                     <th>Dirección</th>
                     <th>Descripción</th>
                     <th>Comentarios</th>
-                    {isEditing && <th>Coordenadas</th>}
+                    <th>Coordenadas</th>
                     <th>Tiempo transcurrido</th>
                     <th>Creación</th>
-                    {props.rol === "admin" && <th>Acciones</th>}
                   </tr>
                 </thead>
                 <tbody>
@@ -271,6 +270,7 @@ const TicketInfo = (props) => {
                             </div>
                           ))}
                         </td>
+                        <td>{TicketById.coordinates}</td>
                       </>
                     ) : (
                       <>
@@ -427,15 +427,6 @@ const TicketInfo = (props) => {
                       {calculateDaysSinceCreation(TicketById.createdAt)} días
                     </td>
                     <td>{TicketById.createdAt}</td>
-                    {props.rol === "admin" && (
-                      <td>
-                        <button
-                          onClick={() => handleDeleteTicket(TicketById.id)}
-                        >
-                          Eliminar Ticket
-                        </button>
-                      </td>
-                    )}
                   </tr>
                 </tbody>
               </table>

@@ -200,8 +200,6 @@
             @include centerFlex(flex, row, flex-start, center, 0);
             @include height(3rem, 3rem);
             @include width(auto, auto);
-            background-color: transparent;
-            z-index: 3;
             background-color: $white-100;
             border-radius: 0.7rem;
             margin-bottom: 0.2rem;
