@@ -29,7 +29,6 @@ const TicketInfo = (props) => {
   const [isReady, setIsReady] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [map, setMap] = useState(null);
-  const [viewMap, setViewMap] = useState(false);
   const [view, setView] = useState({
     detail: true,
     client: false,
@@ -140,7 +139,6 @@ const TicketInfo = (props) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsEditing(false);
-    setViewMap(false);
 
     try {
       await dispatch(
@@ -188,15 +186,6 @@ const TicketInfo = (props) => {
   const getValueNameById = (id, state) => {
     const value = state.find((priority) => priority.id === id);
     return value ? value.name : "";
-  };
-
-  const handleDeleteTicket = (id) => {
-    dispatch(deleteTicket(id));
-    window.history.back();
-  };
-
-  const handleNavigate = () => {
-    window.history.back();
   };
 
   const handleEdit = () => {
@@ -269,18 +258,16 @@ const TicketInfo = (props) => {
         Ticket
       </h1>
       {isReady && TicketById.comments ? (
-        <section>
-          <section>
+        <section className={styles.infoTicketSection}>
+          <section className={styles.topInfoSection}>
             <ul>
               <li>
                 <p>Operador: </p>
                 {TicketById.username}
               </li>
               <li>
-                <td>
-                  <p>Encargado: </p>
-                  {TicketById.responsable}
-                </td>
+                <p>Encargado: </p>
+                {TicketById.responsable}
               </li>
               <li>
                 <p>Estado: </p>
@@ -292,19 +279,36 @@ const TicketInfo = (props) => {
               </li>
             </ul>
           </section>
-          <section>
-            <div>
-              <button onClick={() => handleSelectView("detail")}>
+          <section className={styles.infoSection}>
+            <div className={styles.buttonsContainer}>
+              <button
+                onClick={() => handleSelectView("detail")}
+                className={`${view.detail ? styles.selected : ""}`}
+              >
                 Detalle
               </button>
-              <button onClick={() => handleSelectView("client")}>
+              <button
+                onClick={() => handleSelectView("client")}
+                className={`${view.client ? styles.selected : ""}`}
+              >
                 Cliente
               </button>
-              <button onClick={() => handleSelectView("map")}>Mapa</button>
-              <button onClick={() => handleSelectView("description")}>
+              <button
+                onClick={() => handleSelectView("map")}
+                className={`${view.map ? styles.selected : ""}`}
+              >
+                Mapa
+              </button>
+              <button
+                onClick={() => handleSelectView("description")}
+                className={`${view.description ? styles.selected : ""}`}
+              >
                 Descripcion
               </button>
-              <button onClick={() => handleSelectView("history")}>
+              <button
+                onClick={() => handleSelectView("history")}
+                className={`${view.history ? styles.selected : ""}`}
+              >
                 Historial
               </button>
             </div>
@@ -371,7 +375,7 @@ const TicketInfo = (props) => {
               <section>
                 <div>
                   <h3>Mapa</h3>
-                  {isReady && viewMap && (
+                  {isReady && view.map && (
                     <div style={{ height: "400px", width: "100%" }}>
                       <MapContainer
                         center={newTicket.coordinates.split(",").map(Number)}

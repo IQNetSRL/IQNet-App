@@ -55,87 +55,55 @@
       transition: 0.1s ease;
       &:hover {
         background-color: $white-100;
-        color:rgb(9, 117, 9);
+        color: rgb(9, 117, 9);
       }
     }
   }
-  .tableContainerTwo {
-    @include centerFlex(flex, row, center, center, 0);
+  .infoTicketSection {
+    @include centerFlex(flex, column, center, center, 0);
     @include width(100%, 100%);
-    padding: 0 1rem;
-    background-color: $white-500;
-    .tableContainer {
-      @include centerFlex(flex, row, flex-start, center, 0);
-      overflow-x: auto;
-      overflow-y: hidden;
-      padding: 0;
-      table {
-        @include centerFlex(inline-flex, column, center, center, 0.1rem);
-        @include width(auto, auto);
-        @include height(100%, 100%);
-        border-collapse: collapse;
-        cursor: default;
-        thead {
-          @include width(100%, 100%);
-          tr {
-            @include centerFlex(flex, row, flex-start, center, 0);
-            @include height(3.5rem, 3.5rem);
-            th {
-              @include centerFlex(flex, row, flex-start, center, 0);
-              @include width(8.66rem, 8.66rem);
-              @include height(3.5rem, 3.5rem);
-              border: 0.2rem solid $white-950;
-              background-color: $white-100;
-              position: relative;
-              height: 3rem;
-              padding: 0.5rem;
-              text-align: left;
-              font-size: 1rem;
-            }
-          }
-        }
-        tbody {
-          @include width(100%, 100%);
-          tr {
-            @include centerFlex(flex, row, flex-start, center, 0);
-            height: auto;
-            @include width(auto, auto);
-            background-color: $white-100;
-            border-radius: 0.7rem;
-            margin-bottom: 0.2rem;
-            border: 0.2rem solid $white-950;
-            td {
-              @include centerFlex(flex, column, flex-start, flex-start, 0.5rem);
-              @include width(8.63rem, 8.63rem);
-              height: auto;
-              padding: 0.5rem;
-              text-align: left;
-              white-space: normal;
-            }
-          }
-        }
-      }
-    }
-  }
-  .historySection {
-    @include centerFlex(flex, row, center, center, 0);
-    @include width(100%, 100%);
-  }
-  .showMapButton {
-    @include button(rgb(27, 81, 126), none);
-    @include centerFlex(flex, row, space-between, center, 0);
-    @include width(8rem, 8rem);
-    @include height(3rem, 3rem);
-    color: $white-100;
-    font-size: 1.1rem;
-    padding: 0.9rem;
-    border-radius: 0.3rem;
-    transition: 0.1s ease;
-    span {
+    .topInfoSection {
       @include centerFlex(flex, row, center, center, 0);
+      @include width(100%, 100%);
+      @include height(4.5rem, auto);
+      background-color: $white-200;
+      ul {
+        @include centerFlex(flex, row, flex-start, center, 2rem);
+        @include width(100%, 100%);
+        flex-wrap: wrap;
+        list-style: none;
+        padding: 1rem;
+        @include centerFlex(flex, row, flex-start, center, 2rem);
+        li {
+          @include centerFlex(flex, column, center, flex-start, 0.5rem);
+          color: $white-950;
+          p {
+            font-weight: bold;
+          }
+        }
+      }
     }
-    &:hover {
-      transform: scale(1.05);
+  }
+  .infoSection {
+    @include centerFlex(flex, column, flex-start,  flex-start, 0);
+    @include width(100%, 100%);
+    padding: 1rem;
+    .buttonsContainer {
+      background-color: $white-200;
+      button {
+        @include button(transparent, none);
+        @include width(8rem, 8rem);
+        border: 0.2rem solid $white-950;
+        padding: 1rem;
+        font-weight: bold;
+        &:hover {
+          background-color: $white-400;
+        }
+      }
+      .selected {
+        background-color: $white-400;
+        color: $white-950;
+      }
     }
   }
 }
