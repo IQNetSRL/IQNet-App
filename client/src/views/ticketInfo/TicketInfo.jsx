@@ -10,6 +10,9 @@ import { format } from "date-fns";
 import { IoTicket } from "react-icons/io5";
 import { MdModeEdit } from "react-icons/md";
 import { IoLocationSharp } from "react-icons/io5";
+import { BiCommentDetail } from "react-icons/bi";
+import { IoMdInformationCircleOutline } from "react-icons/io";
+import { CgDetailsMore } from "react-icons/cg";
 import PropTypes from "prop-types";
 import TicketHistory from "../../components/ticketHistory/TicketHistory.jsx";
 import L from "leaflet";
@@ -313,47 +316,68 @@ const TicketInfo = (props) => {
               </button>
             </div>
             {view.detail && (
-              <section>
-                <div>
-                  <h3>Detalle</h3>
-                  <h4>Comentarios</h4>
-                  <div>
-                    {TicketById.comments.map((comment) => (
-                      <div key={comment.id}>
-                        <div>
-                          <span>
-                            {format(
-                              new Date(comment.createdAt),
-                              ">dd/MM/yyyy (HH:mm)"
-                            )}
-                          </span>
-                          <span> - {comment.user}:</span>
+              <>
+                <h3 className={styles.detailTitle}>
+                  Detalle
+                  <span>
+                    <CgDetailsMore />
+                  </span>
+                </h3>
+                <section className={styles.detailSection}>
+                  <div className={styles.detailContainer}>
+                    <h4>
+                      Comentarios
+                      <span>
+                        <BiCommentDetail />
+                      </span>
+                    </h4>
+                    <div className={styles.commentSection}>
+                      {TicketById.comments.map((comment) => (
+                        <div key={comment.id}>
+                          <div>
+                            <span className={styles.dateComments}>
+                              {format(
+                                new Date(comment.createdAt),
+                                ">dd/MM/yyyy (HH:mm) "
+                              )}
+                            </span>
+                            <span className={styles.dateComments}>
+                              - {comment.user}:
+                            </span>
+                          </div>
+                          {comment.text}
                         </div>
-                        {comment.text}
-                      </div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
-                </div>
-                <h4>Informacion</h4>
-                <div>
-                  <p>
-                    <span>Area: </span>
-                    {getValueNameById(TicketById.AreaId, allAreas)}
-                  </p>
-                  <p>
-                    <span>Categoria: </span>
-                    {getValueNameById(TicketById.CategoryId, allCategories)}
-                  </p>
-                  <p>
-                    <span>Prioridad: </span>
-                    {getValueNameById(TicketById.AreaId, allAreas)}
-                  </p>
-                  <p>
-                    <span>Creado hace: </span>
-                    {calculateDaysSinceCreation(TicketById.createdAt)} días
-                  </p>
-                </div>
-              </section>
+                  <div className={styles.informationContainer}>
+                    <h4>
+                      Informacion
+                      <span>
+                        <IoMdInformationCircleOutline />
+                      </span>
+                    </h4>
+                    <div>
+                      <p>
+                        <span>Area: </span>
+                        {getValueNameById(TicketById.AreaId, allAreas)}
+                      </p>
+                      <p>
+                        <span>Categoria: </span>
+                        {getValueNameById(TicketById.CategoryId, allCategories)}
+                      </p>
+                      <p>
+                        <span>Prioridad: </span>
+                        {getValueNameById(TicketById.AreaId, allAreas)}
+                      </p>
+                      <p>
+                        <span>Creado hace: </span>
+                        {calculateDaysSinceCreation(TicketById.createdAt)} días
+                      </p>
+                    </div>
+                  </div>
+                </section>
+              </>
             )}
             {view.client && (
               <section>

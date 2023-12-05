@@ -60,7 +60,7 @@
     }
   }
   .infoTicketSection {
-    @include centerFlex(flex, column, center, center, 0);
+    @include centerFlex(flex, column, center, flex-start, 0);
     @include width(100%, 100%);
     .topInfoSection {
       @include centerFlex(flex, row, center, center, 0);
@@ -85,14 +85,15 @@
     }
   }
   .infoSection {
-    @include centerFlex(flex, column, flex-start,  flex-start, 0);
-    @include width(100%, 100%);
+    @include centerFlex(flex, column, flex-start, flex-start, 0);
+    width: auto;
     padding: 1rem;
+    background-color: $white-300;
     .buttonsContainer {
       background-color: $white-200;
       button {
         @include button(transparent, none);
-        @include width(8rem, 8rem);
+        @include width(10rem, 10rem);
         border: 0.2rem solid $white-950;
         padding: 1rem;
         font-weight: bold;
@@ -103,6 +104,71 @@
       .selected {
         background-color: $white-400;
         color: $white-950;
+      }
+    }
+    .detailTitle {
+      @include centerFlex(flex, row, center, center, 0.5rem);
+      @include width(100%, 100%);
+      background-color: $white-100;
+      color: $pumpkin-700;
+      padding: 0.5rem;
+      span {
+        @include centerFlex(flex, row, center, center, 0);
+        color: $black;
+      }
+    }
+    .detailSection {
+      @include centerFlex(flex, row, space-between, flex-start, 2rem);
+      @include width(100%, 100%);
+      .detailContainer {
+        background-color: $white-200;
+        padding: 0.5rem;
+        h4 {
+          @include centerFlex(flex, row, flex-start, center, 0.5rem);
+          @include width(100%, 100%);
+          color: $white-950;
+          padding: 1rem 0.5rem;
+          span {
+            @include centerFlex(flex, row, center, center, 0);
+            color: $black;
+          }
+        }
+        .commentSection {
+          padding: 0.5rem;
+          div {
+            div {
+              .dateComments {
+                font-style: italic;
+                color: $white-950;
+              }
+            }
+          }
+        }
+      }
+      .informationContainer {
+        background-color: $white-200;
+        padding: 0.5rem;
+        h4 {
+          @include centerFlex(flex, row, flex-start, center, 0.5rem);
+          @include width(100%, 100%);
+          color: $white-950;
+          padding: 1rem 0.5rem;
+          span {
+            @include centerFlex(flex, row, center, center, 0);
+            color: $black;
+          }
+        }
+        div {
+          @include centerFlex(flex, column, flex-start, flex-start, 0.5rem);
+          padding: 0.5rem;
+          p {
+            span{
+              font-weight: bold;
+              color: $white-950;
+            }
+            color: $white-950;
+          }
+        }
       }
     }
   }
