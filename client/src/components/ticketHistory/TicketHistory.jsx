@@ -2,6 +2,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { MdHistory } from "react-icons/md";
+import { format } from "date-fns";
 import PropTypes from "prop-types";
 import styles from "./TicketHistory.module.scss";
 
@@ -22,35 +23,31 @@ const TicketHistory = (props) => {
 
   return (
     <section className={styles.sectionHistory}>
-      <h1 className={styles.titleHistory}>
-        Historial
-        <span>
-          <MdHistory />
-        </span>
-      </h1>
       <div className={styles.tableContainerTwo}>
         <section className={styles.tableContainer}>
           <table>
             <thead>
               <tr>
+                <th>Fecha</th>
+                <th>Hora</th>
                 <th>Operador</th>
-                <th>Área</th>
-                <th>Categoría</th>
+                <th>Encargado</th>
+                <th>Area</th>
+                <th>Categoria</th>
                 <th>Estado</th>
                 <th>Prioridad</th>
-                <th>Encargado</th>
-                <th>Cliente</th>
-                <th>Dirección</th>
-                <th>Descripción</th>
-                <th>Coordenadas</th>
-                <th>Creación</th>
               </tr>
             </thead>
             <tbody>
               {props.TicketById.history &&
                 props.TicketById.history.map((historyEntry) => (
                   <tr key={historyEntry.id}>
+                    <td>
+                      {format(new Date(historyEntry.createdAt), "dd/MM/yyyy")}
+                    </td>
+                    <td>{format(new Date(historyEntry.createdAt), "HH:mm")}</td>
                     <td>{historyEntry.user}</td>
+                    <td>{historyEntry.responsable}</td>
                     <td>{getValueNameById(historyEntry.AreaId, allAreas)}</td>
                     <td>
                       {getValueNameById(historyEntry.CategoryId, allCategories)}
@@ -61,12 +58,6 @@ const TicketHistory = (props) => {
                     <td>
                       {getValueNameById(historyEntry.PriorityId, allPriorities)}
                     </td>
-                    <td>{historyEntry.responsable}</td>
-                    <td>{historyEntry.client}</td>
-                    <td>{historyEntry.address}</td>
-                    <td>{historyEntry.text}</td>
-                    <td>{historyEntry.coordinates}</td>
-                    <td>{historyEntry.createdAt}</td>
                   </tr>
                 ))}
             </tbody>
