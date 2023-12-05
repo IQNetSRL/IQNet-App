@@ -130,7 +130,7 @@ const TicketInfo = (props) => {
     e.preventDefault();
     setIsEditing(false);
     setViewMap(false);
-    
+
     try {
       await dispatch(
         putTicket({
@@ -217,259 +217,279 @@ const TicketInfo = (props) => {
           <button onClick={handleCancelEdit}>Cancelar</button>
         </>
       )}
-      <div>
+      <div className={styles.ticketList}>
         {isReady && TicketById.comments ? (
-          <table>
-            <thead>
-              <tr>
-                <th>Operador</th>
-                <th>Área</th>
-                <th>Categoría</th>
-                <th>Estado</th>
-                <th>Prioridad</th>
-                <th>Encargado</th>
-                <th>Cliente</th>
-                <th>Dirección</th>
-                <th>Descripción</th>
-                <th>Comentarios</th>
-                {isEditing && <th>Coordenadas</th>}
-                <th>Tiempo transcurrido</th>
-                <th>Creación</th>
-                {props.rol === "admin" && <th>Acciones</th>}
-              </tr>
-            </thead>
-            <tbody>
-              <tr key={TicketById.id}>
-                <td>{TicketById.username}</td>
-                {!isEditing ? (
-                  <>
-                    <td>{getValueNameById(TicketById.AreaId, allAreas)}</td>
-                    <td>
-                      {getValueNameById(TicketById.CategoryId, allCategories)}
-                    </td>
-                    <td>{getValueNameById(TicketById.StatusId, allStatus)}</td>
-                    <td>
-                      {getValueNameById(TicketById.PriorityId, allPriorities)}
-                    </td>
-                    <td>{TicketById.responsable}</td>
-                    <td>{TicketById.client}</td>
-                    <td>{TicketById.address}</td>
-                    <td>{TicketById.text}</td>
-                    <td>
-                      {TicketById.comments.map((comment) => (
-                        <div key={comment.id}>
-                          {comment.text} - {comment.user} - {comment.createdAt}
-                        </div>
-                      ))}
-                    </td>
-                  </>
-                ) : (
-                  <>
-                    <td>
-                      <select
-                        name="areas"
-                        value={newTicket.AreaId}
-                        onChange={(e) =>
-                          handleSelectChange("AreaId", e.target.value)
-                        }
-                      >
-                        <option value="">Ninguna</option>
-                        {allAreas?.map((area, index) => (
-                          <option key={area.id || index} value={area.id}>
-                            {area.name}
-                          </option>
-                        ))}
-                      </select>
-                    </td>
-                    <td>
-                      <select
-                        name="categories"
-                        value={newTicket.CategoryId}
-                        onChange={(e) =>
-                          handleSelectChange("CategoryId", e.target.value)
-                        }
-                      >
-                        <option value="">Ninguna</option>
-                        {allCategories?.map((category, index) => (
-                          <option
-                            key={category.id || index}
-                            value={category.id}
+          <>
+            <section className={styles.tableSection}>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Operador</th>
+                    <th>Área</th>
+                    <th>Categoría</th>
+                    <th>Estado</th>
+                    <th>Prioridad</th>
+                    <th>Encargado</th>
+                    <th>Cliente</th>
+                    <th>Dirección</th>
+                    <th>Descripción</th>
+                    <th>Comentarios</th>
+                    {isEditing && <th>Coordenadas</th>}
+                    <th>Tiempo transcurrido</th>
+                    <th>Creación</th>
+                    {props.rol === "admin" && <th>Acciones</th>}
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr key={TicketById.id}>
+                    <td>{TicketById.username}</td>
+                    {!isEditing ? (
+                      <>
+                        <td>{getValueNameById(TicketById.AreaId, allAreas)}</td>
+                        <td>
+                          {getValueNameById(
+                            TicketById.CategoryId,
+                            allCategories
+                          )}
+                        </td>
+                        <td>
+                          {getValueNameById(TicketById.StatusId, allStatus)}
+                        </td>
+                        <td>
+                          {getValueNameById(
+                            TicketById.PriorityId,
+                            allPriorities
+                          )}
+                        </td>
+                        <td>{TicketById.responsable}</td>
+                        <td>{TicketById.client}</td>
+                        <td>{TicketById.address}</td>
+                        <td>{TicketById.text}</td>
+                        <td>
+                          {TicketById.comments.map((comment) => (
+                            <div key={comment.id}>
+                              {comment.text} - {comment.user} -{" "}
+                              {comment.createdAt}
+                            </div>
+                          ))}
+                        </td>
+                      </>
+                    ) : (
+                      <>
+                        <td>
+                          <select
+                            name="areas"
+                            value={newTicket.AreaId}
+                            onChange={(e) =>
+                              handleSelectChange("AreaId", e.target.value)
+                            }
                           >
-                            {category.name}
-                          </option>
-                        ))}
-                      </select>
-                    </td>
-                    <td>
-                      <select
-                        name="status"
-                        value={newTicket.StatusId}
-                        onChange={(e) =>
-                          handleSelectChange("StatusId", e.target.value)
-                        }
-                      >
-                        <option value="">Ninguno</option>
-                        {allStatus?.map((status, index) => (
-                          <option key={status.id || index} value={status.id}>
-                            {status.name}
-                          </option>
-                        ))}
-                      </select>
-                    </td>
-                    <td>
-                      <select
-                        name="priorities"
-                        value={newTicket.PriorityId}
-                        onChange={(e) =>
-                          handleSelectChange("PriorityId", e.target.value)
-                        }
-                      >
-                        <option value="">Ninguna</option>
-                        {allPriorities?.map((priority, index) => (
-                          <option
-                            key={priority.id || index}
-                            value={priority.id}
+                            <option value="">Ninguna</option>
+                            {allAreas?.map((area, index) => (
+                              <option key={area.id || index} value={area.id}>
+                                {area.name}
+                              </option>
+                            ))}
+                          </select>
+                        </td>
+                        <td>
+                          <select
+                            name="categories"
+                            value={newTicket.CategoryId}
+                            onChange={(e) =>
+                              handleSelectChange("CategoryId", e.target.value)
+                            }
                           >
-                            {priority.name}
-                          </option>
-                        ))}
-                      </select>
-                    </td>
-                    <td>
-                      <select
-                        name="responsable"
-                        value={newTicket.responsable}
-                        onChange={(e) =>
-                          handleSelectChange("responsable", e.target.value)
-                        }
-                      >
-                        <option value="">Ninguno</option>
-                        {allAccounts?.map((aaccount, index) => (
-                          <option
-                            key={aaccount.id || index}
-                            value={aaccount.name}
+                            <option value="">Ninguna</option>
+                            {allCategories?.map((category, index) => (
+                              <option
+                                key={category.id || index}
+                                value={category.id}
+                              >
+                                {category.name}
+                              </option>
+                            ))}
+                          </select>
+                        </td>
+                        <td>
+                          <select
+                            name="status"
+                            value={newTicket.StatusId}
+                            onChange={(e) =>
+                              handleSelectChange("StatusId", e.target.value)
+                            }
                           >
-                            {aaccount.name}
-                          </option>
-                        ))}
-                      </select>
-                    </td>
+                            <option value="">Ninguno</option>
+                            {allStatus?.map((status, index) => (
+                              <option
+                                key={status.id || index}
+                                value={status.id}
+                              >
+                                {status.name}
+                              </option>
+                            ))}
+                          </select>
+                        </td>
+                        <td>
+                          <select
+                            name="priorities"
+                            value={newTicket.PriorityId}
+                            onChange={(e) =>
+                              handleSelectChange("PriorityId", e.target.value)
+                            }
+                          >
+                            <option value="">Ninguna</option>
+                            {allPriorities?.map((priority, index) => (
+                              <option
+                                key={priority.id || index}
+                                value={priority.id}
+                              >
+                                {priority.name}
+                              </option>
+                            ))}
+                          </select>
+                        </td>
+                        <td>
+                          <select
+                            name="responsable"
+                            value={newTicket.responsable}
+                            onChange={(e) =>
+                              handleSelectChange("responsable", e.target.value)
+                            }
+                          >
+                            <option value="">Ninguno</option>
+                            {allAccounts?.map((aaccount, index) => (
+                              <option
+                                key={aaccount.id || index}
+                                value={aaccount.name}
+                              >
+                                {aaccount.name}
+                              </option>
+                            ))}
+                          </select>
+                        </td>
+                        <td>
+                          <input
+                            type="text"
+                            name="client"
+                            placeholder="cliente"
+                            value={newTicket.client}
+                            onChange={(e) =>
+                              handleSelectChange("client", e.target.value)
+                            }
+                          />
+                        </td>
+                        <td>
+                          <input
+                            type="text"
+                            name="address"
+                            placeholder="direccion"
+                            value={newTicket.address}
+                            onChange={(e) =>
+                              handleSelectChange("address", e.target.value)
+                            }
+                          />
+                        </td>
+                        <td>
+                          <input
+                            type="text"
+                            name="text"
+                            placeholder="descripcion"
+                            value={newTicket.text}
+                            onChange={(e) =>
+                              handleSelectChange("text", e.target.value)
+                            }
+                          />
+                        </td>
+                        <td>
+                          <input
+                            type="text"
+                            name="commentText"
+                            placeholder="comentario"
+                            value={newTicket.commentText}
+                            onChange={(e) =>
+                              handleSelectChange("commentText", e.target.value)
+                            }
+                          />
+                        </td>
+                        <td>
+                          <input
+                            type="text"
+                            name="coordinates"
+                            placeholder="Coordenadas"
+                            value={newTicket.coordinates}
+                            onChange={(e) =>
+                              handleCoordinatesChange(e.target.value)
+                            }
+                          />
+                        </td>
+                      </>
+                    )}
                     <td>
-                      <input
-                        type="text"
-                        name="client"
-                        placeholder="cliente"
-                        value={newTicket.client}
-                        onChange={(e) =>
-                          handleSelectChange("client", e.target.value)
-                        }
-                      />
+                      {calculateDaysSinceCreation(TicketById.createdAt)} días
                     </td>
-                    <td>
-                      <input
-                        type="text"
-                        name="address"
-                        placeholder="direccion"
-                        value={newTicket.address}
-                        onChange={(e) =>
-                          handleSelectChange("address", e.target.value)
-                        }
-                      />
-                    </td>
-                    <td>
-                      <input
-                        type="text"
-                        name="text"
-                        placeholder="descripcion"
-                        value={newTicket.text}
-                        onChange={(e) =>
-                          handleSelectChange("text", e.target.value)
-                        }
-                      />
-                    </td>
-                    <td>
-                      <input
-                        type="text"
-                        name="commentText"
-                        placeholder="comentario"
-                        value={newTicket.commentText}
-                        onChange={(e) =>
-                          handleSelectChange("commentText", e.target.value)
-                        }
-                      />
-                    </td>
-                    <td>
-                      <input
-                        type="text"
-                        name="coordinates"
-                        placeholder="Coordenadas"
-                        value={newTicket.coordinates}
-                        onChange={(e) =>
-                          handleCoordinatesChange(e.target.value)
-                        }
-                      />
-                    </td>
-                  </>
-                )}
-                <td>{calculateDaysSinceCreation(TicketById.createdAt)} días</td>
-                <td>{TicketById.createdAt}</td>
-                {props.rol === "admin" && (
-                  <td>
-                    <button onClick={() => handleDeleteTicket(TicketById.id)}>
-                      Eliminar Ticket
-                    </button>
-                  </td>
-                )}
-              </tr>
-            </tbody>
-          </table>
+                    <td>{TicketById.createdAt}</td>
+                    {props.rol === "admin" && (
+                      <td>
+                        <button
+                          onClick={() => handleDeleteTicket(TicketById.id)}
+                        >
+                          Eliminar Ticket
+                        </button>
+                      </td>
+                    )}
+                  </tr>
+                </tbody>
+              </table>
+            </section>
+          </>
         ) : (
           <div>Cargando Tickets...</div>
         )}
-        {isReady && !isEditing ? (
-          <TicketHistory TicketById={TicketById} />
-        ) : (
-          <div>Cargando Historial...</div>
-        )}
-        <button onClick={handleViewMap}>Ver Mapa</button>
-        {isReady && viewMap && (
-          <div style={{ height: "400px", width: "100%" }}>
-            <MapContainer
-              center={newTicket.coordinates.split(",").map(Number)}
-              zoom={13}
-              style={{ height: "100%", width: "100%" }}
-              whenCreated={handleMapLoad}
-              onLoad={() =>
-                mapRef.current && mapRef.current.leafletElement.invalidateSize()
-              }
-            >
-              <TileLayer
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-              />
-              {newTicket.coordinates && (
-                <>
-                  {props.currentLocation && (
-                    <Marker
-                      position={props.currentLocation}
-                      draggable={false}
-                      icon={customIcon}
-                    >
-                      <Popup>Tu ubicación actual</Popup>
-                    </Marker>
-                  )}
-                  <Marker
-                    position={newTicket.coordinates.split(",").map(Number)}
-                    draggable={false}
-                  >
-                    <Popup>Tu destino aqui</Popup>
-                  </Marker>
-                </>
-              )}
-            </MapContainer>
-          </div>
-        )}
       </div>
+      {isReady && !isEditing ? (
+        <TicketHistory TicketById={TicketById} />
+      ) : (
+        <div>Cargando Historial...</div>
+      )}
+      <button onClick={handleViewMap}>Ver Mapa</button>
+      {isReady && viewMap && (
+        <div style={{ height: "400px", width: "100%" }}>
+          <MapContainer
+            center={newTicket.coordinates.split(",").map(Number)}
+            zoom={13}
+            style={{ height: "100%", width: "100%" }}
+            whenCreated={handleMapLoad}
+            onLoad={() =>
+              mapRef.current && mapRef.current.leafletElement.invalidateSize()
+            }
+          >
+            <TileLayer
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            />
+            {newTicket.coordinates && (
+              <>
+                {props.currentLocation && (
+                  <Marker
+                    position={props.currentLocation}
+                    draggable={false}
+                    icon={customIcon}
+                  >
+                    <Popup>Tu ubicación actual</Popup>
+                  </Marker>
+                )}
+                <Marker
+                  position={newTicket.coordinates.split(",").map(Number)}
+                  draggable={false}
+                >
+                  <Popup>Tu destino aqui</Popup>
+                </Marker>
+              </>
+            )}
+          </MapContainer>
+        </div>
+      )}
     </section>
   );
 };

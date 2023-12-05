@@ -1,0 +1,91 @@
+@import "../../styles/variables.scss";
+@import "../../styles/mixins.scss";
+
+.sectionTicketInfo {
+  @include centerFlex(flex, column, center, center, 0.1rem);
+  .ticketList {
+    @include centerFlex(flex, row, center, center, 0);
+    @include width(100%, 100%);
+    padding: 0.5rem;
+    margin-top: 1rem;
+    background-color: $white-500;
+    .tableSection {
+      @include centerFlex(flex, row, flex-start, center, 0);
+      overflow-x: auto;
+      overflow-y: hidden;
+      table {
+        @include centerFlex(inline-flex, column, center, center, 0.1rem);
+        @include width(auto, auto);
+        @include height(100%, 100%);
+        border-collapse: collapse;
+        cursor: default;
+        thead {
+          @include width(100%, 100%);
+          tr {
+            @include centerFlex(flex, row, flex-start, center, 0);
+            @include height(3.5rem, 3.5rem);
+            th {
+              @include centerFlex(flex, row, flex-start, center, 0);
+              @include width(8.66rem, 8.66rem);
+              @include height(3.5rem, 3.5rem);
+              border: 0.2rem solid $white-950;
+              background-color: $white-100;
+              position: relative;
+              height: 3rem;
+              padding: 0.5rem;
+              text-align: left;
+              font-size: 1rem;
+              select {
+                @include width(4.8rem, 4.8rem);
+                @include height(1.5rem, 1.5rem);
+                cursor: pointer;
+              }
+              select option {
+                background-color: $pumpkin-400;
+                color: $white-950;
+                font-size: 1rem;
+              }
+              button {
+                @include centerFlex(flex, row, center, center, 0);
+                @include width(1.5rem, 1.5rem);
+                @include height(1.5rem, 1.5rem);
+                position: absolute;
+                top: 0.8rem;
+                right: 0.5rem;
+                transition: 0.3s ease;
+                cursor: pointer;
+                svg {
+                  @include width(1rem, 1rem);
+                  @include height(1rem, 1rem);
+                }
+              }
+            }
+          }
+        }
+        tbody {
+          @include width(100%, 100%);
+          tr {
+            @include centerFlex(flex, row, flex-start, center, 0);
+            height: auto;
+            background-color: transparent;
+            z-index: 3;
+            background-color: $white-100;
+            border-radius: 0.7rem;
+            margin-bottom: 0.2rem;
+            td {
+              @include centerFlex(flex, row, flex-start, center, 0);
+              @include width(8.66rem, 8.66rem);
+              height: auto;
+              padding: 0.5rem 0 0.5rem 0.5rem;
+              text-align: left;
+              white-space: normal;
+            }
+          }
+        }
+      }
+    }
+    .ticketInfo {
+      font-size: 0.85rem;
+    }
+  }
+}
