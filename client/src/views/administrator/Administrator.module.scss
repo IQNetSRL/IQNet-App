@@ -187,8 +187,9 @@
     }
   }
   .addCitySection {
-    @include centerFlex(flex, row, center, center, 0);
+    @include centerFlex(flex, column, center, center, 0.5rem);
     @include width(100%, 100%);
+    padding: 0 1rem;
     div {
       @include centerFlex(flex, row, flex-start, center, 0);
       @include width(100%, 100%);
@@ -200,7 +201,7 @@
         color: $white-100;
         font-size: 1.1rem;
         padding: 0.9rem;
-        margin: 0.5rem 1rem;
+        margin: 0.5rem 0;
         border-radius: 0.3rem;
         transition: 0.1s ease;
         span {
@@ -213,6 +214,79 @@
         }
         &:hover {
           transform: scale(1.05);
+        }
+      }
+      .cancel {
+        background-color: rgb(247, 40, 40);
+      }
+    }
+  }
+  form {
+    @include centerFlex(flex, row, flex-start, center, 1rem);
+    @include width(100%, 100%);
+    input {
+      @include width(11rem, 11rem);
+      @include height(2.2rem, 2.2rem);
+      padding: 0.2rem 0.4rem;
+      border-radius: 0.3rem;
+      font-size: 1rem;
+    }
+    button {
+      @include centerFlex(flex, row, space-between, center, 0);
+      @include button(rgb(9, 117, 9), none);
+      @include width(5.5rem, 5.5rem);
+      @include height(2.2rem, 2.2rem);
+      color: $white-100;
+      font-size: 1.1rem;
+      padding: 0.9rem;
+      margin: 0.5rem 0;
+      border-radius: 0.3rem;
+      transition: 0.1s ease;
+      &:hover {
+        transform: scale(1.05);
+      }
+    }
+  }
+  .usersSection {
+    @include centerFlex(flex, column, center, flex-start, 0.5rem);
+    @include width(100%, 100%);
+    h2 {
+      @include centerFlex(flex, row, center, center, 0.5rem);
+      @include height(4rem, 4rem);
+      @include width(100%, 100%);
+      background-color: $white-200;
+      padding: 1rem;
+      font-size: 1.8rem;
+      color: $white-950;
+      cursor: default;
+      span {
+        @include centerFlex(flex, row, center, center, 0);
+        color: $pumpkin-600;
+      }
+    }
+    ol {
+      @include centerFlex(flex, column, center, flex-start, 0.5rem);
+      margin: 1rem 1rem;
+      list-style: none;
+      background-color: $white-200;
+      padding: 0.5rem;
+      border-radius: 0.2rem;
+      li {
+        @include centerFlex(flex, row, space-between, center, 1rem);
+        @include width(100%, 100%);
+        button {
+          @include height(1.5rem, 1.5rem);
+          @include width(2rem, 2rem);
+          @include button($white-300, none);
+          border-radius: 0.2rem;
+          svg {
+            @include centerFlex(flex, row, center, center, 0);
+            @include width(100%, 100%);
+          }
+          &:hover {
+            background-color: $white-950;
+            color: $white-100;
+          }
         }
       }
     }

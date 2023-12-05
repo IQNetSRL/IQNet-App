@@ -8,6 +8,8 @@ import { FaCity } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { IoEye } from "react-icons/io5";
 import { IoAdd } from "react-icons/io5";
+import { FaUserGear } from "react-icons/fa6";
+import { MdModeEdit } from "react-icons/md";
 import {
   getUsers,
   getCities,
@@ -27,6 +29,7 @@ const Administrator = () => {
   const allAccounts = useSelector((state) => state.someReducer.allAccounts);
   const [isEditing, setIsEditing] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [name, setName] = useState("");
   const [isAdding, setIsAdding] = useState(false);
   const [newCity, setNewCity] = useState({ name: "" });
   const [level, setLevel] = useState("");
@@ -67,8 +70,9 @@ const Administrator = () => {
     "Consulta",
   ];
 
-  const handleEdit = (id, level) => {
+  const handleEdit = (id, name, level) => {
     setIsEditing(true);
+    setName(name);
     setLevel(level);
     setNewLevel({ ...newLevel, id: id });
   };
@@ -229,7 +233,10 @@ const Administrator = () => {
       </section>
       <section className={styles.addCitySection}>
         <div>
-          <button className={styles.addCityButton} onClick={handleAddCities}>
+          <button
+            className={`${styles.addCityButton} ${isAdding && styles.cancel}`}
+            onClick={handleAddCities}
+          >
             {isAdding ? "Cancelar" : "Agregar"}
             <span>
               <IoAdd />
@@ -249,15 +256,24 @@ const Administrator = () => {
           </form>
         )}
       </section>
-      <section>
-        <h2>Usuarios</h2>
+      <section className={styles.usersSection}>
+        <h2>
+          Usuarios
+          <span>
+            <FaUserGear />
+          </span>
+        </h2>
         {allAccounts.length > 0 ? (
           <ol>
             {allAccounts?.map((account, index) => (
               <li key={account.id || index}>
                 {account.name}
-                <button onClick={() => handleEdit(account.id, account.level)}>
-                  editar
+                <button
+                  onClick={() =>
+                    handleEdit(account.id, account.name, account.level)
+                  }
+                >
+                  <MdModeEdit/>
                 </button>
               </li>
             ))}
@@ -267,6 +283,7 @@ const Administrator = () => {
         )}
         {isEditing && (
           <div>
+            <label>{name}</label>
             <select
               name="level"
               onChange={(e) => handleLevelChange(e.target.value)}
