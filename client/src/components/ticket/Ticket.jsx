@@ -1,8 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import { differenceInDays } from "date-fns";
 import {
@@ -20,6 +19,7 @@ import { IoEye } from "react-icons/io5";
 import { MdFormatListBulletedAdd } from "react-icons/md";
 import { RiFileExcel2Fill } from "react-icons/ri";
 import { TfiReload } from "react-icons/tfi";
+import { IoAdd } from "react-icons/io5";
 import Swal from "sweetalert2";
 import PropTypes from "prop-types";
 import DatePicker from "react-datepicker";
@@ -300,6 +300,10 @@ const Ticket = (props) => {
     dispatch(getTicketById(id));
   };
 
+  const handleNavigate = () => {
+    navigate("/create");
+  };
+
   const handleResetFilters = () => {
     dispatch(getTicketsAction());
     setFilters({});
@@ -339,6 +343,11 @@ const Ticket = (props) => {
           </div>
         </div>
         <section className={styles.leftSection}>
+          <button className={styles.addButton} onClick={handleNavigate}>
+            <span>
+              <IoAdd />
+            </span>
+          </button>
           <div className={styles.renderList} ref={parent}>
             <button
               ref={optionsButton}
