@@ -19,6 +19,7 @@ import {
   putAccount,
   getAccounts,
 } from "../../redux/actions.js";
+import Swal from "sweetalert2";
 import * as XLSX from "xlsx";
 import styles from "./Administrator.module.scss";
 
@@ -82,7 +83,35 @@ const Administrator = () => {
   };
 
   const handleDeleteUser = (id) => {
-    dispatch(deleteUser(id));
+    Swal.fire({
+      title:
+        "Esta seguro que desea eliminar la información de este prospecto? Esto no se podra deshacer!",
+      showDenyButton: true,
+      confirmButtonText: "Confirmar",
+      denyButtonText: `Cancelar`,
+      color: "#5a5a5a",
+      confirmButtonColor: "#59A0FD",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: "Esta seguro?",
+          showDenyButton: true,
+          confirmButtonText: "Confirmar",
+          denyButtonText: `Cancelar`,
+          color: "#5a5a5a",
+          confirmButtonColor: "#59A0FD",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire("Prospecto Eliminado", "", "success");
+            dispatch(deleteUser(id));
+          } else if (result.isDenied) {
+            return;
+          }
+        });
+      } else if (result.isDenied) {
+        return;
+      }
+    });
   };
 
   const handleSubmit = async (e) => {
