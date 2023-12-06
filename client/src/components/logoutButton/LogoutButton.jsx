@@ -17,7 +17,6 @@ const LogoutButton = () => {
       <span>
         <TbLogout2 />
       </span>
-      Cerrar sesion
     </button>
   );
 };

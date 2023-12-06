@@ -17,13 +17,17 @@ const Login = () => {
   }, [isAuthenticated, navigate]);
 
   const handleLogin = () => {
-    loginWithRedirect();
+    setTimeout(() => {
+      loginWithRedirect();
+    }, "500");
   };
 
   return (
     <section className={styles.sectionLogin}>
-      <h1>Login</h1>
-      <button onClick={handleLogin}>Iniciar Sesión</button>
+      <div>
+        <h1>IQNet</h1>
+        <button onClick={handleLogin}>Ingresar</button>
+      </div>
     </section>
   );
 };
