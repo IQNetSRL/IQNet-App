@@ -301,6 +301,10 @@
         background-color: $white-200;
         padding: 0.5rem;
         border-radius: 0.2rem;
+        h3 {
+          color: $pumpkin-700;
+          margin-bottom: 0.5rem;
+        }
         li {
           @include centerFlex(flex, row, space-between, center, 1rem);
           @include width(100%, 100%);

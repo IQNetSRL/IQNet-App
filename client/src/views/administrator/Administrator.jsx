@@ -378,20 +378,41 @@ const Administrator = () => {
           </span>
         </h2>
         <div className={styles.editRolContainer}>
+          {allAccounts?.filter((user) => user.level === null).length >= 1 && (
+            <ol>
+              <h3>Nuevos Usuarios</h3>
+              {allAccounts
+                ?.filter((user) => user.level === null)
+                .map((account, index) => (
+                  <li key={account.id || index}>
+                    {account.name}
+                    <button
+                      onClick={() =>
+                        handleEdit(account.id, account.name, account.level)
+                      }
+                    >
+                      <MdModeEdit />
+                    </button>
+                  </li>
+                ))}
+            </ol>
+          )}
           {allAccounts.length > 0 ? (
             <ol>
-              {allAccounts?.map((account, index) => (
-                <li key={account.id || index}>
-                  {account.name}
-                  <button
-                    onClick={() =>
-                      handleEdit(account.id, account.name, account.level)
-                    }
-                  >
-                    <MdModeEdit />
-                  </button>
-                </li>
-              ))}
+              {allAccounts
+                ?.filter((user) => user.level !== null)
+                .map((account, index) => (
+                  <li key={account.id || index}>
+                    {account.name}
+                    <button
+                      onClick={() =>
+                        handleEdit(account.id, account.name, account.level)
+                      }
+                    >
+                      <MdModeEdit />
+                    </button>
+                  </li>
+                ))}
             </ol>
           ) : (
             <p>Cargando cuentas...</p>

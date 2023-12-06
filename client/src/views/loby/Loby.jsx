@@ -26,17 +26,16 @@ const Loby = (props) => {
         </p>
         <p>
           Cuando su cuenta esté habilitada, presione &quot;Continuar&quot; en el
-          botón de abajo para ingresar al servicio.
+          botón de abajo, o vuelva a iniciar sesión para ingresar al servicio.
         </p>
         <div className={styles.buttonContainer}>
-        <button
-          onClick={handleNavigate}
-          disabled={`${props.rol === null ? true : false}`}
-        >
-          Continuar
-        </button>
+          <button
+            onClick={handleNavigate}
+            disabled={`${props.rol === null ? true : false}`}
+          >
+            Continuar
+          </button>
         </div>
-
       </div>
     </section>
   );
