@@ -20,6 +20,7 @@ import { IoEye } from "react-icons/io5";
 import { MdFormatListBulletedAdd } from "react-icons/md";
 import { RiFileExcel2Fill } from "react-icons/ri";
 import { TfiReload } from "react-icons/tfi";
+import Swal from "sweetalert2";
 import PropTypes from "prop-types";
 import DatePicker from "react-datepicker";
 import * as XLSX from "xlsx";
@@ -239,7 +240,35 @@ const Ticket = (props) => {
 
   const handleDeleteTicket = (id, e) => {
     e.stopPropagation();
-    dispatch(deleteTicket(id));
+    Swal.fire({
+      title:
+        "Esta seguro que desea eliminar este ticket? Esto no se podra deshacer!",
+      showDenyButton: true,
+      confirmButtonText: "Confirmar",
+      denyButtonText: `Cancelar`,
+      color: "#5a5a5a",
+      confirmButtonColor: "#59A0FD",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: "Esta seguro?",
+          showDenyButton: true,
+          confirmButtonText: "Confirmar",
+          denyButtonText: `Cancelar`,
+          color: "#5a5a5a",
+          confirmButtonColor: "#59A0FD",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire("Ticket Eliminado", "", "success");
+            dispatch(deleteTicket(id));
+          } else if (result.isDenied) {
+            return;
+          }
+        });
+      } else if (result.isDenied) {
+        return;
+      }
+    });
   };
 
   const toggleSortOrder = () => {

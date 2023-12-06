@@ -150,6 +150,8 @@ const TicketInfo = (props) => {
         icon: "warning",
         title: "Error",
         text: "Debes agregar un comentario!",
+        color: "#5a5a5a",
+        confirmButtonColor: "#E05424",
       });
       return;
     } else if (
@@ -163,6 +165,8 @@ const TicketInfo = (props) => {
         icon: "warning",
         title: "Error",
         text: "Debes agregar coordenadas para cerrar el ticket!",
+        color: "#5a5a5a",
+        confirmButtonColor: "#E05424",
       });
       return;
     }
@@ -440,7 +444,7 @@ const TicketInfo = (props) => {
                   allAccounts?.find(
                     (elem) => elem.name === newTicket.responsable
                   )?.level === "support" &&
-                  newTicket.coordinates === "" 
+                  newTicket.coordinates === ""
                     ? "* -Coordenadas: *"
                     : "-Coordenadas:"}
                 </label>
@@ -603,46 +607,48 @@ const TicketInfo = (props) => {
                       <IoLocationSharp />
                     </span>
                   </h3>
-                  {isReady && view.map && newTicket.coordinates.split(",").map(Number).length > 1 && (
-                    <div style={{ height: "400px", width: "100%" }}>
-                      <MapContainer
-                        center={newTicket.coordinates.split(",").map(Number)}
-                        zoom={13}
-                        style={{ height: "100%", width: "100%" }}
-                        whenCreated={handleMapLoad}
-                        onLoad={() =>
-                          mapRef.current &&
-                          mapRef.current.leafletElement.invalidateSize()
-                        }
-                      >
-                        <TileLayer
-                          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                        />
-                        {newTicket.coordinates && (
-                          <>
-                            {props.currentLocation && (
+                  {isReady &&
+                    view.map &&
+                    newTicket.coordinates.split(",").map(Number).length > 1 && (
+                      <div style={{ height: "400px", width: "100%" }}>
+                        <MapContainer
+                          center={newTicket.coordinates.split(",").map(Number)}
+                          zoom={13}
+                          style={{ height: "100%", width: "100%" }}
+                          whenCreated={handleMapLoad}
+                          onLoad={() =>
+                            mapRef.current &&
+                            mapRef.current.leafletElement.invalidateSize()
+                          }
+                        >
+                          <TileLayer
+                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                          />
+                          {newTicket.coordinates && (
+                            <>
+                              {props.currentLocation && (
+                                <Marker
+                                  position={props.currentLocation}
+                                  draggable={false}
+                                  icon={customIcon}
+                                >
+                                  <Popup>Tu ubicación actual</Popup>
+                                </Marker>
+                              )}
                               <Marker
-                                position={props.currentLocation}
+                                position={newTicket.coordinates
+                                  .split(",")
+                                  .map(Number)}
                                 draggable={false}
-                                icon={customIcon}
                               >
-                                <Popup>Tu ubicación actual</Popup>
+                                <Popup>Tu destino aqui</Popup>
                               </Marker>
-                            )}
-                            <Marker
-                              position={newTicket.coordinates
-                                .split(",")
-                                .map(Number)}
-                              draggable={false}
-                            >
-                              <Popup>Tu destino aqui</Popup>
-                            </Marker>
-                          </>
-                        )}
-                      </MapContainer>
-                    </div>
-                  )}
+                            </>
+                          )}
+                        </MapContainer>
+                      </div>
+                    )}
                 </div>
               </section>
             )}
