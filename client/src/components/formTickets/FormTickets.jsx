@@ -6,6 +6,7 @@ import { postTicket } from "../../redux/actions.js";
 import { IoTicket } from "react-icons/io5";
 import { IoLocationSharp } from "react-icons/io5";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import Swal from "sweetalert2";
 import "leaflet/dist/leaflet.css";
 import styles from "./FormTickets.module.scss";
 
@@ -57,6 +58,18 @@ const FormTickets = () => {
     fetchData();
   }, [isLoading, user, allAccounts, map]);
 
+  const Toast = Swal.mixin({
+    toast: true,
+    position: "top-end",
+    showConfirmButton: false,
+    timer: 3500,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener("mouseenter", Swal.stopTimer);
+      toast.addEventListener("mouseleave", Swal.resumeTimer);
+    },
+  });
+
   const handleSelectChange = (field, value) => {
     if (field === "AreaId" && value) {
       let area = allAreas.find((area) => area.id === value);
@@ -87,7 +100,7 @@ const FormTickets = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setIsAdding(false);
     try {
       await dispatch(
         postTicket({
@@ -116,6 +129,10 @@ const FormTickets = () => {
         responsable: "",
         coordinates: "",
       }));
+      Toast.fire({
+        icon: "success",
+        title: "Ticket Creado!",
+      });
     } catch (error) {
       console.error("Error al agregar un ticket:", error);
     }
