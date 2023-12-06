@@ -159,6 +159,18 @@ const Ticket = (props) => {
     fetchData();
   }, [rol, allTickets, allAreas, sortOrder]);
 
+  const Toast = Swal.mixin({
+    toast: true,
+    position: "top-end",
+    showConfirmButton: false,
+    timer: 3500,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener("mouseenter", Swal.stopTimer);
+      toast.addEventListener("mouseleave", Swal.resumeTimer);
+    },
+  });
+
   const toggleColumnVisibility = (column) => {
     setVisibleColumns((prevVisibleColumns) => {
       const updatedColumns = { ...prevVisibleColumns };
@@ -259,7 +271,10 @@ const Ticket = (props) => {
           confirmButtonColor: "#59A0FD",
         }).then((result) => {
           if (result.isConfirmed) {
-            Swal.fire("Ticket Eliminado", "", "success");
+            Toast.fire({
+              icon: "success",
+              title: "Ticket eliminado!",
+            });
             dispatch(deleteTicket(id));
           } else if (result.isDenied) {
             return;
