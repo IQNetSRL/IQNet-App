@@ -1,0 +1,65 @@
+@import "../../styles/variables.scss";
+@import "../../styles/mixins.scss";
+
+.sectionLoby {
+  @include centerFlex(flex, row, center, center, 0);
+  @include width(100%, 100%);
+  @include height(100vh, 100vh);
+  .info {
+    @include centerFlex(flex, column, space-between, center, 0);
+    @include width(25rem, 25rem);
+    @include height(25rem, 25rem);
+    padding: 1.5rem;
+    background-color: $white-100;
+    border-radius: 0.3rem;
+    -webkit-box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.75);
+    h1 {
+      color: $pumpkin-600;
+      font-size: 2.1rem;
+      text-align: center;
+      cursor: default;
+    }
+    h4 {
+      color: $white-950;
+    }
+    p {
+      color: $white-900;
+    }
+    .buttonContainer {
+      @include centerFlex(flex, row, center, center, 0);
+      @include width(100%, 100%);
+      padding: 0.2rem;
+      button {
+        @include button($pumpkin-700, none);
+        padding: 1rem;
+        font-size: 1rem;
+        border-radius: 0.3rem;
+        transition: 0.2s ease;
+        &:hover {
+          background-color: $white-100;
+          color: $pumpkin-600;
+          -webkit-box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.75);
+          -moz-box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.75);
+          box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.75);
+        }
+      }
+      button:active {
+        animation: clickAnimation 0.5s ease;
+      }
+    }
+  }
+}
+
+@keyframes clickAnimation {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

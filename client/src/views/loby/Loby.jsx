@@ -16,24 +16,27 @@ const Loby = (props) => {
   };
 
   return (
-    <section className={styles.sectionLogin}>
-      <div>
-        <h1>Gracias por registrarte</h1>
-        <h4>Usuario creado con exito!</h4>
+    <section className={styles.sectionLoby}>
+      <div className={styles.info}>
+        <h1>¡Gracias por registrarte!</h1>
+        <h4>Usuario creado con éxito</h4>
         <p>
-          Por favor espere a que un administrador habilite su cuenta y le sea
-          asignado un rol.
+          Por favor, espere a que un administrador habilite su cuenta y le
+          asigne un rol.
         </p>
         <p>
-          Cuando su cuenta sea habilitada presione &quot;Continuar&quot; en el
-          boton de abajo para ingresar al servicio.
+          Cuando su cuenta esté habilitada, presione &quot;Continuar&quot; en el
+          botón de abajo para ingresar al servicio.
         </p>
+        <div className={styles.buttonContainer}>
         <button
           onClick={handleNavigate}
           disabled={`${props.rol === null ? true : false}`}
         >
           Continuar
         </button>
+        </div>
+
       </div>
     </section>
   );
