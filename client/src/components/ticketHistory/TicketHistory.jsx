@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React from "react";
 import { useSelector } from "react-redux";
-import { MdHistory } from "react-icons/md";
 import { format } from "date-fns";
 import PropTypes from "prop-types";
 import styles from "./TicketHistory.module.scss";

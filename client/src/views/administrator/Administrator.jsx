@@ -71,6 +71,18 @@ const Administrator = () => {
     "Consulta",
   ];
 
+  const Toast = Swal.mixin({
+    toast: true,
+    position: "top-end",
+    showConfirmButton: false,
+    timer: 3500,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener("mouseenter", Swal.stopTimer);
+      toast.addEventListener("mouseleave", Swal.resumeTimer);
+    },
+  });
+
   const handleEdit = (id, name, level) => {
     setIsEditing(true);
     setName(name);
@@ -98,7 +110,10 @@ const Administrator = () => {
           confirmButtonColor: "#59A0FD",
         }).then((result) => {
           if (result.isConfirmed) {
-            Swal.fire("Localidad Eliminada", "", "success");
+            Toast.fire({
+              icon: "success",
+              title: "Localidad Eliminada!",
+            });
             dispatch(deleteCity(id));
           } else if (result.isDenied) {
             return;
@@ -130,7 +145,10 @@ const Administrator = () => {
           confirmButtonColor: "#59A0FD",
         }).then((result) => {
           if (result.isConfirmed) {
-            Swal.fire("Prospecto Eliminado", "", "success");
+            Toast.fire({
+              icon: "success",
+              title: "Prospecto Eliminado!",
+            });
             dispatch(deleteUser(id));
           } else if (result.isDenied) {
             return;
@@ -177,10 +195,14 @@ const Administrator = () => {
             confirmButtonColor: "#59A0FD",
           }).then((result) => {
             if (result.isConfirmed) {
-              Swal.fire("Prospecto Eliminado", "", "success");
+              Toast.fire({
+                icon: "success",
+                title: "Rol actualizado!",
+              });
               dispatch(putAccount(newLevel));
               setNewLevel({ id: "", level: "" });
               dispatch(getAccounts());
+              setIsEditing(false);
             } else if (result.isDenied) {
               return;
             }
