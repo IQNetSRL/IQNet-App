@@ -159,9 +159,36 @@ const Administrator = () => {
   const handleSubmitAccount = async (e) => {
     e.preventDefault();
     try {
-      await dispatch(putAccount(newLevel));
-      setNewLevel({ id: "", level: "" });
-      dispatch(getAccounts());
+      await Swal.fire({
+        title: "Esta seguro que desea cambiar el rol de este usuario?",
+        showDenyButton: true,
+        confirmButtonText: "Confirmar",
+        denyButtonText: `Cancelar`,
+        color: "#5a5a5a",
+        confirmButtonColor: "#59A0FD",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire({
+            title: "Esta seguro?",
+            showDenyButton: true,
+            confirmButtonText: "Confirmar",
+            denyButtonText: `Cancelar`,
+            color: "#5a5a5a",
+            confirmButtonColor: "#59A0FD",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              Swal.fire("Prospecto Eliminado", "", "success");
+              dispatch(putAccount(newLevel));
+              setNewLevel({ id: "", level: "" });
+              dispatch(getAccounts());
+            } else if (result.isDenied) {
+              return;
+            }
+          });
+        } else if (result.isDenied) {
+          return;
+        }
+      });
     } catch (error) {
       console.error("Error al cambiar de nivel:", error);
     }
