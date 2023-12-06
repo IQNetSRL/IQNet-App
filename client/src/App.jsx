@@ -20,8 +20,9 @@ import ProfileButton from "./components/profileButton/ProfileButton.jsx";
 import Home from "./views/home/Home.jsx";
 import Administrator from "./views/administrator/Administrator.jsx";
 import CreateTickets from "./views/createTickets/createTickets.jsx";
-import L from "leaflet";
 import TicketInfo from "./views/ticketInfo/TicketInfo.jsx";
+import Loby from "./views/loby/Loby.jsx";
+import L from "leaflet";
 import styles from "./App.module.scss";
 import SideBar from "./components/sideBar/SideBar.jsx";
 
@@ -90,7 +91,7 @@ function App() {
 
   return (
     <main>
-      {!isLogin && (
+      {!isLogin && rol !== null && (
         <section className={styles.navBar}>
           <h2>IQNet</h2>
           <div className={styles.profileContainer}>
@@ -99,34 +100,40 @@ function App() {
           </div>
         </section>
       )}
-      <div className={styles.mainContainer}>
-        {!isLogin && <SideBar rol={rol}/>}
-        <section className={styles.mainSection}>
-          <Routes>
-            <Route path="/" element={<Login />} />
-            <Route path="/profile" element={<Profile rol={rol} />} />
-            <Route
-              path="/home"
-              element={<Home rol={rol} createCustomIcon={createCustomIcon} />}
-            />
-            {rol === "admin" && (
-              <Route path="/admin" element={<Administrator />} />
-            )}
-            <Route path="/create" element={<CreateTickets rol={rol} />} />
-            <Route
-              path="/ticket-info"
-              element={
-                <TicketInfo
-                  rol={rol}
-                  currentLocation={currentLocation}
-                  createCustomIcon={createCustomIcon}
-                />
-              }
-            />
-            <Route path="*" element={<Navigate to="/" />} />
-          </Routes>
+      {rol === null ? (
+        <section>
+          <Loby rol={rol}/>
         </section>
-      </div>
+      ) : (
+        <div className={styles.mainContainer}>
+          {!isLogin && rol !== null && <SideBar rol={rol} />}
+          <section className={styles.mainSection}>
+            <Routes>
+              <Route path="/" element={<Login />} />
+              <Route path="/profile" element={<Profile rol={rol} />} />
+              <Route
+                path="/home"
+                element={<Home rol={rol} createCustomIcon={createCustomIcon} />}
+              />
+              {rol === "admin" && (
+                <Route path="/admin" element={<Administrator />} />
+              )}
+              <Route path="/create" element={<CreateTickets rol={rol} />} />
+              <Route
+                path="/ticket-info"
+                element={
+                  <TicketInfo
+                    rol={rol}
+                    currentLocation={currentLocation}
+                    createCustomIcon={createCustomIcon}
+                  />
+                }
+              />
+              <Route path="*" element={<Navigate to="/" />} />
+            </Routes>
+          </section>
+        </div>
+      )}
     </main>
   );
 }
