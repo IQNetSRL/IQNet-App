@@ -25,6 +25,7 @@ import Loby from "./views/loby/Loby.jsx";
 import L from "leaflet";
 import styles from "./App.module.scss";
 import SideBar from "./components/sideBar/SideBar.jsx";
+import FiltersPage from "./views/filtersPage/FiltersPage.jsx";
 
 axios.defaults.baseURL = "http://localhost:3001/";
 
@@ -110,6 +111,7 @@ function App() {
           <section className={styles.mainSection}>
             <Routes>
               <Route path="/" element={<Login />} />
+              <Route path="/filters" element={<FiltersPage />} />
               <Route path="/profile" element={<Profile rol={rol} />} />
               <Route
                 path="/home"
