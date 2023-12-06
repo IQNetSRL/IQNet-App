@@ -61,6 +61,18 @@ const CreateTickets = (props) => {
     dispatch(getAccounts());
   }, []);
 
+  const Toast = Swal.mixin({
+    toast: true,
+    position: "top-end",
+    showConfirmButton: false,
+    timer: 3500,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener("mouseenter", Swal.stopTimer);
+      toast.addEventListener("mouseleave", Swal.resumeTimer);
+    },
+  });
+
   const handleSubmitArea = async (e) => {
     e.preventDefault();
     if (newArea.name.trim() === "") {
@@ -188,7 +200,10 @@ const CreateTickets = (props) => {
             confirmButtonColor: "#59A0FD",
           }).then((result) => {
             if (result.isConfirmed) {
-              Swal.fire("Area Eliminada", "", "success");
+              Toast.fire({
+                icon: "success",
+                title: "Area Eliminada!",
+              });
               dispatch(deleteArea(id));
             } else if (result.isDenied) {
               return;
@@ -219,7 +234,10 @@ const CreateTickets = (props) => {
             confirmButtonColor: "#59A0FD",
           }).then((result) => {
             if (result.isConfirmed) {
-              Swal.fire("Categoria Eliminada", "", "success");
+              Toast.fire({
+                icon: "success",
+                title: "Categoria Eliminada!",
+              });
               dispatch(deleteCategory(id));
             } else if (result.isDenied) {
               return;
@@ -250,7 +268,10 @@ const CreateTickets = (props) => {
             confirmButtonColor: "#59A0FD",
           }).then((result) => {
             if (result.isConfirmed) {
-              Swal.fire("Estatus Eliminado", "", "success");
+              Toast.fire({
+                icon: "success",
+                title: "Estado Eliminado!",
+              });
               dispatch(deleteStatus(id));
             } else if (result.isDenied) {
               return;
@@ -281,7 +302,10 @@ const CreateTickets = (props) => {
             confirmButtonColor: "#59A0FD",
           }).then((result) => {
             if (result.isConfirmed) {
-              Swal.fire("Prioridad Eliminada", "", "success");
+              Toast.fire({
+                icon: "success",
+                title: "Prioridad Eliminada!",
+              });
               dispatch(deletePriority(id));
             } else if (result.isDenied) {
               return;
