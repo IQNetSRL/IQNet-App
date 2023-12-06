@@ -96,6 +96,7 @@ const SideBar = (props) => {
         <div className={styles.navigateButtons}>
           <button
             className={styles.homeButton}
+            title="Home"
             onClick={() => handleNavigate("home")}
           >
             <span>
@@ -104,6 +105,7 @@ const SideBar = (props) => {
           </button>
           <button
             className={styles.newTicketButton}
+            title="Nuevo ticket"
             onClick={() => handleNavigate("create")}
           >
             <span>
@@ -113,6 +115,7 @@ const SideBar = (props) => {
           {props.rol === "admin" && (
             <button
               className={styles.adminButton}
+              title="Administrador"
               onClick={() => handleNavigate("admin")}
             >
               <span>

@@ -337,13 +337,17 @@ const Ticket = (props) => {
             />
           </div>
           <div className={styles.reset}>
-            <button onClick={handleResetFilters}>
+            <button onClick={handleResetFilters} title="Limpiar filtros">
               <TfiReload />
             </button>
           </div>
         </div>
         <section className={styles.leftSection}>
-          <button className={styles.addButton} onClick={handleNavigate}>
+          <button
+            className={styles.addButton}
+            title="Nuevo ticket"
+            onClick={handleNavigate}
+          >
             <span>
               <IoAdd />
             </span>
@@ -351,6 +355,7 @@ const Ticket = (props) => {
           <div className={styles.renderList} ref={parent}>
             <button
               ref={optionsButton}
+              title="Añadir columna"
               className={`${styles.columnsButton} ${
                 showOptions ? styles.selected : ""
               }`}
