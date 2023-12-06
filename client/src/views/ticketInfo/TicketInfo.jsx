@@ -18,6 +18,7 @@ import { MdOutlineDescription } from "react-icons/md";
 import PropTypes from "prop-types";
 import TicketHistory from "../../components/ticketHistory/TicketHistory.jsx";
 import L from "leaflet";
+import Swal from "sweetalert2";
 import "leaflet/dist/leaflet.css";
 import styles from "./TicketInfo.module.scss";
 
@@ -143,6 +144,29 @@ const TicketInfo = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (newTicket.commentText.trim() === "") {
+      Swal.fire({
+        icon: "warning",
+        title: "Error",
+        text: "Debes agregar un comentario!",
+      });
+      return;
+    } else if (
+      allStatus?.find((elem) => elem.id === newTicket.StatusId)?.name ===
+        "cerrado" &&
+      allAccounts?.find((elem) => elem.name === newTicket.responsable)
+        ?.level === "support" &&
+      newTicket.coordinates.trim() === ""
+    ) {
+      Swal.fire({
+        icon: "warning",
+        title: "Error",
+        text: "Debes agregar coordenadas para cerrar el ticket!",
+      });
+      return;
+    }
+
     setIsEditing(false);
 
     try {
@@ -393,7 +417,11 @@ const TicketInfo = (props) => {
               />
             </div>
             <div>
-              <label>-Comentario:</label>
+              <label>
+                {newTicket.commentText === ""
+                  ? "* -Comentario: *"
+                  : "-Comentario:"}
+              </label>
               <input
                 type="text"
                 name="commentText"
@@ -411,7 +439,8 @@ const TicketInfo = (props) => {
                     ?.name === "cerrado" &&
                   allAccounts?.find(
                     (elem) => elem.name === newTicket.responsable
-                  )?.level === "support"
+                  )?.level === "support" &&
+                  newTicket.coordinates === "" 
                     ? "* -Coordenadas: *"
                     : "-Coordenadas:"}
                 </label>
@@ -574,7 +603,7 @@ const TicketInfo = (props) => {
                       <IoLocationSharp />
                     </span>
                   </h3>
-                  {isReady && view.map && (
+                  {isReady && view.map && newTicket.coordinates.split(",").map(Number).length > 1 && (
                     <div style={{ height: "400px", width: "100%" }}>
                       <MapContainer
                         center={newTicket.coordinates.split(",").map(Number)}
