@@ -165,9 +165,13 @@ const Administrator = () => {
     if (newCity.name.trim() === "") {
       return;
     }
-
+    setIsAdding(false);
     try {
-      await dispatch(postCity(newCity));
+      await Toast.fire({
+        icon: "success",
+        title: "Localidad agregada!",
+      });
+      dispatch(postCity(newCity));
       setNewCity({ name: "" });
     } catch (error) {
       console.error("Error al agregar la ciudad:", error);
