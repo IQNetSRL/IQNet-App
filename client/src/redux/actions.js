@@ -331,7 +331,6 @@ export function getPriorities(priorityId) {
 
 export function putAccount(accountInfo) {
   const level = accountInfo.level;
-  console.log(accountInfo);
   return async function (dispatch) {
     try {
       const response = await axios.put(`/accounts/${accountInfo.id}`, {

@@ -42,7 +42,8 @@ const Administrator = () => {
   useEffect(() => {
     dispatch(getCities());
     dispatch(getUsers());
-  }, [dispatch]);
+    dispatch(getAccounts());
+  }, [dispatch, allAccounts]);
 
   const handleExportToExcel = () => {
     const sheetData = allUsers.map((user) => [
@@ -115,6 +116,7 @@ const Administrator = () => {
               title: "Localidad Eliminada!",
             });
             dispatch(deleteCity(id));
+            dispatch(getCities());
           } else if (result.isDenied) {
             return;
           }
@@ -173,6 +175,7 @@ const Administrator = () => {
       });
       dispatch(postCity(newCity));
       setNewCity({ name: "" });
+      dispatch(getCities());
     } catch (error) {
       console.error("Error al agregar la ciudad:", error);
     }
@@ -203,9 +206,9 @@ const Administrator = () => {
                 icon: "success",
                 title: "Rol actualizado!",
               });
+              dispatch(getAccounts());
               dispatch(putAccount(newLevel));
               setNewLevel({ id: "", level: "" });
-              dispatch(getAccounts());
               setIsEditing(false);
             } else if (result.isDenied) {
               return;
