@@ -22,6 +22,7 @@ import {
   deleteStatus,
   deletePriority,
 } from "../../redux/actions.js";
+import Swal from "sweetalert2";
 import PropTypes from "prop-types";
 import FormTickets from "../../components/formTickets/FormTickets.jsx";
 import styles from "./CreateTickets.module.scss";
@@ -168,16 +169,128 @@ const CreateTickets = (props) => {
 
   const handleDelete = (id, value) => {
     if (value === "area") {
-      dispatch(deleteArea(id));
+      Swal.fire({
+        title:
+          "Esta seguro que desea eliminar esta area? Esto no se podra deshacer y el area desaparecera de los tickets asociados!",
+        showDenyButton: true,
+        confirmButtonText: "Confirmar",
+        denyButtonText: `Cancelar`,
+        color: "#5a5a5a",
+        confirmButtonColor: "#59A0FD",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire({
+            title: "Esta seguro?",
+            showDenyButton: true,
+            confirmButtonText: "Confirmar",
+            denyButtonText: `Cancelar`,
+            color: "#5a5a5a",
+            confirmButtonColor: "#59A0FD",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              Swal.fire("Area Eliminada", "", "success");
+              dispatch(deleteArea(id));
+            } else if (result.isDenied) {
+              return;
+            }
+          });
+        } else if (result.isDenied) {
+          return;
+        }
+      });
     }
     if (value === "category") {
-      dispatch(deleteCategory(id));
+      Swal.fire({
+        title:
+          "Esta seguro que desea eliminar esta categoria? Esto no se podra deshacer y el area desaparecera de los tickets asociados!",
+        showDenyButton: true,
+        confirmButtonText: "Confirmar",
+        denyButtonText: `Cancelar`,
+        color: "#5a5a5a",
+        confirmButtonColor: "#59A0FD",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire({
+            title: "Esta seguro?",
+            showDenyButton: true,
+            confirmButtonText: "Confirmar",
+            denyButtonText: `Cancelar`,
+            color: "#5a5a5a",
+            confirmButtonColor: "#59A0FD",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              Swal.fire("Categoria Eliminada", "", "success");
+              dispatch(deleteCategory(id));
+            } else if (result.isDenied) {
+              return;
+            }
+          });
+        } else if (result.isDenied) {
+          return;
+        }
+      });
     }
     if (value === "status") {
-      dispatch(deleteStatus(id));
+      Swal.fire({
+        title:
+          "Esta seguro que desea eliminar este estatus? Esto no se podra deshacer y el area desaparecera de los tickets asociados!",
+        showDenyButton: true,
+        confirmButtonText: "Confirmar",
+        denyButtonText: `Cancelar`,
+        color: "#5a5a5a",
+        confirmButtonColor: "#59A0FD",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire({
+            title: "Esta seguro?",
+            showDenyButton: true,
+            confirmButtonText: "Confirmar",
+            denyButtonText: `Cancelar`,
+            color: "#5a5a5a",
+            confirmButtonColor: "#59A0FD",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              Swal.fire("Estatus Eliminado", "", "success");
+              dispatch(deleteStatus(id));
+            } else if (result.isDenied) {
+              return;
+            }
+          });
+        } else if (result.isDenied) {
+          return;
+        }
+      });
     }
     if (value === "priority") {
-      dispatch(deletePriority(id));
+      Swal.fire({
+        title:
+          "Esta seguro que desea eliminar esta prioridad? Esto no se podra deshacer y el area desaparecera de los tickets asociados!",
+        showDenyButton: true,
+        confirmButtonText: "Confirmar",
+        denyButtonText: `Cancelar`,
+        color: "#5a5a5a",
+        confirmButtonColor: "#59A0FD",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire({
+            title: "Esta seguro?",
+            showDenyButton: true,
+            confirmButtonText: "Confirmar",
+            denyButtonText: `Cancelar`,
+            color: "#5a5a5a",
+            confirmButtonColor: "#59A0FD",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              Swal.fire("Prioridad Eliminada", "", "success");
+              dispatch(deletePriority(id));
+            } else if (result.isDenied) {
+              return;
+            }
+          });
+        } else if (result.isDenied) {
+          return;
+        }
+      });
     }
   };
 
