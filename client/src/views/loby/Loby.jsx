@@ -1,18 +1,10 @@
 /* eslint-disable no-unused-vars */
 import React from "react";
-import { useNavigate } from "react-router-dom";
-import PropTypes from "prop-types";
 import styles from "./Loby.module.scss";
 
-const Loby = (props) => {
-  const navigate = useNavigate();
-
-  Loby.propTypes = {
-    rol: PropTypes.string.isRequired,
-  };
-
-  const handleNavigate = () => {
-    navigate("/home");
+const Loby = () => {
+  const handleReload = () => {
+    window.location.reload();
   };
 
   return (
@@ -29,12 +21,7 @@ const Loby = (props) => {
           botón de abajo, o vuelva a iniciar sesión para ingresar al servicio.
         </p>
         <div className={styles.buttonContainer}>
-          <button
-            onClick={handleNavigate}
-            disabled={`${props.rol === null ? true : false}`}
-          >
-            Continuar
-          </button>
+          <button onClick={handleReload}>Continuar</button>
         </div>
       </div>
     </section>

@@ -102,7 +102,7 @@ function App() {
       )}
       {rol === null ? (
         <section>
-          <Loby rol={rol}/>
+          <Loby />
         </section>
       ) : (
         <div className={styles.mainContainer}>
