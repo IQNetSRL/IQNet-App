@@ -3,6 +3,8 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getTickets } from "../../redux/actions.js";
+import { FaList } from "react-icons/fa6";
+import { IoTicket } from "react-icons/io5";
 import PropTypes from "prop-types";
 import styles from "./FiltersPage.module.scss";
 
@@ -110,8 +112,16 @@ const FiltersPage = (props) => {
 
   return (
     <section className={styles.sectionFiltersPage}>
-      <div>
-        <h1>Todos los tickets</h1>
+      <h1 className={styles.allTicketsTitle}>
+        <span>
+          <FaList />
+        </span>
+        Todos los tickets
+      </h1>
+      <div className={styles.allTickets}>
+        <span>
+          <IoTicket />
+        </span>
         <span>{allTickets.length}</span>
       </div>
       {Object.entries(responsables).map(([propiedad, valor]) => (

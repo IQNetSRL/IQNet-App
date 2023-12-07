@@ -36,6 +36,7 @@ const Ticket = (props) => {
   const { user, isLoading } = useAuth0();
   const { parent } = useAutoAnimate;
   const isProfile = location.pathname === "/profile";
+  const isHome = location.pathname === "/home";
   const allTickets = useSelector((state) => state.someReducer.allTickets);
   const allAreas = useSelector((state) => state.someReducer.allAreas);
   const allCategories = useSelector((state) => state.someReducer.allCategories);
@@ -103,26 +104,28 @@ const Ticket = (props) => {
   }, []);
 
   useEffect(() => {
-    if (props.area.length > 0) {
-      setFilters((prevFilters) => ({
-        ...prevFilters,
-        [props.area[0]]: props.area[1],
-      }));
-    } else if (props.category.length > 0) {
-      setFilters((prevFilters) => ({
-        ...prevFilters,
-        [props.category[0]]: props.category[1],
-      }));
-    } else if (props.status.length > 0) {
-      setFilters((prevFilters) => ({
-        ...prevFilters,
-        [props.status[0]]: props.status[1],
-      }));
-    } else if (props.priority.length > 0) {
-      setFilters((prevFilters) => ({
-        ...prevFilters,
-        [props.priority[0]]: props.priority[1],
-      }));
+    if (isHome) {
+      if (props.area.length > 0) {
+        setFilters((prevFilters) => ({
+          ...prevFilters,
+          [props.area[0]]: props.area[1],
+        }));
+      } else if (props.category.length > 0) {
+        setFilters((prevFilters) => ({
+          ...prevFilters,
+          [props.category[0]]: props.category[1],
+        }));
+      } else if (props.status.length > 0) {
+        setFilters((prevFilters) => ({
+          ...prevFilters,
+          [props.status[0]]: props.status[1],
+        }));
+      } else if (props.priority.length > 0) {
+        setFilters((prevFilters) => ({
+          ...prevFilters,
+          [props.priority[0]]: props.priority[1],
+        }));
+      }
     }
   }, [props.area, props.category, props.priority, props.status]);
 

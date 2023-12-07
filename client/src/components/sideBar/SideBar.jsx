@@ -5,6 +5,7 @@ import { IoIosHome } from "react-icons/io";
 import { RiAdminFill } from "react-icons/ri";
 import { IoTicket } from "react-icons/io5";
 import { TbLayoutSidebarLeftExpandFilled } from "react-icons/tb";
+import { FaList } from "react-icons/fa6";
 import PropTypes from "prop-types";
 import styles from "./SideBar.module.scss";
 
@@ -32,11 +33,7 @@ const SideBar = (props) => {
   }, []);
 
   const handleNavigate = (dir) => {
-    dir === "create"
-      ? navigate("/create")
-      : dir === "home"
-      ? navigate("/home")
-      : dir === "admin" && navigate("/admin");
+    navigate(dir);
     setIsSidebarOpen(false);
   };
 
@@ -58,7 +55,7 @@ const SideBar = (props) => {
         <div className={styles.navigateButtons}>
           <button
             className={styles.homeButton}
-            onClick={() => handleNavigate("home")}
+            onClick={() => handleNavigate("/home")}
           >
             <span>
               <IoIosHome />
@@ -67,7 +64,7 @@ const SideBar = (props) => {
           </button>
           <button
             className={styles.newTicketButton}
-            onClick={() => handleNavigate("create")}
+            onClick={() => handleNavigate("/create")}
           >
             <span>
               <IoTicket />
@@ -77,12 +74,24 @@ const SideBar = (props) => {
           {props.rol === "admin" && (
             <button
               className={styles.adminButton}
-              onClick={() => handleNavigate("admin")}
+              onClick={() => handleNavigate("/admin")}
             >
               <span>
                 <RiAdminFill />
               </span>
               <p>Administracion</p>
+            </button>
+          )}
+          {props.rol === "admin" && (
+            <button
+              className={styles.adminButton}
+              title="filtros"
+              onClick={() => handleNavigate("/filters")}
+            >
+              <span>
+                <FaList />
+              </span>
+              <p>Filtros</p>
             </button>
           )}
         </div>
@@ -97,7 +106,7 @@ const SideBar = (props) => {
           <button
             className={styles.homeButton}
             title="Home"
-            onClick={() => handleNavigate("home")}
+            onClick={() => handleNavigate("/home")}
           >
             <span>
               <IoIosHome />
@@ -106,7 +115,7 @@ const SideBar = (props) => {
           <button
             className={styles.newTicketButton}
             title="Nuevo ticket"
-            onClick={() => handleNavigate("create")}
+            onClick={() => handleNavigate("/create")}
           >
             <span>
               <IoTicket />
@@ -116,10 +125,21 @@ const SideBar = (props) => {
             <button
               className={styles.adminButton}
               title="Administrador"
-              onClick={() => handleNavigate("admin")}
+              onClick={() => handleNavigate("/admin")}
             >
               <span>
                 <RiAdminFill />
+              </span>
+            </button>
+          )}
+          {props.rol === "admin" && (
+            <button
+              className={styles.adminButton}
+              title="filtros"
+              onClick={() => handleNavigate("/filters")}
+            >
+              <span>
+                <FaList />
               </span>
             </button>
           )}

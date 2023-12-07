@@ -2,5 +2,23 @@
 @import "../../styles/mixins.scss";
 
 .sectionFiltersPage {
-  
+  @include centerFlex(flex, column, flex-start, flex-start, 2rem);
+  @include width(100%, 100%);
+  h1 {
+    @include centerFlex(flex, row, flex-start, center, 0.7rem);
+    @include height(4rem, 4rem);
+    @include width(100%, 100%);
+    background-color: $white-200;
+    padding: 1rem;
+    font-size: 1.8rem;
+    color: $white-950;
+    cursor: default;
+    span {
+      @include centerFlex(flex, row, center, center, 0);
+      color: $black;
+    }
+  }
+  .allTickets {
+
+  }
 }
