@@ -124,10 +124,10 @@ const FiltersPage = (props) => {
         Todos los tickets
       </h1>
       <div className={styles.allTickets}>
-        <span>
+        <span className={styles.icon}>
           <IoTicket />
         </span>
-        <span>{allTickets.length}</span>
+        <p>{allTickets.length}</p>
       </div>
       <h1>
         <span>
