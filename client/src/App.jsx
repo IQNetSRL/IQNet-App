@@ -12,6 +12,7 @@ import {
   getStatus,
   getPriorities,
   getAccounts,
+  postAccount,
 } from "./redux/actions.js";
 import Login from "./views/login/Login.jsx";
 import LogoutButton from "./components/logoutButton/LogoutButton.jsx";
@@ -54,6 +55,7 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       if (!isLoading && user && user.name) {
+        await dispatch(postAccount(user.name));
         const currentUser = allAccounts.find(
           (account) => account.name === user.name
         );
@@ -96,7 +98,7 @@ function App() {
 
   return (
     <main>
-      {!isLogin && rol !== null && (
+      {!isLogin && rol !== "" && (
         <section className={styles.navBar}>
           <h2>IQNet</h2>
           <div className={styles.profileContainer}>
@@ -105,16 +107,16 @@ function App() {
           </div>
         </section>
       )}
-      {rol === null ? (
+      {rol === "" ? (
         <section>
           <Loby />
         </section>
       ) : (
         <div className={styles.mainContainer}>
-          {!isLogin && rol !== null && <SideBar rol={rol} />}
+          {!isLogin && rol !== "" && <SideBar rol={rol} />}
           <section className={styles.mainSection}>
             <Routes>
-              <Route path="/" element={<Login />} />
+              <Route path="/" element={<Login rol={rol} />} />
               <Route
                 path="/filters"
                 element={

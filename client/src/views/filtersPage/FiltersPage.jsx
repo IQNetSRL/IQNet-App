@@ -1,12 +1,14 @@
 /* eslint-disable no-unused-vars */
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { getTickets } from "../../redux/actions.js";
 import PropTypes from "prop-types";
 import styles from "./FiltersPage.module.scss";
 
 const FiltersPage = (props) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const allTickets = useSelector((state) => state.someReducer.allTickets);
   const allAreas = useSelector((state) => state.someReducer.allAreas);
   const allCategories = useSelector((state) => state.someReducer.allCategories);
@@ -14,12 +16,19 @@ const FiltersPage = (props) => {
   const allPriorities = useSelector((state) => state.someReducer.allPriorities);
 
   FiltersPage.propTypes = {
-    rol: PropTypes.string.isRequired,
     setArea: PropTypes.func.isRequired,
     setCategory: PropTypes.func.isRequired,
     setStatus: PropTypes.func.isRequired,
     setPriority: PropTypes.func.isRequired,
   };
+
+  useEffect(() => {
+    dispatch(getTickets());
+    props.setArea([]);
+    props.setCategory([]);
+    props.setStatus([]);
+    props.setPriority([]);
+  }, []);
 
   const getValueNameById = (id, state) => {
     const value = state.find((priority) => priority.id === id);
