@@ -129,80 +129,108 @@ const FiltersPage = (props) => {
         </span>
         <p>{allTickets.length}</p>
       </div>
-      <h1>
-        <span>
-          <FaUser />
-        </span>
-        Tickets asignados a
-      </h1>
       <section>
-        {Object.entries(responsables).map(([propiedad, valor]) => (
-          <div key={propiedad} className={styles.allAccounts}>
-            <h3>{`${propiedad} `}</h3>
-            <p>{valor}</p>
-          </div>
-        ))}
+        <div>
+          <h1>
+            <span>
+              <FaUser />
+            </span>
+            Tickets asignados a
+          </h1>
+          <section>
+            {Object.entries(responsables).map(([propiedad, valor]) => (
+              <div key={propiedad} className={styles.allAccounts}>
+                <h3>{`${propiedad} `}</h3>
+                <p>{valor}</p>
+              </div>
+            ))}
+          </section>
+        </div>
+        <div>
+          <h1>
+            <span>
+              <MdOutlineSupportAgent />
+            </span>
+            Tickets área
+          </h1>
+          <section>
+            {Object.entries(areasWithNames).map(([areaName, cantidad]) => (
+              <div
+                key={areaName}
+                onClick={() => handleSetFilters("AreaId", cantidad[1])}
+                className={styles.allAccounts}
+              >
+                <h3>{`${areaName} `}</h3>
+                <p>{cantidad[0]}</p>
+              </div>
+            ))}
+          </section>
+        </div>
+        <div>
+          <h1>
+            <span>
+              <BiSolidCategoryAlt />
+            </span>
+            Tickets categoría
+          </h1>
+          <section>
+            {Object.entries(categoriesWithNames).map(
+              ([categoryName, cantidad]) => (
+                <div
+                  key={categoryName}
+                  onClick={() => handleSetFilters("CategoryId", cantidad[1])}
+                  className={styles.allAccounts}
+                >
+                  <h3>{`${categoryName} `}</h3>
+                  <p>{cantidad[0]}</p>
+                </div>
+              )
+            )}
+          </section>
+        </div>
+        <div>
+          <h1>
+            <span>
+              <GrStatusInfo />
+            </span>
+            Tickets estado
+          </h1>
+          <section>
+            {Object.entries(statusWithNames).map(([statusName, cantidad]) => (
+              <div
+                key={statusName}
+                onClick={() => handleSetFilters("StatusId", cantidad[1])}
+                className={styles.allAccounts}
+              >
+                <h3>{`${statusName} `}</h3>
+                <p>{cantidad[0]}</p>
+              </div>
+            ))}
+          </section>
+        </div>
+        <div>
+          <h1>
+            <span>
+              <MdLowPriority />
+            </span>
+            Tickets prioridad
+          </h1>
+          <section>
+            {Object.entries(prioritiesWithNames).map(
+              ([priorityName, cantidad]) => (
+                <div
+                  key={priorityName}
+                  onClick={() => handleSetFilters("PriorityId", cantidad[1])}
+                  className={styles.allAccounts}
+                >
+                  <h3>{`${priorityName}: `}</h3>
+                  <p>{cantidad[0]}</p>
+                </div>
+              )
+            )}
+          </section>
+        </div>
       </section>
-      <h1>
-        <span>
-          <MdOutlineSupportAgent />
-        </span>
-        Tickets asignados al área
-      </h1>
-      {Object.entries(areasWithNames).map(([areaName, cantidad]) => (
-        <div
-          key={areaName}
-          onClick={() => handleSetFilters("AreaId", cantidad[1])}
-        >
-          <h3>{`${areaName}: `}</h3>
-          <span>{cantidad[0]}</span>
-        </div>
-      ))}
-      <h1>
-        <span>
-          <BiSolidCategoryAlt />
-        </span>
-        Tickets asignados a la categoría
-      </h1>
-      {Object.entries(categoriesWithNames).map(([categoryName, cantidad]) => (
-        <div
-          key={categoryName}
-          onClick={() => handleSetFilters("CategoryId", cantidad[1])}
-        >
-          <h3>{`${categoryName}: `}</h3>
-          <span>{cantidad[0]}</span>
-        </div>
-      ))}
-      <h1>
-        <span>
-          <GrStatusInfo />
-        </span>
-        Tickets con estado
-      </h1>
-      {Object.entries(statusWithNames).map(([statusName, cantidad]) => (
-        <div
-          key={statusName}
-          onClick={() => handleSetFilters("StatusId", cantidad[1])}
-        >
-          <h3>{`${statusName}: `}</h3>
-          <span>{cantidad[0]}</span>
-        </div>
-      ))}
-      <h1>
-        <span>
-          <MdLowPriority />
-        </span>
-        Tickets de prioridad
-      </h1>
-      {Object.entries(prioritiesWithNames).map(([priorityName, cantidad]) => (
-        <div
-          key={priorityName}
-          onClick={() => handleSetFilters("PriorityId", cantidad[1])}
-        >
-          <h3>{`${priorityName}: `}</h3>
-          <span>{cantidad[0]}</span>
-        </div>
-      ))}
     </section>
   );
 };

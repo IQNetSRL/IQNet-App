@@ -58,39 +58,50 @@
     }
   }
   section {
-    @include centerFlex(flex, row, center, flex-start, 0);
-    .allAccounts {
-      @include centerFlex(flex, column, center, center, 2rem);
-      @include width(10rem, 10rem);
-      margin: 0 1rem;
-      padding: 1.5rem 1rem;
-      background-color: $white-100;
-      border-radius: 0.3rem;
-      transition: 0.2s ease;
-      cursor: pointer;
-      h3 {
-        @include width(100%, 100%);
-        font-size: 1.5rem;
-        color: $white-950;
-        transition: 0.2s ease;
-        text-align: center;
-      }
-      p {
-        font-size: 1.5rem;
-        color: $white-700;
-        transition: 0.2s ease;
-      }
-      &:hover {
-        background-color: $pumpkin-700;
-        color: $white-100;
-        -webkit-box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.75);
-        -moz-box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.75);
-        box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.75);
-        p {
-          color: $white-100;
-        }
-        h3 {
-          color: $white-100;
+    @include centerFlex(flex, row, center, flex-start, 1rem);
+    @include width(100%, 100%);
+    flex-wrap: wrap;
+    div {
+      @include width(40%, 100%);
+      @include centerFlex(flex, column, center, center, 0);
+      flex: 1;
+      section {
+        @include centerFlex(flex, row, flex-start, flex-start, 0);
+        .allAccounts {
+          @include centerFlex(flex, column, center, center, 2rem);
+          @include width(10rem, auto);
+          margin: 1rem;
+          padding: 1.5rem 1rem;
+          background-color: $white-100;
+          border-radius: 0.3rem;
+          transition: 0.2s ease;
+          flex: 0;
+          cursor: pointer;
+          h3 {
+            @include width(100%, 100%);
+            font-size: 1.5rem;
+            color: $white-950;
+            transition: 0.2s ease;
+            text-align: center;
+          }
+          p {
+            font-size: 1.5rem;
+            color: $white-700;
+            transition: 0.2s ease;
+          }
+          &:hover {
+            background-color: $pumpkin-700;
+            color: $white-100;
+            -webkit-box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.75);
+            -moz-box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.75);
+            box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.75);
+            p {
+              color: $white-100;
+            }
+            h3 {
+              color: $white-100;
+            }
+          }
         }
       }
     }
