@@ -12,10 +12,12 @@ const Home = (props) => {
     category: PropTypes.array.isRequired,
     status: PropTypes.array.isRequired,
     priority: PropTypes.array.isRequired,
+    responsable: PropTypes.array.isRequired,
     setArea: PropTypes.func.isRequired,
     setCategory: PropTypes.func.isRequired,
     setStatus: PropTypes.func.isRequired,
     setPriority: PropTypes.func.isRequired,
+    setResponsable: PropTypes.func.isRequired,
   };
 
   return (
@@ -32,10 +34,12 @@ const Home = (props) => {
         category={props.category}
         status={props.status}
         priority={props.priority}
+        responsable={props.responsable}
         setArea={props.setArea}
         setCategory={props.setCategory}
         setStatus={props.setStatus}
         setPriority={props.setPriority}
+        setResponsable={props.setResponsable}
       />
     </section>
   );

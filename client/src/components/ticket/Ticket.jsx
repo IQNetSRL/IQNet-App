@@ -83,6 +83,8 @@ const Ticket = (props) => {
     setCategory: PropTypes.func.isRequired,
     setStatus: PropTypes.func.isRequired,
     setPriority: PropTypes.func.isRequired,
+    responsable: PropTypes.array.isRequired,
+    setResponsable: PropTypes.func.isRequired,
   };
 
   useEffect(() => {
@@ -125,9 +127,14 @@ const Ticket = (props) => {
           ...prevFilters,
           [props.priority[0]]: props.priority[1],
         }));
+      } else if (props.responsable.length > 0) {
+        setFilters((prevFilters) => ({
+          ...prevFilters,
+          [props.responsable[0]]: props.responsable[1],
+        }));
       }
     }
-  }, [props.area, props.category, props.priority, props.status]);
+  }, [props.area, props.category, props.priority, props.status, props.responsable]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -326,7 +333,6 @@ const Ticket = (props) => {
 
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
-    console.log(name, value);
     setFilters((prevFilters) => ({ ...prevFilters, [name]: value }));
   };
 
@@ -344,6 +350,7 @@ const Ticket = (props) => {
     props.setCategory([]);
     props.setStatus([]);
     props.setPriority([]);
+    props.responsable([]);
     dispatch(getTicketsAction());
     setFilters({});
     setStartDate(null);

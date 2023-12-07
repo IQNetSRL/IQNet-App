@@ -27,6 +27,7 @@ const FiltersPage = (props) => {
     setCategory: PropTypes.func.isRequired,
     setStatus: PropTypes.func.isRequired,
     setPriority: PropTypes.func.isRequired,
+    setResponsable: PropTypes.func.isRequired,
   };
 
   useEffect(() => {
@@ -121,7 +122,9 @@ const FiltersPage = (props) => {
       ? props.setCategory([name, value])
       : name === "StatusId"
       ? props.setStatus([name, value])
-      : name === "PriorityId" && props.setPriority([name, value]);
+      : name === "PriorityId"
+      ? props.setPriority([name, value])
+      : name === "Responsable" && props.setResponsable([name, value]);
     navigate("/home");
   };
 
@@ -149,7 +152,11 @@ const FiltersPage = (props) => {
           </h1>
           <section>
             {Object.entries(responsables).map(([propiedad, valor]) => (
-              <div key={propiedad} className={styles.allAccounts}>
+              <div
+                key={propiedad}
+                className={styles.allAccounts}
+                onClick={() => handleSetFilters("Responsable", propiedad)}
+              >
                 <h3>{`${propiedad} `}</h3>
                 <p>{valor}</p>
               </div>

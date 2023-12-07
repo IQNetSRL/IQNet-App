@@ -42,6 +42,7 @@ function App() {
   const [category, setCategory] = useState([]);
   const [status, setStatus] = useState([]);
   const [priority, setPriority] = useState([]);
+  const [responsable, setResponsable] = useState([]);
 
   useEffect(() => {
     dispatch(getTickets());
@@ -128,6 +129,7 @@ function App() {
                           setCategory={setCategory}
                           setStatus={setStatus}
                           setPriority={setPriority}
+                          setResponsable={setResponsable}
                         />
                       }
                     />
@@ -143,10 +145,12 @@ function App() {
                         category={category}
                         status={status}
                         priority={priority}
+                        responsable={responsable}
                         setArea={setArea}
                         setCategory={setCategory}
                         setStatus={setStatus}
                         setPriority={setPriority}
+                        setResponsable={setResponsable}
                       />
                     }
                   />
