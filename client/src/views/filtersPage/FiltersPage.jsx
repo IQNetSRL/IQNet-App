@@ -1,14 +1,25 @@
 /* eslint-disable no-unused-vars */
 import React from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import PropTypes from "prop-types";
 import styles from "./FiltersPage.module.scss";
 
-const FiltersPage = () => {
+const FiltersPage = (props) => {
+  const navigate = useNavigate();
   const allTickets = useSelector((state) => state.someReducer.allTickets);
   const allAreas = useSelector((state) => state.someReducer.allAreas);
   const allCategories = useSelector((state) => state.someReducer.allCategories);
   const allStatus = useSelector((state) => state.someReducer.allStatus);
   const allPriorities = useSelector((state) => state.someReducer.allPriorities);
+
+  FiltersPage.propTypes = {
+    rol: PropTypes.string.isRequired,
+    setArea: PropTypes.func.isRequired,
+    setCategory: PropTypes.func.isRequired,
+    setStatus: PropTypes.func.isRequired,
+    setPriority: PropTypes.func.isRequired,
+  };
 
   const getValueNameById = (id, state) => {
     const value = state.find((priority) => priority.id === id);
@@ -56,26 +67,37 @@ const FiltersPage = () => {
   const areasWithNames = {};
   Object.entries(areas).forEach(([areaId, cantidad]) => {
     const areaName = getValueNameById(areaId, allAreas);
-    areasWithNames[areaName] = cantidad;
+    areasWithNames[areaName] = [cantidad, areaId];
   });
 
   const categoriesWithNames = {};
   Object.entries(categories).forEach(([categoryId, cantidad]) => {
     const categoryName = getValueNameById(categoryId, allCategories);
-    categoriesWithNames[categoryName] = cantidad;
+    categoriesWithNames[categoryName] = [cantidad, categoryId];
   });
 
   const statusWithNames = {};
   Object.entries(status).forEach(([statusId, cantidad]) => {
     const statusName = getValueNameById(statusId, allStatus);
-    statusWithNames[statusName] = cantidad;
+    statusWithNames[statusName] = [cantidad, statusId];
   });
 
   const prioritiesWithNames = {};
   Object.entries(priorities).forEach(([priorityId, cantidad]) => {
     const priorityName = getValueNameById(priorityId, allPriorities);
-    prioritiesWithNames[priorityName] = cantidad;
+    prioritiesWithNames[priorityName] = [cantidad, priorityId];
   });
+
+  const handleSetFilters = (name, value) => {
+    name === "AreaId"
+      ? props.setArea([name, value])
+      : name === "CategoryId"
+      ? props.setCategory([name, value])
+      : name === "StatusId"
+      ? props.setStatus([name, value])
+      : name === "PriorityId" && props.setPriority([name, value]);
+    navigate("/home");
+  };
 
   return (
     <section className={styles.sectionFiltersPage}>
@@ -92,34 +114,46 @@ const FiltersPage = () => {
         </div>
       ))}
       {Object.entries(areasWithNames).map(([areaName, cantidad]) => (
-        <div key={areaName}>
+        <div
+          key={areaName}
+          onClick={() => handleSetFilters("AreaId", cantidad[1])}
+        >
           <h1>
             {`Tickets asignados al área de ${areaName}: `}
-            <span>{cantidad}</span>
+            <span>{cantidad[0]}</span>
           </h1>
         </div>
       ))}
       {Object.entries(categoriesWithNames).map(([categoryName, cantidad]) => (
-        <div key={categoryName}>
+        <div
+          key={categoryName}
+          onClick={() => handleSetFilters("CategoryId", cantidad[1])}
+        >
           <h1>
             {`Tickets asignados a la categoría de ${categoryName}: `}
-            <span>{cantidad}</span>
+            <span>{cantidad[0]}</span>
           </h1>
         </div>
       ))}
       {Object.entries(statusWithNames).map(([statusName, cantidad]) => (
-        <div key={statusName}>
+        <div
+          key={statusName}
+          onClick={() => handleSetFilters("StatusId", cantidad[1])}
+        >
           <h1>
             {`Tickets con estado ${statusName}: `}
-            <span>{cantidad}</span>
+            <span>{cantidad[0]}</span>
           </h1>
         </div>
       ))}
       {Object.entries(prioritiesWithNames).map(([priorityName, cantidad]) => (
-        <div key={priorityName}>
+        <div
+          key={priorityName}
+          onClick={() => handleSetFilters("PriorityId", cantidad[1])}
+        >
           <h1>
             {`Tickets de prioridad ${priorityName}: `}
-            <span>{cantidad}</span>
+            <span>{cantidad[0]}</span>
           </h1>
         </div>
       ))}

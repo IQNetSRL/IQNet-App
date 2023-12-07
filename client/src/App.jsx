@@ -37,6 +37,10 @@ function App() {
   const allAccounts = useSelector((state) => state.someReducer.allAccounts);
   const [rol, setRol] = useState("");
   const [currentLocation, setCurrentLocation] = useState(null);
+  const [area, setArea] = useState([]);
+  const [category, setCategory] = useState([]);
+  const [status, setStatus] = useState([]);
+  const [priority, setPriority] = useState([]);
 
   useEffect(() => {
     dispatch(getTickets());
@@ -111,11 +115,34 @@ function App() {
           <section className={styles.mainSection}>
             <Routes>
               <Route path="/" element={<Login />} />
-              <Route path="/filters" element={<FiltersPage />} />
+              <Route
+                path="/filters"
+                element={
+                  <FiltersPage
+                    setArea={setArea}
+                    setCategory={setCategory}
+                    setStatus={setStatus}
+                    setPriority={setPriority}
+                  />
+                }
+              />
               <Route path="/profile" element={<Profile rol={rol} />} />
               <Route
                 path="/home"
-                element={<Home rol={rol} createCustomIcon={createCustomIcon} />}
+                element={
+                  <Home
+                    rol={rol}
+                    createCustomIcon={createCustomIcon}
+                    area={area}
+                    category={category}
+                    status={status}
+                    priority={priority}
+                    setArea={setArea}
+                    setCategory={setCategory}
+                    setStatus={setStatus}
+                    setPriority={setPriority}
+                  />
+                }
               />
               {rol === "admin" && (
                 <Route path="/admin" element={<Administrator />} />

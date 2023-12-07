@@ -8,6 +8,14 @@ import styles from "./Home.module.scss";
 const Home = (props) => {
   Home.propTypes = {
     rol: PropTypes.string.isRequired,
+    area: PropTypes.array.isRequired,
+    category: PropTypes.array.isRequired,
+    status: PropTypes.array.isRequired,
+    priority: PropTypes.array.isRequired,
+    setArea: PropTypes.func.isRequired,
+    setCategory: PropTypes.func.isRequired,
+    setStatus: PropTypes.func.isRequired,
+    setPriority: PropTypes.func.isRequired,
   };
 
   return (
@@ -18,7 +26,17 @@ const Home = (props) => {
           <IoTicket />
         </span>
       </div>
-      <Ticket rol={props.rol} />
+      <Ticket
+        rol={props.rol}
+        area={props.area}
+        category={props.category}
+        status={props.status}
+        priority={props.priority}
+        setArea={props.setArea}
+        setCategory={props.setCategory}
+        setStatus={props.setStatus}
+        setPriority={props.setPriority}
+      />
     </section>
   );
 };

@@ -74,6 +74,14 @@ const Ticket = (props) => {
 
   Ticket.propTypes = {
     rol: PropTypes.string.isRequired,
+    area: PropTypes.array.isRequired,
+    category: PropTypes.array.isRequired,
+    status: PropTypes.array.isRequired,
+    priority: PropTypes.array.isRequired,
+    setArea: PropTypes.func.isRequired,
+    setCategory: PropTypes.func.isRequired,
+    setStatus: PropTypes.func.isRequired,
+    setPriority: PropTypes.func.isRequired,
   };
 
   useEffect(() => {
@@ -95,10 +103,33 @@ const Ticket = (props) => {
   }, []);
 
   useEffect(() => {
+    if (props.area.length > 0) {
+      setFilters((prevFilters) => ({
+        ...prevFilters,
+        [props.area[0]]: props.area[1],
+      }));
+    } else if (props.category.length > 0) {
+      setFilters((prevFilters) => ({
+        ...prevFilters,
+        [props.category[0]]: props.category[1],
+      }));
+    } else if (props.status.length > 0) {
+      setFilters((prevFilters) => ({
+        ...prevFilters,
+        [props.status[0]]: props.status[1],
+      }));
+    } else if (props.priority.length > 0) {
+      setFilters((prevFilters) => ({
+        ...prevFilters,
+        [props.priority[0]]: props.priority[1],
+      }));
+    }
+  }, [props.area]);
+
+  useEffect(() => {
     const fetchData = async () => {
       if (!isLoading && user && user.name) {
         setIsReady(true);
-
         const userFilter = isProfile ? { Responsable: user.name } : {};
         const finalFilters = { ...userFilter, ...filters };
 
@@ -305,6 +336,10 @@ const Ticket = (props) => {
   };
 
   const handleResetFilters = () => {
+    props.setArea([]);
+    props.setCategory([]);
+    props.setStatus([]);
+    props.setPriority([]);
     dispatch(getTicketsAction());
     setFilters({});
     setStartDate(null);
