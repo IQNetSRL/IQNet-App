@@ -49,6 +49,7 @@ const Ticket = (props) => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [showOptions, setShowOptions] = useState(false);
+  const [rol, setRol] = useState("");
   const [showFilter, setShowFilter] = useState({
     responsable: false,
     area: false,
@@ -56,7 +57,6 @@ const Ticket = (props) => {
     status: false,
     priority: false,
   });
-  const [rol, setRol] = useState("");
 
   const [visibleColumns, setVisibleColumns] = useState({
     area: { name: "Área", isVisible: true },

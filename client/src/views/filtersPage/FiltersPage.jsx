@@ -15,7 +15,7 @@ const FiltersPage = () => {
     return value ? value.name : "";
   };
 
-  function contarRepeticionesPorNombre(arrayDeObjetos, value) {
+  function countOccurrencesByProperty(arrayDeObjetos, value) {
     const contadorNombres = {};
 
     value === "responsables"
@@ -47,11 +47,11 @@ const FiltersPage = () => {
     return contadorNombres;
   }
 
-  const responsables = contarRepeticionesPorNombre(allTickets, "responsables");
-  const areas = contarRepeticionesPorNombre(allTickets, "areas");
-  const categories = contarRepeticionesPorNombre(allTickets, "categories");
-  const status = contarRepeticionesPorNombre(allTickets, "status");
-  const priorities = contarRepeticionesPorNombre(allTickets, "priorities");
+  const responsables = countOccurrencesByProperty(allTickets, "responsables");
+  const areas = countOccurrencesByProperty(allTickets, "areas");
+  const categories = countOccurrencesByProperty(allTickets, "categories");
+  const status = countOccurrencesByProperty(allTickets, "status");
+  const priorities = countOccurrencesByProperty(allTickets, "priorities");
 
   const areasWithNames = {};
   Object.entries(areas).forEach(([areaId, cantidad]) => {
@@ -78,39 +78,49 @@ const FiltersPage = () => {
   });
 
   return (
-    <section className={styles.sectionLoby}>
+    <section className={styles.sectionFiltersPage}>
       <div>
         <h1>Todos los tickets</h1>
         <span>{allTickets.length}</span>
       </div>
       {Object.entries(responsables).map(([propiedad, valor]) => (
         <div key={propiedad}>
-          <h1>Tickets asignados a {propiedad}</h1>
-          <span>{valor}</span>
+          <h1>
+            {`Tickets asignados a ${propiedad}: `}
+            <span>{valor}</span>
+          </h1>
         </div>
       ))}
       {Object.entries(areasWithNames).map(([areaName, cantidad]) => (
         <div key={areaName}>
-          <h1>Tickets asignados al area de {areaName}</h1>
-          <span>{cantidad}</span>
+          <h1>
+            {`Tickets asignados al área de ${areaName}: `}
+            <span>{cantidad}</span>
+          </h1>
         </div>
       ))}
-      {Object.entries(categoriesWithNames).map(([areaName, cantidad]) => (
-        <div key={areaName}>
-          <h1>Tickets asignados a la categoria de {areaName}</h1>
-          <span>{cantidad}</span>
+      {Object.entries(categoriesWithNames).map(([categoryName, cantidad]) => (
+        <div key={categoryName}>
+          <h1>
+            {`Tickets asignados a la categoría de ${categoryName}: `}
+            <span>{cantidad}</span>
+          </h1>
         </div>
       ))}
-      {Object.entries(statusWithNames).map(([areaName, cantidad]) => (
-        <div key={areaName}>
-          <h1>Tickets con estado {areaName}</h1>
-          <span>{cantidad}</span>
+      {Object.entries(statusWithNames).map(([statusName, cantidad]) => (
+        <div key={statusName}>
+          <h1>
+            {`Tickets con estado ${statusName}: `}
+            <span>{cantidad}</span>
+          </h1>
         </div>
       ))}
-      {Object.entries(prioritiesWithNames).map(([areaName, cantidad]) => (
-        <div key={areaName}>
-          <h1>Tickets de prioridad {areaName}</h1>
-          <span>{cantidad}</span>
+      {Object.entries(prioritiesWithNames).map(([priorityName, cantidad]) => (
+        <div key={priorityName}>
+          <h1>
+            {`Tickets de prioridad ${priorityName}: `}
+            <span>{cantidad}</span>
+          </h1>
         </div>
       ))}
     </section>
