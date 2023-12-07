@@ -6,21 +6,20 @@ import PropTypes from "prop-types";
 import styles from "./Login.module.scss";
 
 const Login = (props) => {
-  const { isAuthenticated, loginWithRedirect } = useAuth0();
   const navigate = useNavigate();
+  const { isAuthenticated, loginWithRedirect } = useAuth0();
 
   Login.propTypes = {
     rol: PropTypes.string.isRequired,
   };
 
   useEffect(() => {
-    console.log(props.rol);
-    if (isAuthenticated && props.rol !== "") {
-      navigate("/filters");
+    if (isAuthenticated && props.rol !== "" && props.rol !== null) {
+      props.rol === "admin" ? navigate("/filters") : navigate("/home");
     } else {
       return;
     }
-  }, [isAuthenticated, navigate]);
+  }, [isAuthenticated, navigate, props.rol]);
 
   const handleLogin = () => {
     setTimeout(() => {

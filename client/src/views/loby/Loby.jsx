@@ -2,7 +2,7 @@
 import React from "react";
 import styles from "./Loby.module.scss";
 
-const Loby = () => {
+const Loby = (props) => {
   const handleReload = () => {
     window.location.reload();
   };

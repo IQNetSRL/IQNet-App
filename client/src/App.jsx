@@ -32,7 +32,7 @@ axios.defaults.baseURL = "http://localhost:3001/";
 
 function App() {
   const location = useLocation();
-  const { user, isLoading } = useAuth0();
+  const { user, isLoading, isAuthenticated } = useAuth0();
   const isLogin = location.pathname === "/";
   const dispatch = useDispatch();
   const allAccounts = useSelector((state) => state.someReducer.allAccounts);
@@ -98,7 +98,7 @@ function App() {
 
   return (
     <main>
-      {!isLogin && rol !== "" && (
+      {!isLogin && rol !== "" && rol !== null && (
         <section className={styles.navBar}>
           <h2>IQNet</h2>
           <div className={styles.profileContainer}>
@@ -107,60 +107,66 @@ function App() {
           </div>
         </section>
       )}
-      {rol === "" ? (
+      {(!isLogin && rol === "") || rol === null ? (
         <section>
-          <Loby />
+          <Loby rol={rol} />
         </section>
       ) : (
         <div className={styles.mainContainer}>
-          {!isLogin && rol !== "" && <SideBar rol={rol} />}
+          {!isLogin && rol !== "" && rol !== null && <SideBar rol={rol} />}
           <section className={styles.mainSection}>
             <Routes>
               <Route path="/" element={<Login rol={rol} />} />
-              <Route
-                path="/filters"
-                element={
-                  <FiltersPage
-                    setArea={setArea}
-                    setCategory={setCategory}
-                    setStatus={setStatus}
-                    setPriority={setPriority}
+              {rol && (
+                <>
+                  {rol === "admin" && (
+                    <Route
+                      path="/filters"
+                      element={
+                        <FiltersPage
+                          setArea={setArea}
+                          setCategory={setCategory}
+                          setStatus={setStatus}
+                          setPriority={setPriority}
+                        />
+                      }
+                    />
+                  )}
+                  <Route path="/profile" element={<Profile rol={rol} />} />
+                  <Route
+                    path="/home"
+                    element={
+                      <Home
+                        rol={rol}
+                        createCustomIcon={createCustomIcon}
+                        area={area}
+                        category={category}
+                        status={status}
+                        priority={priority}
+                        setArea={setArea}
+                        setCategory={setCategory}
+                        setStatus={setStatus}
+                        setPriority={setPriority}
+                      />
+                    }
                   />
-                }
-              />
-              <Route path="/profile" element={<Profile rol={rol} />} />
-              <Route
-                path="/home"
-                element={
-                  <Home
-                    rol={rol}
-                    createCustomIcon={createCustomIcon}
-                    area={area}
-                    category={category}
-                    status={status}
-                    priority={priority}
-                    setArea={setArea}
-                    setCategory={setCategory}
-                    setStatus={setStatus}
-                    setPriority={setPriority}
+                  {rol === "admin" && (
+                    <Route path="/admin" element={<Administrator />} />
+                  )}
+                  <Route path="/create" element={<CreateTickets rol={rol} />} />
+                  <Route
+                    path="/ticket-info"
+                    element={
+                      <TicketInfo
+                        rol={rol}
+                        currentLocation={currentLocation}
+                        createCustomIcon={createCustomIcon}
+                      />
+                    }
                   />
-                }
-              />
-              {rol === "admin" && (
-                <Route path="/admin" element={<Administrator />} />
+                  <Route path="*" element={<Navigate to="/" />} />
+                </>
               )}
-              <Route path="/create" element={<CreateTickets rol={rol} />} />
-              <Route
-                path="/ticket-info"
-                element={
-                  <TicketInfo
-                    rol={rol}
-                    currentLocation={currentLocation}
-                    createCustomIcon={createCustomIcon}
-                  />
-                }
-              />
-              <Route path="*" element={<Navigate to="/" />} />
             </Routes>
           </section>
         </div>

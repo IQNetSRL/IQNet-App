@@ -124,7 +124,7 @@ const Ticket = (props) => {
         [props.priority[0]]: props.priority[1],
       }));
     }
-  }, [props.area]);
+  }, [props.area, props.category, props.priority, props.status]);
 
   useEffect(() => {
     const fetchData = async () => {
