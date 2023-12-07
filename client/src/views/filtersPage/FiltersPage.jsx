@@ -39,7 +39,9 @@ const FiltersPage = (props) => {
 
   const getValueNameById = (id, state) => {
     const value = state.find((priority) => priority.id === id);
-    return value ? value.name : "";
+    const color = value.color;
+    const data = [value.name, color];
+    return value ? data : "";
   };
 
   function countOccurrencesByProperty(arrayDeObjetos, value) {
@@ -83,25 +85,33 @@ const FiltersPage = (props) => {
   const areasWithNames = {};
   Object.entries(areas).forEach(([areaId, cantidad]) => {
     const areaName = getValueNameById(areaId, allAreas);
-    areasWithNames[areaName] = [cantidad, areaId];
+    areasWithNames[areaName[0]] = [cantidad, areaId, areaName[1]];
   });
 
   const categoriesWithNames = {};
   Object.entries(categories).forEach(([categoryId, cantidad]) => {
     const categoryName = getValueNameById(categoryId, allCategories);
-    categoriesWithNames[categoryName] = [cantidad, categoryId];
+    categoriesWithNames[categoryName[0]] = [
+      cantidad,
+      categoryId,
+      categoryName[1],
+    ];
   });
 
   const statusWithNames = {};
   Object.entries(status).forEach(([statusId, cantidad]) => {
     const statusName = getValueNameById(statusId, allStatus);
-    statusWithNames[statusName] = [cantidad, statusId];
+    statusWithNames[statusName[0]] = [cantidad, statusId, statusName[1]];
   });
 
   const prioritiesWithNames = {};
   Object.entries(priorities).forEach(([priorityId, cantidad]) => {
     const priorityName = getValueNameById(priorityId, allPriorities);
-    prioritiesWithNames[priorityName] = [cantidad, priorityId];
+    prioritiesWithNames[priorityName[0]] = [
+      cantidad,
+      priorityId,
+      priorityName[1],
+    ];
   });
 
   const handleSetFilters = (name, value) => {
@@ -156,6 +166,7 @@ const FiltersPage = (props) => {
           <section>
             {Object.entries(areasWithNames).map(([areaName, cantidad]) => (
               <div
+                style={{ border: `0.2rem solid ${cantidad[2]}` }}
                 key={areaName}
                 onClick={() => handleSetFilters("AreaId", cantidad[1])}
                 className={styles.allAccounts}
@@ -177,6 +188,7 @@ const FiltersPage = (props) => {
             {Object.entries(categoriesWithNames).map(
               ([categoryName, cantidad]) => (
                 <div
+                  style={{ border: `0.2rem solid ${cantidad[2]}` }}
                   key={categoryName}
                   onClick={() => handleSetFilters("CategoryId", cantidad[1])}
                   className={styles.allAccounts}
@@ -198,6 +210,7 @@ const FiltersPage = (props) => {
           <section>
             {Object.entries(statusWithNames).map(([statusName, cantidad]) => (
               <div
+                style={{ border: `0.2rem solid ${cantidad[2]}` }}
                 key={statusName}
                 onClick={() => handleSetFilters("StatusId", cantidad[1])}
                 className={styles.allAccounts}
@@ -219,6 +232,7 @@ const FiltersPage = (props) => {
             {Object.entries(prioritiesWithNames).map(
               ([priorityName, cantidad]) => (
                 <div
+                  style={{ border: `0.2rem solid ${cantidad[2]}` }}
                   key={priorityName}
                   onClick={() => handleSetFilters("PriorityId", cantidad[1])}
                   className={styles.allAccounts}

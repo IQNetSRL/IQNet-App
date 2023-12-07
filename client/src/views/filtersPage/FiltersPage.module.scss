@@ -4,6 +4,8 @@
 .sectionFiltersPage {
   @include centerFlex(flex, column, flex-start, flex-start, 2rem);
   @include width(100%, 100%);
+  @include height(100%, 100%);
+  background-color: $white-700;
   h1 {
     @include centerFlex(flex, row, flex-start, center, 0.7rem);
     @include height(4rem, 4rem);
@@ -12,6 +14,9 @@
     padding: 1rem;
     font-size: 1.8rem;
     color: $white-950;
+    -webkit-box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.75);
     cursor: default;
     span {
       @include centerFlex(flex, row, center, center, 0);
@@ -60,6 +65,7 @@
   section {
     @include centerFlex(flex, row, center, flex-start, 1rem);
     @include width(100%, 100%);
+    @include height(auto, 100%);
     flex-wrap: wrap;
     div {
       @include width(40%, 100%);
@@ -67,9 +73,11 @@
       flex: 1;
       section {
         @include centerFlex(flex, row, flex-start, flex-start, 0);
+        @include height(8.625rem, auto);
         .allAccounts {
           @include centerFlex(flex, column, center, center, 2rem);
-          @include width(10rem, auto);
+          @include width(13rem, auto);
+          @include height(8.625rem, 100%);
           margin: 1rem;
           padding: 1.5rem 1rem;
           background-color: $white-100;
