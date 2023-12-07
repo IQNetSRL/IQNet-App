@@ -135,12 +135,14 @@ const FiltersPage = (props) => {
         </span>
         Tickets asignados a
       </h1>
-      {Object.entries(responsables).map(([propiedad, valor]) => (
-        <div key={propiedad}>
-          <h3>{`${propiedad}: `}</h3>
-          <span>{valor}</span>
-        </div>
-      ))}
+      <section>
+        {Object.entries(responsables).map(([propiedad, valor]) => (
+          <div key={propiedad} className={styles.allAccounts}>
+            <h3>{`${propiedad} `}</h3>
+            <p>{valor}</p>
+          </div>
+        ))}
+      </section>
       <h1>
         <span>
           <MdOutlineSupportAgent />
