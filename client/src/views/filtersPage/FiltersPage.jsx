@@ -5,6 +5,11 @@ import { useNavigate } from "react-router-dom";
 import { getTickets } from "../../redux/actions.js";
 import { FaList } from "react-icons/fa6";
 import { IoTicket } from "react-icons/io5";
+import { MdOutlineSupportAgent } from "react-icons/md";
+import { FaUser } from "react-icons/fa";
+import { BiSolidCategoryAlt } from "react-icons/bi";
+import { GrStatusInfo } from "react-icons/gr";
+import { MdLowPriority } from "react-icons/md";
 import PropTypes from "prop-types";
 import styles from "./FiltersPage.module.scss";
 
@@ -124,56 +129,76 @@ const FiltersPage = (props) => {
         </span>
         <span>{allTickets.length}</span>
       </div>
+      <h1>
+        <span>
+          <FaUser />
+        </span>
+        Tickets asignados a
+      </h1>
       {Object.entries(responsables).map(([propiedad, valor]) => (
         <div key={propiedad}>
-          <h1>
-            {`Tickets asignados a ${propiedad}: `}
-            <span>{valor}</span>
-          </h1>
+          <h3>{`${propiedad}: `}</h3>
+          <span>{valor}</span>
         </div>
       ))}
+      <h1>
+        <span>
+          <MdOutlineSupportAgent />
+        </span>
+        Tickets asignados al área
+      </h1>
       {Object.entries(areasWithNames).map(([areaName, cantidad]) => (
         <div
           key={areaName}
           onClick={() => handleSetFilters("AreaId", cantidad[1])}
         >
-          <h1>
-            {`Tickets asignados al área de ${areaName}: `}
-            <span>{cantidad[0]}</span>
-          </h1>
+          <h3>{`${areaName}: `}</h3>
+          <span>{cantidad[0]}</span>
         </div>
       ))}
+      <h1>
+        <span>
+          <BiSolidCategoryAlt />
+        </span>
+        Tickets asignados a la categoría
+      </h1>
       {Object.entries(categoriesWithNames).map(([categoryName, cantidad]) => (
         <div
           key={categoryName}
           onClick={() => handleSetFilters("CategoryId", cantidad[1])}
         >
-          <h1>
-            {`Tickets asignados a la categoría de ${categoryName}: `}
-            <span>{cantidad[0]}</span>
-          </h1>
+          <h3>{`${categoryName}: `}</h3>
+          <span>{cantidad[0]}</span>
         </div>
       ))}
+      <h1>
+        <span>
+          <GrStatusInfo />
+        </span>
+        Tickets con estado
+      </h1>
       {Object.entries(statusWithNames).map(([statusName, cantidad]) => (
         <div
           key={statusName}
           onClick={() => handleSetFilters("StatusId", cantidad[1])}
         >
-          <h1>
-            {`Tickets con estado ${statusName}: `}
-            <span>{cantidad[0]}</span>
-          </h1>
+          <h3>{`${statusName}: `}</h3>
+          <span>{cantidad[0]}</span>
         </div>
       ))}
+      <h1>
+        <span>
+          <MdLowPriority />
+        </span>
+        Tickets de prioridad
+      </h1>
       {Object.entries(prioritiesWithNames).map(([priorityName, cantidad]) => (
         <div
           key={priorityName}
           onClick={() => handleSetFilters("PriorityId", cantidad[1])}
         >
-          <h1>
-            {`Tickets de prioridad ${priorityName}: `}
-            <span>{cantidad[0]}</span>
-          </h1>
+          <h3>{`${priorityName}: `}</h3>
+          <span>{cantidad[0]}</span>
         </div>
       ))}
     </section>
