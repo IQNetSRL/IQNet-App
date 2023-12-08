@@ -108,33 +108,45 @@ const Ticket = (props) => {
   useEffect(() => {
     if (isHome) {
       if (props.area.length > 0) {
+        setSortedTickets([]);
         setFilters((prevFilters) => ({
           ...prevFilters,
           [props.area[0]]: props.area[1],
         }));
       } else if (props.category.length > 0) {
+        setSortedTickets([]);
         setFilters((prevFilters) => ({
           ...prevFilters,
           [props.category[0]]: props.category[1],
         }));
       } else if (props.status.length > 0) {
+        setSortedTickets([]);
         setFilters((prevFilters) => ({
           ...prevFilters,
           [props.status[0]]: props.status[1],
         }));
       } else if (props.priority.length > 0) {
+        setSortedTickets([]);
         setFilters((prevFilters) => ({
           ...prevFilters,
           [props.priority[0]]: props.priority[1],
         }));
       } else if (props.responsable.length > 0) {
+        setSortedTickets([]);
         setFilters((prevFilters) => ({
           ...prevFilters,
           [props.responsable[0]]: props.responsable[1],
         }));
       }
     }
-  }, [props.area, props.category, props.priority, props.status, props.responsable]);
+  }, [
+    props.area,
+    props.category,
+    props.priority,
+    props.status,
+    props.responsable,
+    isHome,
+  ]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -350,7 +362,7 @@ const Ticket = (props) => {
     props.setCategory([]);
     props.setStatus([]);
     props.setPriority([]);
-    props.responsable([]);
+    props.setResponsable([]);
     dispatch(getTicketsAction());
     setFilters({});
     setStartDate(null);

@@ -32,7 +32,7 @@ axios.defaults.baseURL = "http://localhost:3001/";
 
 function App() {
   const location = useLocation();
-  const { user, isLoading, isAuthenticated } = useAuth0();
+  const { user, isLoading } = useAuth0();
   const isLogin = location.pathname === "/";
   const dispatch = useDispatch();
   const allAccounts = useSelector((state) => state.someReducer.allAccounts);

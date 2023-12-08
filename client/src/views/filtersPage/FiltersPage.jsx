@@ -36,6 +36,7 @@ const FiltersPage = (props) => {
     props.setCategory([]);
     props.setStatus([]);
     props.setPriority([]);
+    props.setResponsable([]);
   }, []);
 
   const getValueNameById = (id, state) => {
@@ -128,6 +129,10 @@ const FiltersPage = (props) => {
     navigate("/home");
   };
 
+  const handleAllTickets = () => {
+    navigate("/home");
+  };
+
   return (
     <section className={styles.sectionFiltersPage}>
       <h1 className={styles.allTicketsTitle}>
@@ -136,7 +141,7 @@ const FiltersPage = (props) => {
         </span>
         Todos los tickets
       </h1>
-      <div className={styles.allTickets}>
+      <div className={styles.allTickets} onClick={handleAllTickets}>
         <span className={styles.icon}>
           <IoTicket />
         </span>
