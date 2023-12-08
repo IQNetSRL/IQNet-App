@@ -282,6 +282,14 @@ const TicketInfo = (props) => {
       }));
   };
 
+  const handleAddCurrentLocation = (e) => {
+    e.preventDefault();
+    setNewTicket((prevTicket) => ({
+      ...prevTicket,
+      coordinates: props.currentLocation.join(','),
+    }));
+  };
+  
   return (
     <section className={styles.sectionTicketInfo}>
       <h1>
@@ -446,7 +454,10 @@ const TicketInfo = (props) => {
                   )?.level === "support" &&
                   newTicket.coordinates === ""
                     ? "* -Coordenadas: *"
-                    : "-Coordenadas:"}
+                    : "-Coordenadas: "}
+                  <button onClick={handleAddCurrentLocation}>
+                    cordenas actuales
+                  </button>
                 </label>
               )}
               <input
