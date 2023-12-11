@@ -93,8 +93,13 @@
             text-align: center;
           }
           p {
+            @include centerFlex(flex, row, center, center, 0);
+            @include width(3rem, 3rem);
+            @include height(3rem, 3rem);
             font-size: 1.5rem;
             color: $white-700;
+            background-color: $white-200;
+            border-radius: 100%;
             transition: 0.2s ease;
           }
           &:hover {
@@ -105,6 +110,7 @@
             box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.75);
             p {
               color: $white-100;
+              background-color: $pumpkin-800;
             }
             h3 {
               color: $white-100;
