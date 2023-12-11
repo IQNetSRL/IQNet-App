@@ -15,6 +15,7 @@ import { IoMdInformationCircleOutline } from "react-icons/io";
 import { CgDetailsMore } from "react-icons/cg";
 import { FaUserGear } from "react-icons/fa6";
 import { MdOutlineDescription } from "react-icons/md";
+import { BiImport } from "react-icons/bi";
 import PropTypes from "prop-types";
 import TicketHistory from "../../components/ticketHistory/TicketHistory.jsx";
 import L from "leaflet";
@@ -286,10 +287,10 @@ const TicketInfo = (props) => {
     e.preventDefault();
     setNewTicket((prevTicket) => ({
       ...prevTicket,
-      coordinates: props.currentLocation.join(','),
+      coordinates: props.currentLocation.join(","),
     }));
   };
-  
+
   return (
     <section className={styles.sectionTicketInfo}>
       <h1>
@@ -456,7 +457,7 @@ const TicketInfo = (props) => {
                     ? "* -Coordenadas: *"
                     : "-Coordenadas: "}
                   <button onClick={handleAddCurrentLocation}>
-                    cordenas actuales
+                    <BiImport />
                   </button>
                 </label>
               )}

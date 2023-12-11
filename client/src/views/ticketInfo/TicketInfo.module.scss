@@ -32,6 +32,22 @@
         @include centerFlex(flex, column, flex-start, flex-start, 1rem);
         label {
           color: $white-950;
+          position: relative;
+          button {
+            @include button($pumpkin-500, none);
+            @include height(2rem, 2rem);
+            @include width(2rem, 2rem);
+            position: absolute;
+            right: -3.5rem;
+            bottom: -0.5rem;
+            color: $white-100;
+            border-radius: 0.5rem;
+            transition: 0.2s ease;
+            &:hover {
+              background-color: $white-100;
+              color: $white-950;
+            }
+          }
         }
         select {
           @include height(2.5rem, 2.5rem);
