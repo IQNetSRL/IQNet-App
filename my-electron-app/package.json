@@ -1,8 +1,8 @@
 {
-  "name": "my-electron-app",
+  "name": "iqnet-app",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
     "start": "electron main.js",
     "start-react": "cd ../my-electron-app && npm run dev",
@@ -10,11 +10,38 @@
     "build": "electron-builder",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/IQNetSRL/IQNet-App.git"
+  },
+  "build": {
+    "appId": "com.iqnetcomunicaciones.iqnetapp",
+    "productName": "IQNet-App",
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": "nsis"
+    },
+    "files": [
+      "main.js",
+      "node_modules",
+      "package.json"
+    ],
+    "nsis": {
+      "oneClick": false,
+      "uninstallDisplayName": "IQNet-App-unistaller",
+      "allowToChangeInstallationDirectory": true
+    }
+  },
   "keywords": [],
-  "author": "",
+  "author": "Cáceres Franco",
   "license": "ISC",
   "dependencies": {
-    "electron": "^27.0.2",
     "electron-is-dev": "^2.0.0"
+  },
+  "devDependencies": {
+    "electron": "^27.0.2",
+    "electron-builder": "^24.9.1"
   }
 }
