@@ -43,7 +43,7 @@ const Administrator = () => {
     dispatch(getCities());
     dispatch(getUsers());
     dispatch(getAccounts());
-  }, [dispatch, allAccounts]);
+  }, [dispatch]);
 
   const handleExportToExcel = () => {
     const sheetData = allUsers.map((user) => [
@@ -206,8 +206,8 @@ const Administrator = () => {
                 icon: "success",
                 title: "Rol actualizado!",
               });
-              dispatch(getAccounts());
               dispatch(putAccount(newLevel));
+              dispatch(getAccounts());
               setNewLevel({ id: "", level: "" });
               setIsEditing(false);
             } else if (result.isDenied) {
