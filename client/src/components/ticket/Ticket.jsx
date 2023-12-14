@@ -59,6 +59,8 @@ const Ticket = (props) => {
     priority: false,
   });
 
+  const allCities = allTickets.map((t) => t.city);
+
   const [visibleColumns, setVisibleColumns] = useState({
     area: { name: "Área", isVisible: true },
     category: { name: "Categoría", isVisible: true },
@@ -67,7 +69,7 @@ const Ticket = (props) => {
     operator: { name: "Operador", isVisible: true },
     responsable: { name: "Encargado", isVisible: true },
     client: { name: "Cliente", isVisible: false },
-    address: { name: "Dirección", isVisible: false },
+    address: { name: "Ciudad", isVisible: false },
     text: { name: "Descripción", isVisible: false },
     elapsedTime: { name: "Tiempo transcurrido", isVisible: false },
     actions: { name: "Acciones", isVisible: true },
@@ -274,7 +276,7 @@ const Ticket = (props) => {
     "Operador",
     "Encargado",
     "Cliente",
-    "Dirección",
+    "Ciudad",
     "Descripción",
     "Tiempo transcurrido",
   ];
@@ -599,7 +601,33 @@ const Ticket = (props) => {
                       </th>
                     )}
                     {visibleColumns.client.isVisible && <th>Cliente</th>}
-                    {visibleColumns.address.isVisible && <th>Ciudad</th>}
+                    {visibleColumns.address.isVisible && (
+                      <th>
+                        {showFilter.city ? (
+                          <select
+                            name="city"
+                            value={filters.city || ""}
+                            onChange={handleFilterChange}
+                          >
+                            <option value="">Todas</option>
+                            {allCities.map((city) => (
+                              <option key={city} value={city}>
+                                {city}
+                              </option>
+                            ))}
+                          </select>
+                        ) : (
+                          "Ciudad"
+                        )}
+                        <button onClick={() => handleShowFilter("city")}>
+                          {showFilter.city ? (
+                            <MdOutlineClose />
+                          ) : (
+                            <IoFilter />
+                          )}
+                        </button>
+                      </th>
+                    )}
                     {visibleColumns.text.isVisible && <th>Descripción</th>}
                     {visibleColumns.elapsedTime.isVisible && (
                       <th>
@@ -697,7 +725,11 @@ const Ticket = (props) => {
                           <td>{ticket.customers[0].name}</td>
                         )}
                         {visibleColumns.address.isVisible && (
-                          <td>{ticket.customers[0].city === null ? ticket.city : ticket.customers[0].city}</td>
+                          <td>
+                            {ticket.customers[0].city === null
+                              ? ticket.city
+                              : ticket.customers[0].city}
+                          </td>
                         )}
                         {visibleColumns.text.isVisible && (
                           <td>{ticket.text}</td>

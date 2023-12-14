@@ -9,6 +9,7 @@ const controllGetTickets = async (req) => {
     StatusId,
     PriorityId,
     Responsable,
+    city,
   } = req.query;
 
   const where = {};
@@ -33,6 +34,9 @@ const controllGetTickets = async (req) => {
   }
   if (PriorityId) {
     where.PriorityId = PriorityId;
+  }
+  if (city) {
+    where.city = city;
   }
 
   const tickets = await Tickets.findAll({
