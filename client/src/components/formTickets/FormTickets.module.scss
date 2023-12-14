@@ -117,3 +117,22 @@
     }
   }
 }
+
+@media (max-width: 463px) {
+  .sectionFormTickets {
+    .titleContainer {
+      .title {
+        font-size: 1.5rem;
+      }
+      .ticketIcon {
+        @include height(2rem, 2rem);
+        @include width(2rem, 2rem);
+        color: $pumpkin-600;
+        svg {
+          @include height(1.5rem, 1.5rem);
+          @include width(1.5rem, 1.5rem);
+        }
+      }
+    }
+  }
+}

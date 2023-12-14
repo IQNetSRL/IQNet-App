@@ -121,3 +121,51 @@
     }
   }
 }
+
+@media (max-width: 717px) {
+  .sectionFiltersPage {
+    h1 {
+      font-size: 1.5rem;
+      span {
+        svg {
+          @include height(1.5rem, 1.5rem);
+          @include width(1.5rem, 1.5rem);
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 627px) {
+  .sectionFiltersPage {
+    section {
+      @include width(100%, 100%);
+      div {
+        @include width(100%, 100%);
+        section {
+          .allAccounts {
+            h3 {
+              font-size: 1.2rem;
+            }
+            p {
+              font-size: 1.2rem;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 430px) {
+  .sectionFiltersPage {
+    @include centerFlex(flex, column, flex-start, center, 2rem);
+    section {
+      div {
+        section {
+          @include centerFlex(flex, row, center, center, 0);
+        }
+      }
+    }
+  }
+}
