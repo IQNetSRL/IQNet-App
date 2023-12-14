@@ -246,6 +246,7 @@
       background-color: $white-200;
       cursor: default;
       p {
+        @include centerFlex(flex, row, center, center, 0.5rem);
         span {
           font-weight: bold;
           color: $white-950;

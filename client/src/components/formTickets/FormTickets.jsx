@@ -37,6 +37,7 @@ const FormTickets = () => {
     client: "",
     firstAddress: "",
     secondAddress: "",
+    city: "",
     text: "",
     responsable: "",
     coordinates: "",
@@ -71,6 +72,7 @@ const FormTickets = () => {
       newTicket.StatusId.trim() !== "" &&
       newTicket.PriorityId.trim() !== "" &&
       newTicket.client.trim() !== "" &&
+      newTicket.city.trim() !== "" &&
       (newTicket.firstAddress.trim() !== "" ||
         newTicket.secondAddress.trim() !== "") &&
       newTicket.text.trim() !== "" &&
@@ -121,6 +123,7 @@ const FormTickets = () => {
       customerId: selectedCustomer.id,
       client: selectedCustomer.name,
       firstAddress: selectedCustomer.address || "",
+      city: selectedCustomer.city,
     });
 
     setFilteredCities([]);
@@ -168,7 +171,7 @@ const FormTickets = () => {
         confirmButtonColor: "#E05424",
       });
       return;
-    } 
+    }
 
     setIsAdding(false);
     try {
@@ -180,7 +183,9 @@ const FormTickets = () => {
           StatusId: newTicket.StatusId,
           PriorityId: newTicket.PriorityId,
           client: newTicket.client,
-          address: newTicket.address,
+          firstAddress: newTicket.firstAddress,
+          secondAddress: newTicket.secondAddress,
+          city: newTicket.city,
           text: newTicket.text,
           responsable: newTicket.responsable,
           coordinates: newTicket.coordinates,
@@ -195,7 +200,9 @@ const FormTickets = () => {
         StatusId: "",
         PriorityId: "",
         client: "",
-        address: "",
+        firstAddress: "",
+        secondAddress: "",
+        city: "",
         text: "",
         responsable: "",
         coordinates: "",
@@ -236,7 +243,9 @@ const FormTickets = () => {
           {isAdding && (
             <form>
               <div>
-                <label>-Seleccionar Area {newTicket.AreaId.trim() === "" && '*'}</label>
+                <label>
+                  -Seleccionar Area {newTicket.AreaId.trim() === "" && "*"}
+                </label>
                 <select
                   name="areas"
                   value={newTicket.AreaId}
@@ -251,7 +260,10 @@ const FormTickets = () => {
                 </select>
               </div>
               <div>
-                <label>-Seleccionar Categoria {newTicket.CategoryId.trim() === "" && '*'}</label>
+                <label>
+                  -Seleccionar Categoria{" "}
+                  {newTicket.CategoryId.trim() === "" && "*"}
+                </label>
                 <select
                   name="categories"
                   value={newTicket.CategoryId}
@@ -268,7 +280,9 @@ const FormTickets = () => {
                 </select>
               </div>
               <div>
-                <label>-Seleccionar Estado {newTicket.StatusId.trim() === "" && '*'}</label>
+                <label>
+                  -Seleccionar Estado {newTicket.StatusId.trim() === "" && "*"}
+                </label>
                 <select
                   name="status"
                   value={newTicket.StatusId}
@@ -285,7 +299,10 @@ const FormTickets = () => {
                 </select>
               </div>
               <div>
-                <label>-Seleccionar Prioridad {newTicket.PriorityId.trim() === "" && '*'}</label>
+                <label>
+                  -Seleccionar Prioridad{" "}
+                  {newTicket.PriorityId.trim() === "" && "*"}
+                </label>
                 <select
                   name="priorities"
                   value={newTicket.PriorityId}
@@ -302,7 +319,9 @@ const FormTickets = () => {
                 </select>
               </div>
               <div>
-                <label>-Asignar a {newTicket.responsable.trim() === "" && '*'}</label>
+                <label>
+                  -Asignar a {newTicket.responsable.trim() === "" && "*"}
+                </label>
                 <select
                   name="responsable"
                   value={newTicket.responsable}
@@ -348,7 +367,9 @@ const FormTickets = () => {
                 </select>
               </div>
               <div>
-                <label>-Descripcion {newTicket.text.trim() === "" && '*'}</label>
+                <label>
+                  -Descripcion {newTicket.text.trim() === "" && "*"}
+                </label>
                 <input
                   type="text"
                   name="text"
@@ -358,7 +379,7 @@ const FormTickets = () => {
                 />
               </div>
               <div>
-                <label>-Cliente {newTicket.client.trim() === "" && '*'}</label>
+                <label>-Cliente {newTicket.client.trim() === "" && "*"}</label>
                 <input
                   type="text"
                   name="client"
@@ -382,6 +403,20 @@ const FormTickets = () => {
                 )}
               </div>
               <div>
+                <label>
+                  -Ciudad{" "}
+                  {newTicket.city === "" || (newTicket.city === null && "*")}
+                </label>
+                <input
+                  type="text"
+                  name="city"
+                  disabled={newTicket.client.trim() === ""}
+                  placeholder="ciudad"
+                  value={newTicket.city}
+                  onChange={(e) => handleSelectChange("city", e.target.value)}
+                />
+              </div>
+              <div>
                 <label>-Direccion 1</label>
                 <input
                   type="text"
@@ -390,12 +425,17 @@ const FormTickets = () => {
                   disabled={true}
                   value={newTicket.firstAddress}
                   onChange={(e) =>
-                    handleSelectChange("address", e.target.value)
+                    handleSelectChange("firstAddress", e.target.value)
                   }
                 />
               </div>
               <div>
-                <label>-Direccion 2 {newTicket.firstAddress.trim() === "" && newTicket.secondAddress.trim() === "" &&'*'}</label>
+                <label>
+                  -Direccion 2{" "}
+                  {newTicket.firstAddress.trim() === "" &&
+                    newTicket.secondAddress.trim() === "" &&
+                    "*"}
+                </label>
                 <input
                   type="text"
                   name="secondAddress"

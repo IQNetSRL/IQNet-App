@@ -41,6 +41,10 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: true,
       },
+      city: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
       coordinates: {
         type: DataTypes.TEXT,
         allowNull: true,

@@ -2,8 +2,6 @@ const { Tickets, Comments, TicketHistories } = require("../../db");
 
 const controllPutTicket = async (req) => {
   const {
-    client,
-    address,
     text,
     commentText,
     responsable,
@@ -12,6 +10,7 @@ const controllPutTicket = async (req) => {
     CategoryId,
     StatusId,
     coordinates,
+    secondAddress,
     user,
   } = req.body;
 
@@ -24,8 +23,6 @@ const controllPutTicket = async (req) => {
   }
 
   const newHistory = await TicketHistories.create({
-    client: existingTicket.client,
-    address: existingTicket.address,
     text: existingTicket.text,
     AreaId: existingTicket.AreaId,
     PriorityId: existingTicket.PriorityId,
@@ -33,17 +30,17 @@ const controllPutTicket = async (req) => {
     StatusId: existingTicket.StatusId,
     responsable: existingTicket.responsable,
     coordinates: existingTicket.coordinates,
+    secondAddress: existingTicket.secondAddress,
     user: user,
   });
 
-  existingTicket.client = client;
   existingTicket.AreaId = AreaId;
   existingTicket.PriorityId = PriorityId;
   existingTicket.CategoryId = CategoryId;
   existingTicket.StatusId = StatusId;
   existingTicket.responsable = responsable;
-  existingTicket.address = address;
   existingTicket.coordinates = coordinates;
+  existingTicket.secondAddress = secondAddress;
   existingTicket.text = text;
 
   const newComment = await Comments.create({ text: commentText, user: user });

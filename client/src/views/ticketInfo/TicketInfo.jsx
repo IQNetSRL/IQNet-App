@@ -44,8 +44,7 @@ const TicketInfo = (props) => {
     history: false,
   });
   const [newTicket, setNewTicket] = useState({
-    client: "",
-    address: "",
+    secondAddress: "",
     text: "",
     commentText: "",
     responsable: "",
@@ -88,10 +87,9 @@ const TicketInfo = (props) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (TicketById.client) {
+      if (TicketById) {
         setNewTicket({
-          client: TicketById.client,
-          address: TicketById.address,
+          secondAddress: TicketById.secondAddress,
           text: TicketById.text,
           commentText: "",
           responsable: TicketById.responsable,
@@ -178,8 +176,7 @@ const TicketInfo = (props) => {
       await dispatch(
         putTicket({
           id: TicketById.id,
-          client: newTicket.client,
-          address: newTicket.address,
+          secondAddress: newTicket.secondAddress,
           text: newTicket.text,
           commentText: newTicket.commentText,
           responsable: newTicket.responsable,
@@ -193,8 +190,7 @@ const TicketInfo = (props) => {
       );
       setNewTicket((prevTicket) => ({
         ...prevTicket,
-        client: "",
-        address: "",
+        secondAddress: "",
         text: "",
         commentText: "",
         responsable: "",
@@ -400,23 +396,13 @@ const TicketInfo = (props) => {
               </select>
             </div>
             <div>
-              <label>-Cliente:</label>
-              <input
-                type="text"
-                name="client"
-                placeholder="cliente"
-                value={newTicket.client}
-                onChange={(e) => handleSelectChange("client", e.target.value)}
-              />
-            </div>
-            <div>
               <label>-Direccion:</label>
               <input
                 type="text"
-                name="address"
-                placeholder="direccion"
-                value={newTicket.address}
-                onChange={(e) => handleSelectChange("address", e.target.value)}
+                name="secondAddress"
+                placeholder="direccion 2"
+                value={newTicket.secondAddress}
+                onChange={(e) => handleSelectChange("secondAddress", e.target.value)}
               />
             </div>
             <div>
@@ -602,10 +588,22 @@ const TicketInfo = (props) => {
                 <div>
                   <p>
                     <span>Nombre: </span>
-                    {TicketById.client}
+                    {TicketById.customers[0].name}
                   </p>
                   <p>
-                    <span>Direccion: </span> {TicketById.address}
+                    <span>Ciudad: </span> {TicketById.customers[0].city === null ? TicketById.city : TicketById.customers[0].city}
+                  </p>
+                  <p>
+                    <span>Direccion 1: </span> {TicketById.firstAddress}
+                  </p>
+                  <p>
+                    <span>Direccion 2: </span> {TicketById.secondAddress}
+                  </p>
+                  <p>
+                    <span>Telefono: </span> {TicketById.customers[0].phones[0]}
+                  </p>
+                  <p>
+                    <span>DNI: </span> {TicketById.customers[0].docNumber}
                   </p>
                 </div>
               </section>

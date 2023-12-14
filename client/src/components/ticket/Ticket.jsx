@@ -599,7 +599,7 @@ const Ticket = (props) => {
                       </th>
                     )}
                     {visibleColumns.client.isVisible && <th>Cliente</th>}
-                    {visibleColumns.address.isVisible && <th>Direccion</th>}
+                    {visibleColumns.address.isVisible && <th>Ciudad</th>}
                     {visibleColumns.text.isVisible && <th>Descripción</th>}
                     {visibleColumns.elapsedTime.isVisible && (
                       <th>
@@ -694,10 +694,10 @@ const Ticket = (props) => {
                           </td>
                         )}
                         {visibleColumns.client.isVisible && (
-                          <td>{ticket.client}</td>
+                          <td>{ticket.customers[0].name}</td>
                         )}
                         {visibleColumns.address.isVisible && (
-                          <td>{ticket.address}</td>
+                          <td>{ticket.customers[0].city === null ? ticket.city : ticket.customers[0].city}</td>
                         )}
                         {visibleColumns.text.isVisible && (
                           <td>{ticket.text}</td>

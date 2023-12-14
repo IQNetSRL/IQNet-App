@@ -376,7 +376,6 @@ export function putAccount(accountInfo) {
 }
 
 export function putTicket(ticketInfo) {
-  const client = ticketInfo.client;
   const address = ticketInfo.address;
   const text = ticketInfo.text;
   const commentText = ticketInfo.commentText;
@@ -386,12 +385,12 @@ export function putTicket(ticketInfo) {
   const CategoryId = ticketInfo.CategoryId;
   const StatusId = ticketInfo.StatusId;
   const coordinates = ticketInfo.coordinates;
+  const secondAddress = ticketInfo.secondAddress;
   const user = ticketInfo.user;
 
   return async function (dispatch) {
     try {
       const response = await axios.put(`/tickets/${ticketInfo.id}`, {
-        client,
         address,
         text,
         commentText,
@@ -401,6 +400,7 @@ export function putTicket(ticketInfo) {
         CategoryId,
         StatusId,
         coordinates,
+        secondAddress,
         user,
       });
 
@@ -408,7 +408,16 @@ export function putTicket(ticketInfo) {
         type: PUT_TICKET,
         payload: response.data,
       });
+
+      Toast.fire({
+        icon: "success",
+        title: "Ticket Actualizado!",
+      });
     } catch (error) {
+      Toast.fire({
+        icon: "error",
+        title: "Ocurrio un error!",
+      });
       console.log(error);
     }
   };

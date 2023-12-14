@@ -1,17 +1,19 @@
 const { Customers } = require("../../db.js");
+const data = process.env;
 
 const controllPostCustomers = async () => {
+  const token = data.AUTHORIZATION;
+  const clientId = data.CLIENT_ID;
+  const key = data.API_KEY;
+
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
   myHeaders.append("Accept", "application/json");
-  myHeaders.append("api-key", "9ad4e9eb-ef39-4205-a3a2-d310bf713c6d");
-  myHeaders.append("client-id", "774");
+  myHeaders.append("api-key", key);
+  myHeaders.append("client-id", clientId);
   myHeaders.append("login-type", "api");
   myHeaders.append("username", "api");
-  myHeaders.append(
-    "Authorization",
-    "Bearer 7829|Cd0aMh7SHum0UkQN2jpPA3dFDxDJ6rfZirt9Q2p7"
-  );
+  myHeaders.append("Authorization", `Bearer ${token}`);
 
   var requestOptions = {
     method: "GET",
