@@ -65,3 +65,15 @@
     transform: scale(1);
   }
 }
+
+@media (max-width: 415px) {
+  .sectionLoby {
+    .info {
+      @include width(22rem, 22rem);
+      @include height(22rem, 22rem);
+      h1 {
+        font-size: 2rem;
+      }
+    }
+  }
+}
