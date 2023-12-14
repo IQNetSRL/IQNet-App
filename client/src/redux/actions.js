@@ -79,7 +79,7 @@ export function getCustomers() {
         payload: response.data,
       });
     } catch (error) {
-      // alert("Error al obtener usuarios");
+      console.log(error);
     }
   };
 }

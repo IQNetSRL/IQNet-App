@@ -13,17 +13,21 @@ import styles from "./FormTickets.module.scss";
 const FormTickets = () => {
   const dispatch = useDispatch();
   const mapRef = useRef(null);
+  const resultsRef = useRef(null);
   const { user, isLoading } = useAuth0();
   const allAreas = useSelector((state) => state.someReducer.allAreas);
   const allCategories = useSelector((state) => state.someReducer.allCategories);
   const allStatus = useSelector((state) => state.someReducer.allStatus);
   const allPriorities = useSelector((state) => state.someReducer.allPriorities);
   const allAccounts = useSelector((state) => state.someReducer.allAccounts);
+  const allCustomers = useSelector((state) => state.someReducer.allCustomers);
   const [map, setMap] = useState(null);
   const [selectedArea, setSelectedArea] = useState("Ninguna");
   const [isSelected, setIsSelected] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
   const [isMapOpen, setIsMapOpen] = useState(false);
+  const [isListVisible, setListVisible] = useState(false);
+  const [filteredCities, setFilteredCities] = useState([]);
   const [newTicket, setNewTicket] = useState({
     username: "",
     AreaId: "",
@@ -35,6 +39,7 @@ const FormTickets = () => {
     text: "",
     responsable: "",
     coordinates: "",
+    customerId: "",
   });
 
   useEffect(() => {
@@ -69,6 +74,45 @@ const FormTickets = () => {
       toast.addEventListener("mouseleave", Swal.resumeTimer);
     },
   });
+
+  const handleBlur = () => {
+    setTimeout(() => {
+      setListVisible(false);
+    }, 200);
+  };
+
+  const handleFocus = () => {
+    if (allCustomers.length > 0) {
+      setListVisible(true);
+    }
+  };
+
+  const handleCustomerInputChange = (event) => {
+    const customerName = event.target.value;
+    const filteredCustomerList = allCustomers.filter((city) =>
+      city.name.toLowerCase().includes(customerName.toLowerCase())
+    );
+
+    setNewTicket({
+      ...newTicket,
+      client: customerName,
+      customerId: filteredCustomerList[0].id,
+    });
+
+    setFilteredCities(filteredCustomerList);
+    setListVisible(true);
+  };
+
+  const handleSelectCustomer = (selectedCustomer) => {
+    setNewTicket({
+      ...newTicket,
+      customerId: selectedCustomer.id,
+      client: selectedCustomer.name,
+    });
+
+    setFilteredCities([]);
+    setListVisible(false);
+  };
 
   const handleSelectChange = (field, value) => {
     if (field === "AreaId" && value) {
@@ -114,6 +158,7 @@ const FormTickets = () => {
           text: newTicket.text,
           responsable: newTicket.responsable,
           coordinates: newTicket.coordinates,
+          customerId: newTicket.customerId,
         })
       );
       setNewTicket((prevTicket) => ({
@@ -128,6 +173,7 @@ const FormTickets = () => {
         text: "",
         responsable: "",
         coordinates: "",
+        customerId: "",
       }));
       Toast.fire({
         icon: "success",
@@ -289,10 +335,24 @@ const FormTickets = () => {
               <input
                 type="text"
                 name="client"
-                placeholder="cliente"
+                placeholder="cliente o DNI"
+                onFocus={handleFocus}
+                onBlur={handleBlur}
                 value={newTicket.client}
-                onChange={(e) => handleSelectChange("client", e.target.value)}
+                onChange={handleCustomerInputChange}
               />
+              {isListVisible && filteredCities.length > 0 && (
+                <ul className={styles.customerResults} ref={resultsRef}>
+                  {filteredCities.slice(0, 5).map((customer) => (
+                    <li
+                      key={customer.id}
+                      onClick={() => handleSelectCustomer(customer)}
+                    >
+                      {customer.name}
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
             <div>
               <label>-Direccion</label>

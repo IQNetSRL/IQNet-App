@@ -13,6 +13,7 @@ import {
   getPriorities,
   getAccounts,
   postAccount,
+  getCustomers,
 } from "./redux/actions.js";
 import Login from "./views/login/Login.jsx";
 import LogoutButton from "./components/logoutButton/LogoutButton.jsx";
@@ -51,6 +52,7 @@ function App() {
     dispatch(getStatus());
     dispatch(getPriorities());
     dispatch(getAccounts());
+    dispatch(getCustomers());
   }, [dispatch]);
 
   useEffect(() => {

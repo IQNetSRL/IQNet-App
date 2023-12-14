@@ -1,4 +1,4 @@
-const { Tickets, Comments, TicketHistories } = require("../../db");
+const { Tickets, Comments, TicketHistories, Customers } = require("../../db");
 
 const controllGetTickets = async (req) => {
   const {

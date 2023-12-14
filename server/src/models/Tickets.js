@@ -29,10 +29,6 @@ module.exports = (sequelize) => {
         type: DataTypes.UUID,
         allowNull: false,
       },
-      client: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
       responsable: {
         type: DataTypes.STRING,
         allowNull: false,
