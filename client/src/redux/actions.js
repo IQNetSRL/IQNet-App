@@ -459,6 +459,10 @@ export function postTicket(ticketData) {
         title: "Ticket Creado!",
       });
     } catch (error) {
+      Toast.fire({
+        icon: "error",
+        title: "Ocurrio un error!",
+      });
       console.error("Error al agregar un ticket:", error);
     }
   };

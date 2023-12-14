@@ -6,6 +6,7 @@ import { postTicket } from "../../redux/actions.js";
 import { IoTicket } from "react-icons/io5";
 import { IoLocationSharp } from "react-icons/io5";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import Swal from "sweetalert2";
 import "leaflet/dist/leaflet.css";
 import styles from "./FormTickets.module.scss";
 
@@ -34,7 +35,8 @@ const FormTickets = () => {
     StatusId: "",
     PriorityId: "",
     client: "",
-    address: "",
+    firstAddress: "",
+    secondAddress: "",
     text: "",
     responsable: "",
     coordinates: "",
@@ -61,6 +63,20 @@ const FormTickets = () => {
 
     fetchData();
   }, [isLoading, user, allAccounts, map]);
+
+  const isFormValid = () => {
+    return (
+      newTicket.AreaId.trim() !== "" &&
+      newTicket.CategoryId.trim() !== "" &&
+      newTicket.StatusId.trim() !== "" &&
+      newTicket.PriorityId.trim() !== "" &&
+      newTicket.client.trim() !== "" &&
+      (newTicket.firstAddress.trim() !== "" ||
+        newTicket.secondAddress.trim() !== "") &&
+      newTicket.text.trim() !== "" &&
+      newTicket.responsable.trim() !== ""
+    );
+  };
 
   const handleBlur = () => {
     setTimeout(() => {
@@ -104,6 +120,7 @@ const FormTickets = () => {
       ...newTicket,
       customerId: selectedCustomer.id,
       client: selectedCustomer.name,
+      firstAddress: selectedCustomer.address || "",
     });
 
     setFilteredCities([]);
@@ -140,6 +157,19 @@ const FormTickets = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!isFormValid()) {
+      Swal.fire({
+        icon: "error",
+        text: "Por favor, complete todos los campos (*) antes de enviar el formulario.",
+        showCancelButton: false,
+        confirmButtonText: "Aceptar",
+        color: "#5a5a5a",
+        confirmButtonColor: "#E05424",
+      });
+      return;
+    } 
+
     setIsAdding(false);
     try {
       await dispatch(
@@ -206,7 +236,7 @@ const FormTickets = () => {
           {isAdding && (
             <form>
               <div>
-                <label>-Seleccionar Area</label>
+                <label>-Seleccionar Area {newTicket.AreaId.trim() === "" && '*'}</label>
                 <select
                   name="areas"
                   value={newTicket.AreaId}
@@ -221,7 +251,7 @@ const FormTickets = () => {
                 </select>
               </div>
               <div>
-                <label>-Seleccionar Categoria</label>
+                <label>-Seleccionar Categoria {newTicket.CategoryId.trim() === "" && '*'}</label>
                 <select
                   name="categories"
                   value={newTicket.CategoryId}
@@ -238,7 +268,7 @@ const FormTickets = () => {
                 </select>
               </div>
               <div>
-                <label>-Seleccionar Estado</label>
+                <label>-Seleccionar Estado {newTicket.StatusId.trim() === "" && '*'}</label>
                 <select
                   name="status"
                   value={newTicket.StatusId}
@@ -255,7 +285,7 @@ const FormTickets = () => {
                 </select>
               </div>
               <div>
-                <label>-Seleccionar Prioridad</label>
+                <label>-Seleccionar Prioridad {newTicket.PriorityId.trim() === "" && '*'}</label>
                 <select
                   name="priorities"
                   value={newTicket.PriorityId}
@@ -272,7 +302,7 @@ const FormTickets = () => {
                 </select>
               </div>
               <div>
-                <label>-Asignar a</label>
+                <label>-Asignar a {newTicket.responsable.trim() === "" && '*'}</label>
                 <select
                   name="responsable"
                   value={newTicket.responsable}
@@ -318,7 +348,7 @@ const FormTickets = () => {
                 </select>
               </div>
               <div>
-                <label>-Descripcion</label>
+                <label>-Descripcion {newTicket.text.trim() === "" && '*'}</label>
                 <input
                   type="text"
                   name="text"
@@ -328,7 +358,7 @@ const FormTickets = () => {
                 />
               </div>
               <div>
-                <label>-Cliente</label>
+                <label>-Cliente {newTicket.client.trim() === "" && '*'}</label>
                 <input
                   type="text"
                   name="client"
@@ -352,14 +382,27 @@ const FormTickets = () => {
                 )}
               </div>
               <div>
-                <label>-Direccion</label>
+                <label>-Direccion 1</label>
                 <input
                   type="text"
-                  name="address"
-                  placeholder="direccion"
-                  value={newTicket.address}
+                  name="firstAddress"
+                  placeholder="direccion 1"
+                  disabled={true}
+                  value={newTicket.firstAddress}
                   onChange={(e) =>
                     handleSelectChange("address", e.target.value)
+                  }
+                />
+              </div>
+              <div>
+                <label>-Direccion 2 {newTicket.firstAddress.trim() === "" && newTicket.secondAddress.trim() === "" &&'*'}</label>
+                <input
+                  type="text"
+                  name="secondAddress"
+                  placeholder="direccion 2"
+                  value={newTicket.secondAddress}
+                  onChange={(e) =>
+                    handleSelectChange("secondAddress", e.target.value)
                   }
                 />
               </div>
@@ -368,7 +411,7 @@ const FormTickets = () => {
                 <input
                   type="text"
                   name="coordinates"
-                  placeholder="Coordenadas"
+                  placeholder="coordenadas"
                   value={newTicket.coordinates}
                   onChange={(e) => handleCoordinatesChange(e.target.value)}
                 />
