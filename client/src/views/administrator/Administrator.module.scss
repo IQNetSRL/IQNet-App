@@ -374,3 +374,29 @@
     }
   }
 }
+
+@media (max-width: 463px) {
+  .sectionAdministrator {
+    h1 {
+      font-size: 1.5rem;
+    }
+    .usersSection {
+      .editRolContainer {
+        @include centerFlex(flex, row, center, flex-start, 0);
+      }
+      h2 {
+        font-size: 1.5rem;
+      }
+    }
+    .citiesSection {
+      h2 {
+        font-size: 1.5rem;
+      }
+    }
+    .clients {
+      h2 {
+        font-size: 1.5rem;
+      }
+    }
+  }
+}

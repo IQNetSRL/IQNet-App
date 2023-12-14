@@ -255,124 +255,6 @@ const Administrator = () => {
         </span>
         Administración
       </h1>
-      <section className={styles.clients}>
-        <h2>
-          Prospectos
-          <span>
-            <RiUserFollowFill />
-          </span>
-        </h2>
-        <div>
-          <button className={styles.excelButton} onClick={handleExportToExcel}>
-            <span>
-              <RiFileExcel2Fill />
-            </span>
-            Excel
-          </button>
-        </div>
-        <div className={styles.tableContainerTwo}>
-          <section className={styles.tableContainer}>
-            <table>
-              <thead>
-                <tr>
-                  <th>Nombre</th>
-                  <th>Apellido</th>
-                  <th>Localidad</th>
-                  <th>Número telefonico</th>
-                  <th>Email</th>
-                  <th>Dirección</th>
-                  <th className={styles.consult}>Consulta</th>
-                  <th>Acciones</th>
-                </tr>
-              </thead>
-              <tbody>
-                {allUsers?.map((user) => (
-                  <tr key={user.id}>
-                    <td>{user.name}</td>
-                    <td>{user.lastName}</td>
-                    <td>{user.city}</td>
-                    <td>{user.phoneNumber}</td>
-                    <td>{user.emailAddress}</td>
-                    <td>{user.address}</td>
-                    <td className={styles.consult}>{user.consult}</td>
-                    <td>
-                      <div>
-                        <button onClick={() => handleDeleteUser(user.id)}>
-                          <MdDelete />
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </section>
-        </div>
-      </section>
-      <section className={styles.citiesSection}>
-        <h2>
-          Localidades
-          <span>
-            <FaCity />
-          </span>
-        </h2>
-        <div>
-          <button
-            className={styles.showCitiesButton}
-            onClick={handleShowCities}
-          >
-            {isOpen ? "Ocultar" : "Mostrar"}
-            <span>
-              <IoEye />
-            </span>
-          </button>
-        </div>
-        {isOpen && (
-          <div className={styles.olContainer}>
-            {allCities.length > 0 ? (
-              <ol>
-                {allCities?.map((city, index) => (
-                  <li key={city.id || index}>
-                    {city.name}
-                    <button onClick={() => handleDeleteCity(city.id)}>
-                      <MdDelete />
-                    </button>
-                  </li>
-                ))}
-              </ol>
-            ) : (
-              <p>Cargando ciudades...</p>
-            )}
-          </div>
-        )}
-      </section>
-      <section className={styles.addCitySection}>
-        <div>
-          <button
-            className={`${styles.addCityButton} ${isAdding && styles.cancel}`}
-            onClick={handleAddCities}
-          >
-            {isAdding ? "Cancelar" : "Agregar"}
-            {!isAdding && (
-              <span>
-                <IoAdd />
-              </span>
-            )}
-          </button>
-        </div>
-        {isAdding && (
-          <form onSubmit={handleSubmit}>
-            <input
-              type="text"
-              name="name"
-              placeholder="localidad"
-              onChange={handleInputChange}
-              value={newCity.name}
-            />
-            <button type="submit">agregar</button>
-          </form>
-        )}
-      </section>
       <section className={styles.usersSection}>
         <h2>
           Usuarios
@@ -450,6 +332,124 @@ const Administrator = () => {
               </div>
             </div>
           )}
+        </div>
+      </section>
+      <section className={styles.citiesSection}>
+        <h2>
+          Localidades
+          <span>
+            <FaCity />
+          </span>
+        </h2>
+        <div>
+          <button
+            className={styles.showCitiesButton}
+            onClick={handleShowCities}
+          >
+            {isOpen ? "Ocultar" : "Mostrar"}
+            <span>
+              <IoEye />
+            </span>
+          </button>
+        </div>
+        {isOpen && (
+          <div className={styles.olContainer}>
+            {allCities.length > 0 ? (
+              <ol>
+                {allCities?.map((city, index) => (
+                  <li key={city.id || index}>
+                    {city.name}
+                    <button onClick={() => handleDeleteCity(city.id)}>
+                      <MdDelete />
+                    </button>
+                  </li>
+                ))}
+              </ol>
+            ) : (
+              <p>Cargando ciudades...</p>
+            )}
+          </div>
+        )}
+      </section>
+      <section className={styles.addCitySection}>
+        <div>
+          <button
+            className={`${styles.addCityButton} ${isAdding && styles.cancel}`}
+            onClick={handleAddCities}
+          >
+            {isAdding ? "Cancelar" : "Agregar"}
+            {!isAdding && (
+              <span>
+                <IoAdd />
+              </span>
+            )}
+          </button>
+        </div>
+        {isAdding && (
+          <form onSubmit={handleSubmit}>
+            <input
+              type="text"
+              name="name"
+              placeholder="localidad"
+              onChange={handleInputChange}
+              value={newCity.name}
+            />
+            <button type="submit">agregar</button>
+          </form>
+        )}
+      </section>
+      <section className={styles.clients}>
+        <h2>
+          Prospectos
+          <span>
+            <RiUserFollowFill />
+          </span>
+        </h2>
+        <div>
+          <button className={styles.excelButton} onClick={handleExportToExcel}>
+            <span>
+              <RiFileExcel2Fill />
+            </span>
+            Excel
+          </button>
+        </div>
+        <div className={styles.tableContainerTwo}>
+          <section className={styles.tableContainer}>
+            <table>
+              <thead>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Apellido</th>
+                  <th>Localidad</th>
+                  <th>Número telefonico</th>
+                  <th>Email</th>
+                  <th>Dirección</th>
+                  <th className={styles.consult}>Consulta</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                {allUsers?.map((user) => (
+                  <tr key={user.id}>
+                    <td>{user.name}</td>
+                    <td>{user.lastName}</td>
+                    <td>{user.city}</td>
+                    <td>{user.phoneNumber}</td>
+                    <td>{user.emailAddress}</td>
+                    <td>{user.address}</td>
+                    <td className={styles.consult}>{user.consult}</td>
+                    <td>
+                      <div>
+                        <button onClick={() => handleDeleteUser(user.id)}>
+                          <MdDelete />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </section>
         </div>
       </section>
     </section>
