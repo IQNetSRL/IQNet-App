@@ -88,17 +88,23 @@ const FormTickets = () => {
   };
 
   const handleCustomerInputChange = (event) => {
-    const customerName = event.target.value;
-    const filteredCustomerList = allCustomers.filter((city) =>
-      city.name.toLowerCase().includes(customerName.toLowerCase())
-    );
+    const inputValue = event.target.value;
+  
+    const isNumber = !isNaN(inputValue);
+  
+    const filteredCustomerList = allCustomers.filter((customer) => {
+      const nameMatch = customer.name.toLowerCase().includes(inputValue.toLowerCase());
+      const docNumberMatch = isNumber && customer.docNumber.toString().startsWith(inputValue);
 
-    setNewTicket({
-      ...newTicket,
-      client: customerName,
-      customerId: filteredCustomerList[0].id,
+      return nameMatch || docNumberMatch;
     });
-
+  
+    setNewTicket((prevTicket) => ({
+      ...prevTicket,
+      client: inputValue,
+      customerId: filteredCustomerList[0]?.id || "",
+    }));
+  
     setFilteredCities(filteredCustomerList);
     setListVisible(true);
   };

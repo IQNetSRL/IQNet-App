@@ -26,7 +26,7 @@ const controllPostTicket = async (req) => {
     coordinates: coordinates,
   });
 
-  const customer = await Tickets.findByPk(customerId);
+  const customer = await Customers.findByPk(customerId);
 
   if (!customer) {
     throw new Error("cliente no encontrado");
