@@ -24,6 +24,7 @@ import {
   PUT_TICKET,
   GET_TICKET_BY_ID,
   PUT_ACCOUNT,
+  GET_CUSTOMERS,
 } from "./actionTypes.js";
 
 let initialState = {
@@ -35,6 +36,7 @@ let initialState = {
   allPriorities: [],
   allCategories: [],
   allTickets: [],
+  allCustomers: [],
   TicketById: [],
 };
 
@@ -68,6 +70,11 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         allCities: action.payload,
+      };
+    case GET_CUSTOMERS:
+      return {
+        ...state,
+        allCustomers: action.payload,
       };
     case POST_CITY:
       return {

@@ -25,6 +25,7 @@ import {
   DELETE_TICKET,
   GET_TICKET_BY_ID,
   PUT_ACCOUNT,
+  GET_CUSTOMERS,
 } from "./actionTypes.js";
 
 export function getUsers() {
@@ -61,6 +62,20 @@ export function getCities() {
       const response = await axios.get("/cities");
       dispatch({
         type: GET_CITIES,
+        payload: response.data,
+      });
+    } catch (error) {
+      // alert("Error al obtener usuarios");
+    }
+  };
+}
+
+export function getCustomers() {
+  return async function (dispatch) {
+    try {
+      const response = await axios.get("/customers");
+      dispatch({
+        type: GET_CUSTOMERS,
         payload: response.data,
       });
     } catch (error) {
