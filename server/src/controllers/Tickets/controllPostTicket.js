@@ -1,4 +1,4 @@
-const { Tickets } = require("../../db");
+const { Tickets, Customers } = require("../../db");
 
 const controllPostTicket = async (req) => {
   const {
@@ -12,6 +12,7 @@ const controllPostTicket = async (req) => {
     text,
     responsable,
     coordinates,
+    customerId,
   } = req.body;
 
   const newTicket = await Tickets.create({
@@ -26,6 +27,14 @@ const controllPostTicket = async (req) => {
     responsable: responsable,
     coordinates: coordinates,
   });
+
+  const customer = await Tickets.findByPk(customerId);
+
+  if (!customer) {
+    throw new Error("cliente no encontrado");
+  }
+
+  newTicket.addCustomer(customer);
 
   return newTicket;
 };

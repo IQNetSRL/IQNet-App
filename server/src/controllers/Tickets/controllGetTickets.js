@@ -40,6 +40,7 @@ const controllGetTickets = async (req) => {
     include: [
       { model: Comments, as: "comments" },
       { model: TicketHistories, as: "history" },
+      { model: Customers, as: "customers" },
     ],
   });
 

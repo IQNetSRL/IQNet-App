@@ -55,6 +55,7 @@ module.exports = (sequelize) => {
   
   Ticket.hasMany(sequelize.models.TicketHistories, { as: "history" });
   Ticket.hasMany(sequelize.models.Comments, { as: "comments" });
+  Ticket.hasMany(sequelize.models.Customers, { as: "customers" });
 
   return Ticket;
 };
