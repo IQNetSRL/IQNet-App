@@ -168,7 +168,7 @@
       }
     }
     .detailSection {
-      @include centerFlex(flex, row, space-between, flex-start, 2rem);
+      @include centerFlex(flex, row, space-between, flex-start, 0);
       @include width(100%, 100%);
       .detailContainer {
         background-color: $white-200;
@@ -318,6 +318,46 @@
       @include width(100%, 100%);
       overflow-x: auto;
       overflow-y: hidden;
+    }
+  }
+}
+
+@media (max-width: 889px) {
+  .sectionTicketInfo {
+    h1 {
+      font-size: 1.5rem;
+    }
+    .infoSection {
+      @include width(100%, 100%);
+      .buttonsContainer {
+        @include centerFlex(flex, row, center, center, 0);
+        flex-wrap: wrap;
+      }
+    }
+  }
+}
+
+@media (max-width: 570px) {
+  .sectionTicketInfo {
+    .infoSection {
+      @include centerFlex(flex, column, flex-start, center, 0);
+      .buttonsContainer {
+        @include width(100%, 100%);
+        button {
+          @include width(100%, 100%);
+          padding: 0.6rem;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  .sectionTicketInfo {
+    .infoSection {
+      .detailSection {
+        @include centerFlex(flex, column, space-between, flex-start, 0.5rem);
+      }
     }
   }
 }
