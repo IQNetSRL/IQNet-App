@@ -23,3 +23,22 @@
     }
   }
 }
+
+@media (max-width: 463px) {
+  .sectionHome {
+    .titleContainer {
+      @include height(4rem, 4rem);
+      .title {
+        font-size: 1.5rem;
+      }
+      .ticketIcon {
+        @include height(2rem, 2rem);
+        @include width(2rem, 2rem);
+        svg {
+          @include height(1.5rem, 1.5rem);
+          @include width(1.5rem, 1.5rem);
+        }
+      }
+    }
+  }
+}

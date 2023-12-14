@@ -10,6 +10,10 @@
       @include centerFlex(flex, row, center, flex-end, 1rem);
       padding: 0.5rem 0.5rem 0.5rem 1rem;
       div {
+        @include centerFlex(flex, row, center, flex-end, 0.5rem);
+        div {
+          @include centerFlex(flex, column, center, flex-start, 0);
+        }
         h3 {
           color: $pumpkin-400;
           font-size: 1rem;
@@ -39,6 +43,9 @@
       @include centerFlex(flex, row, center, center, 0.5rem);
       padding-right: 1rem;
       margin-top: 0.6rem;
+      .twoButtons {
+        @include centerFlex(flex, row, center, center, 0.5rem);
+      }
       .addButton {
         @include centerFlex(flex, row, center, center, 0);
         @include button($pumpkin-600, none);
@@ -287,5 +294,72 @@
   }
   100% {
     visibility: visible;
+  }
+}
+
+@media (max-width: 700px) {
+  .sectionTicket {
+    .topOptions {
+      @include centerFlex(flex, column-reverse, flex-start, flex-start, 0);
+      .leftSection {
+        @include centerFlex(flex, row, space-between, center, 0);
+        @include width(100%, 100%);
+        padding-left: 1rem;
+        .twoButtons {
+          @include centerFlex(flex, row, center, center, 1rem);
+        }
+      }
+      .dateContainer {
+        @include centerFlex(flex, row, space-between, flex-end, 0);
+        @include width(100%, 100%);
+        padding: 1rem 1rem 0 1rem;
+      }
+    }
+  }
+}
+
+@media (max-width: 463px) {
+  .sectionTicket {
+    .topOptions {
+      .dateContainer {
+        @include centerFlex(flex, row, space-between, flex-end, 0);
+        @include width(100%, 100%);
+        padding: 1rem 1rem 0 1rem;
+        div {
+          @include centerFlex(flex, row, center, center, 0.5rem);
+          div {
+            @include centerFlex(flex, column, flex-start, flex-start, 0);
+            div {
+              input {
+                @include width(7rem, 7rem);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 385px) {
+  .sectionTicket {
+    .topOptions {
+      .dateContainer {
+        @include centerFlex(flex, row, space-between, flex-end, 0);
+        @include width(100%, 100%);
+        padding: 1rem 1rem 0 1rem;
+        div {
+          @include centerFlex(flex, row, center, center, 0.5rem);
+          div {
+            @include centerFlex(flex, column, flex-start, flex-start, 0);
+            div {
+              input {
+                @include width(6rem, 6rem);
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }

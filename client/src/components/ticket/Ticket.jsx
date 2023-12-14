@@ -376,25 +376,27 @@ const Ticket = (props) => {
       <section className={styles.topOptions}>
         <div className={styles.dateContainer}>
           <div>
-            <h3>Desde</h3>
-            <DatePicker
-              selected={startDate}
-              onChange={handleStartDateChange}
-              selectsStart
-              startDate={startDate}
-              endDate={endDate}
-            />
-          </div>
-          <div>
-            <h3>Hasta</h3>
-            <DatePicker
-              selected={endDate}
-              onChange={handleEndDateChange}
-              selectsEnd
-              startDate={startDate}
-              endDate={endDate}
-              minDate={startDate}
-            />
+            <div>
+              <h3>Desde</h3>
+              <DatePicker
+                selected={startDate}
+                onChange={handleStartDateChange}
+                selectsStart
+                startDate={startDate}
+                endDate={endDate}
+              />
+            </div>
+            <div>
+              <h3>Hasta</h3>
+              <DatePicker
+                selected={endDate}
+                onChange={handleEndDateChange}
+                selectsEnd
+                startDate={startDate}
+                endDate={endDate}
+                minDate={startDate}
+              />
+            </div>
           </div>
           <div className={styles.reset}>
             <button onClick={handleResetFilters} title="Limpiar filtros">
@@ -403,54 +405,57 @@ const Ticket = (props) => {
           </div>
         </div>
         <section className={styles.leftSection}>
-          <button
-            className={styles.addButton}
-            title="Nuevo ticket"
-            onClick={handleNavigate}
-          >
-            <span>
-              <IoAdd />
-            </span>
-          </button>
-          <div className={styles.renderList} ref={parent}>
+          <div className={styles.twoButtons}>
             <button
-              ref={optionsButton}
-              title="Añadir columna"
-              className={`${styles.columnsButton} ${
-                showOptions ? styles.selected : ""
-              }`}
-              onClick={handleShowOptions}
+              className={styles.addButton}
+              title="Nuevo ticket"
+              onClick={handleNavigate}
             >
-              <MdFormatListBulletedAdd />
+              <span>
+                <IoAdd />
+              </span>
             </button>
-
-            <div
-              ref={optionsRef}
-              className={`${styles.options} ${showOptions ? styles.show : ""}`}
-            >
-              {Object.keys(visibleColumns).map((column) => (
-                <div key={column} className={styles.list}>
-                  {visibleColumns[column].isVisible ? (
-                    <span>
-                      <MdCheckBox />
-                    </span>
-                  ) : (
-                    <span>
-                      <MdCheckBoxOutlineBlank />
-                    </span>
-                  )}
-                  <button
-                    onClick={() => toggleColumnVisibility(column)}
-                    style={{
-                      fontWeight: visibleColumns[column].isVisible
-                        ? "bold"
-                        : "normal",
-                    }}
-                  >
-                    {visibleColumns[column].name}
-                  </button>
-                </div>
-              ))}
+            <div className={styles.renderList} ref={parent}>
+              <button
+                ref={optionsButton}
+                title="Añadir columna"
+                className={`${styles.columnsButton} ${
+                  showOptions ? styles.selected : ""
+                }`}
+                onClick={handleShowOptions}
+              >
+                <MdFormatListBulletedAdd />
+              </button>
+              <div
+                ref={optionsRef}
+                className={`${styles.options} ${
+                  showOptions ? styles.show : ""
+                }`}
+              >
+                {Object.keys(visibleColumns).map((column) => (
+                  <div key={column} className={styles.list}>
+                    {visibleColumns[column].isVisible ? (
+                      <span>
+                        <MdCheckBox />
+                      </span>
+                    ) : (
+                      <span>
+                        <MdCheckBoxOutlineBlank />
+                      </span>
+                    )}
+                    <button
+                      onClick={() => toggleColumnVisibility(column)}
+                      style={{
+                        fontWeight: visibleColumns[column].isVisible
+                          ? "bold"
+                          : "normal",
+                      }}
+                    >
+                      {visibleColumns[column].name}
+                    </button>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
           <button className={styles.excelButton} onClick={handleExportToExcel}>
@@ -620,11 +625,7 @@ const Ticket = (props) => {
                           "Ciudad"
                         )}
                         <button onClick={() => handleShowFilter("city")}>
-                          {showFilter.city ? (
-                            <MdOutlineClose />
-                          ) : (
-                            <IoFilter />
-                          )}
+                          {showFilter.city ? <MdOutlineClose /> : <IoFilter />}
                         </button>
                       </th>
                     )}
