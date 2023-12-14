@@ -26,7 +26,8 @@
       }
     }
   }
-  section {
+  .formSection {
+    @include centerFlex(flex, column, center, center, 0);
     @include width(100%, 100%);
     padding: 1rem 1rem;
     background-color: $white-500;
@@ -46,48 +47,52 @@
         background-color: $white-100;
       }
     }
-    form {
-      @include centerFlex(flex, row, space-between, center, 1rem);
-      @include width(100%, 100%);
-      flex-wrap: wrap;
-      margin-top: 1rem;
-      div {
-        @include centerFlex(flex, column, center, flex-start, 0.5rem);
-        @include width(10rem, 10rem);
-        font-size: 0.9rem;
-        select {
+    .createButtonContainer {
+      @include centerFlex(flex, row, center, flex-end, 0);
+      .createButton {
+        @include button(rgb(27, 126, 27), none);
+        transition: 0.1s ease;
+        &:hover {
+          background-color: $white-100;
+          color: rgb(27, 126, 27);
+          border: 0.2rem solid rgb(27, 126, 27);
+        }
+      }
+    }
+    .formDiv {
+      @include centerFlex(flex, row, center, center, 0);
+      background-color: $white-400;
+      margin: 1rem 0;
+      form {
+        @include centerFlex(flex, row, center, center, 1rem);
+        width: auto;
+        flex-wrap: wrap;
+        padding: 1rem;
+        div {
+          @include centerFlex(flex, column, center, flex-start, 0.5rem);
           @include width(10rem, 10rem);
-          @include height(2.3rem, 2.3rem);
-          border-radius: 0.3rem;
-          padding: 0.2rem;
           font-size: 0.9rem;
-          cursor: pointer;
-          option {
+          select {
+            @include width(10rem, 10rem);
+            @include height(2.3rem, 2.3rem);
+            border-radius: 0.3rem;
+            padding: 0.2rem;
             font-size: 0.9rem;
-            color: $white-950;
-            background-color: $white-200;
+            cursor: pointer;
+            option {
+              font-size: 0.9rem;
+              color: $white-950;
+              background-color: $white-200;
+            }
           }
         }
-      }
-      div {
-        input {
-          @include width(10rem, 10rem);
-          @include height(2.3rem, 2.3rem);
-          border-radius: 0.3rem;
-          padding: 0.6rem;
-          border: 0.15rem solid $white-950;
-        }
-      }
-      .createButtonContainer {
-        @include centerFlex(flex, row, center, flex-end, 0);
-        @include height(3.925rem, 3.925rem);
-        .createButton {
-          @include button(rgb(27, 126, 27), none);
-          transition: 0.1s ease;
-          &:hover {
-            background-color: $white-100;
-            color: rgb(27, 126, 27);
-            border: 0.2rem solid rgb(27, 126, 27);
+        div {
+          input {
+            @include width(10rem, 10rem);
+            @include height(2.3rem, 2.3rem);
+            border-radius: 0.3rem;
+            padding: 0.6rem;
+            border: 0.15rem solid $white-950;
           }
         }
       }

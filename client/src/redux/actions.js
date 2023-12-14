@@ -1,4 +1,5 @@
 import axios from "axios";
+import Swal from "sweetalert2";
 import {
   GET_USERS,
   DELETE_USER,
@@ -27,6 +28,18 @@ import {
   PUT_ACCOUNT,
   GET_CUSTOMERS,
 } from "./actionTypes.js";
+
+const Toast = Swal.mixin({
+  toast: true,
+  position: "top-end",
+  showConfirmButton: false,
+  timer: 3500,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.addEventListener("mouseenter", Swal.stopTimer);
+    toast.addEventListener("mouseleave", Swal.resumeTimer);
+  },
+});
 
 export function getUsers() {
   return async function (dispatch) {
@@ -440,6 +453,10 @@ export function postTicket(ticketData) {
       dispatch({
         type: POST_TICKET,
         payload: response.data[0],
+      });
+      Toast.fire({
+        icon: "success",
+        title: "Ticket Creado!",
       });
     } catch (error) {
       console.error("Error al agregar un ticket:", error);
