@@ -21,7 +21,7 @@ import Profile from "./views/profile/Profile.jsx";
 import ProfileButton from "./components/profileButton/ProfileButton.jsx";
 import Home from "./views/home/Home.jsx";
 import Administrator from "./views/administrator/Administrator.jsx";
-import CreateTickets from "./views/createTickets/CreateTickets.jsx";
+import CreateTickets from "./views/createTickets/createTickets.jsx";
 import TicketInfo from "./views/ticketInfo/TicketInfo.jsx";
 import Loby from "./views/loby/Loby.jsx";
 import L from "leaflet";
