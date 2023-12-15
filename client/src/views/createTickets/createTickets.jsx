@@ -25,7 +25,7 @@ import {
 import Swal from "sweetalert2";
 import PropTypes from "prop-types";
 import FormTickets from "../../components/formTickets/FormTickets.jsx";
-import styles from "./CreateTickets.module.scss";
+import styles from "./createTickets.module.scss";
 
 const CreateTickets = (props) => {
   const dispatch = useDispatch();
