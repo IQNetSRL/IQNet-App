@@ -27,6 +27,7 @@ import {
   GET_TICKET_BY_ID,
   PUT_ACCOUNT,
   GET_CUSTOMERS,
+  POST_CUSTOMERS,
 } from "./actionTypes.js";
 
 const Toast = Swal.mixin({
@@ -473,6 +474,20 @@ export function postTicket(ticketData) {
         title: "Ocurrio un error!",
       });
       console.error("Error al agregar un ticket:", error);
+    }
+  };
+}
+
+export function postCustomers(result) {
+  return async function (dispatch) {
+    try {
+      const response = await axios.post("/customers/post", result);
+      dispatch({
+        type: POST_CUSTOMERS,
+        payload: response.data[0],
+      });
+    } catch (error) {
+      console.error("Error al agregar customers:",error);
     }
   };
 }

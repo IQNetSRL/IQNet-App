@@ -14,6 +14,7 @@ import {
   getAccounts,
   postAccount,
   getCustomers,
+  postCustomers,
 } from "./redux/actions.js";
 import Login from "./views/login/Login.jsx";
 import LogoutButton from "./components/logoutButton/LogoutButton.jsx";

@@ -25,6 +25,7 @@ import {
   GET_TICKET_BY_ID,
   PUT_ACCOUNT,
   GET_CUSTOMERS,
+  POST_CUSTOMERS,
 } from "./actionTypes.js";
 
 let initialState = {
@@ -157,6 +158,11 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         allTickets: [...state.allTickets, action.payload],
+      };
+    case POST_CUSTOMERS:
+      return {
+        ...state,
+        allCustomers: [...state.allCustomers, action.payload],
       };
     case DELETE_AREA:
       updatedAreas = state.allAreas.filter(

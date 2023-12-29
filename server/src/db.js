@@ -1,16 +1,11 @@
-require("dotenv").config();
 const { Sequelize } = require("sequelize");
 const fs = require("fs");
 const path = require("path");
 
-const user = process.env.USER;
-const password = process.env.PASSWORD;
-const database = process.env.DB;
-
 const sequelize = new Sequelize({
-  database: database,
-  username: user,
-  password: password,
+  database: "iqnet",
+  username: "iqnetsrl",
+  password: "iqnetsrl",
   host: "localhost",
   dialect: "postgres",
   logging: false,

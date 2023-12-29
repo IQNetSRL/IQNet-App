@@ -24,3 +24,4 @@ export const PUT_TICKET = "PUT_TICKET";
 export const GET_TICKET_BY_ID = "GET_TICKET_BY_ID";
 export const PUT_ACCOUNT = "PUT_ACCOUNT";
 export const GET_CUSTOMERS = "GET_CUSTOMERS";
+export const POST_CUSTOMERS = "POST_CUSTOMERS";
