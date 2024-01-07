@@ -17,9 +17,6 @@ server.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
 server.use(bodyParser.json({ limit: "50mb" }));
 server.use(cookieParser());
 server.use(morgan("dev"));
-server.use(express.static(path.join(__dirname, "../../../IQNet-App/client/dist")));
-server.use(history());
-server.use(express.static(path.join(__dirname, "../../../IQNet-App/client/dist")));
 server.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Credentials", "true");
@@ -29,9 +26,6 @@ server.use((req, res, next) => {
   );
   res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
   next();
-});
-server.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "../../../IQNet-App/client/dist", "index.html"));
 });
 
 server.use(cors());

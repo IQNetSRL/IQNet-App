@@ -1,14 +1,15 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, Tray } = require('electron');
 
 function createWindow() {
-  let win = new BrowserWindow({
+  this.win = new BrowserWindow({
     width: 1000,
     height: 650,
+    icon: './iqnet-naranja.ico',
   });
 
-  win.loadURL('http://localhost:5173');
-  win.on('closed', () => {
-    win = null;
+  this.win.loadURL('https://gestion.iqnetcomunicaciones.com/');
+  this.win.on('closed', () => {
+    this.win = null;
   });
 }
 
@@ -21,7 +22,7 @@ app.on('window-all-closed', () => {
 });
 
 app.on('activate', () => {
-  if (win === null) {
+  if (this.win === null) {
     createWindow();
   }
 });

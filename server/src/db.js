@@ -3,9 +3,9 @@ const fs = require("fs");
 const path = require("path");
 
 const sequelize = new Sequelize({
-  database: "iqnet",
-  username: "iqnetsrl",
-  password: "iqnetsrl",
+  database: "IQNet",
+  username: "postgres",
+  password: "francocodea",
   host: "localhost",
   dialect: "postgres",
   logging: false,

@@ -31,7 +31,8 @@
     "nsis": {
       "oneClick": false,
       "uninstallDisplayName": "IQNet-App-unistaller",
-      "allowToChangeInstallationDirectory": true
+      "allowToChangeInstallationDirectory": true,
+      "installerIcon": "./iqnet-naranja.ico"
     }
   },
   "keywords": [],
