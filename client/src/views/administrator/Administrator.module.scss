@@ -308,18 +308,21 @@
         li {
           @include centerFlex(flex, row, space-between, center, 1rem);
           @include width(100%, 100%);
-          button {
-            @include height(1.5rem, 1.5rem);
-            @include width(2rem, 2rem);
-            @include button($white-300, none);
-            border-radius: 0.2rem;
-            svg {
-              @include centerFlex(flex, row, center, center, 0);
-              @include width(100%, 100%);
-            }
-            &:hover {
-              background-color: $white-950;
-              color: $white-100;
+          .deleteAccountButton {
+            @include centerFlex(flex, row, space-between, center, 0.5rem);
+            button {
+              @include height(1.5rem, 1.5rem);
+              @include width(2rem, 2rem);
+              @include button($white-300, none);
+              border-radius: 0.2rem;
+              svg {
+                @include centerFlex(flex, row, center, center, 0);
+                @include width(100%, 100%);
+              }
+              &:hover {
+                background-color: $white-950;
+                color: $white-100;
+              }
             }
           }
         }

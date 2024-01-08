@@ -18,6 +18,7 @@ import {
   deleteUser,
   putAccount,
   getAccounts,
+  deleteAccount,
 } from "../../redux/actions.js";
 import Swal from "sweetalert2";
 import * as XLSX from "xlsx";
@@ -223,6 +224,10 @@ const Administrator = () => {
     }
   };
 
+  const handleDeleteAccount = (id) => {
+    dispatch(deleteAccount(id));
+  };
+
   const handleLevelChange = (value) => {
     setNewLevel({
       ...newLevel,
@@ -289,13 +294,18 @@ const Administrator = () => {
                 .map((account, index) => (
                   <li key={account.id || index}>
                     {account.name}
-                    <button
-                      onClick={() =>
-                        handleEdit(account.id, account.name, account.level)
-                      }
-                    >
-                      <MdModeEdit />
-                    </button>
+                    <div className={styles.deleteAccountButton}>
+                      <button
+                        onClick={() =>
+                          handleEdit(account.id, account.name, account.level)
+                        }
+                      >
+                        <MdModeEdit />
+                      </button>
+                      <button onClick={() => handleDeleteAccount(account.id)}>
+                        <MdDelete />
+                      </button>
+                    </div>
                   </li>
                 ))}
             </ol>
