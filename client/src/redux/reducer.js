@@ -227,7 +227,7 @@ function rootReducer(state = initialState, action) {
 
       return {
         ...state,
-        allTickets: updatedAccounts,
+        allAccounts: updatedAccounts,
       };
     case DELETE_TICKET:
       updatedTickets = state.allTickets.filter(

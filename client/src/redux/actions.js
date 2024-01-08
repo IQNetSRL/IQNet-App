@@ -28,6 +28,11 @@ import {
   PUT_ACCOUNT,
   GET_CUSTOMERS,
   POST_CUSTOMERS,
+  PUT_AREA,
+  PUT_CATEGORY,
+  PUT_STATUS,
+  PUT_PRIORITY,
+  DELETE_ACCOUNT,
 } from "./actionTypes.js";
 
 const Toast = Swal.mixin({
@@ -158,6 +163,20 @@ export function postAccount(name) {
   };
 }
 
+export function deleteAccount(id) {
+  return async function (dispatch) {
+    try {
+      await axios.delete(`/accounts/${id}`);
+      dispatch({
+        type: DELETE_ACCOUNT,
+        payload: id,
+      });
+    } catch (error) {
+      console.error("Error al eliminar el cuenta:", error);
+    }
+  };
+}
+
 export function postArea(newArea) {
   return async function (dispatch) {
     try {
@@ -167,6 +186,74 @@ export function postArea(newArea) {
       });
       return dispatch({
         type: POST_AREA,
+        payload: response.data[0],
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+}
+
+export function putArea(newArea) {
+  return async function (dispatch) {
+    try {
+      const response = await axios.put(`/values/areas/${newArea.id}`, {
+        name: newArea.name,
+        color: newArea.color,
+      });
+      return dispatch({
+        type: PUT_AREA,
+        payload: response.data[0],
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+}
+
+export function putCategory(newCategory) {
+  return async function (dispatch) {
+    try {
+      const response = await axios.put(`/values/categories/${newCategory.id}`, {
+        name: newCategory.name,
+        color: newCategory.color,
+      });
+      return dispatch({
+        type: PUT_CATEGORY,
+        payload: response.data[0],
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+}
+
+export function putStatus(newStatus) {
+  return async function (dispatch) {
+    try {
+      const response = await axios.put(`/values/status/${newStatus.id}`, {
+        name: newStatus.name,
+        color: newStatus.color,
+      });
+      return dispatch({
+        type: PUT_STATUS,
+        payload: response.data[0],
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+}
+
+export function putPriority(newPriority) {
+  return async function (dispatch) {
+    try {
+      const response = await axios.put(`/values/priorities/${newPriority.id}`, {
+        name: newPriority.name,
+        color: newPriority.color,
+      });
+      return dispatch({
+        type: PUT_PRIORITY,
         payload: response.data[0],
       });
     } catch (error) {
