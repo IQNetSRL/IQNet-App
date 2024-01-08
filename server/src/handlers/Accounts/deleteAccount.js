@@ -1,4 +1,4 @@
-const controllDeleteAccount = require("../../controllers/Account/controllDeleteAccount.js");
+const controllDeleteAccount = require("../../controllers/Accounts/controllDeleteAccount.js");
 
 const deleteAccount = async (req, res) => {
   const { id } = req.params;
