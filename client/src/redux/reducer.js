@@ -26,6 +26,11 @@ import {
   PUT_ACCOUNT,
   GET_CUSTOMERS,
   POST_CUSTOMERS,
+  PUT_AREA,
+  PUT_CATEGORY,
+  PUT_STATUS,
+  PUT_PRIORITY,
+  DELETE_ACCOUNT,
 } from "./actionTypes.js";
 
 let initialState = {
@@ -214,6 +219,70 @@ function rootReducer(state = initialState, action) {
         ...state,
         allTickets: updatedInformation,
       };
+    case PUT_AREA:
+      updatedAreas = state.allAreas.map((info) => {
+        if (info.id === action.payload.id) {
+          return {
+            ...info,
+            color: action.payload.color,
+            name: action.payload.name,
+          };
+        }
+        return info;
+      });
+
+      return {
+        ...state,
+        allAreas: updatedAreas,
+      };
+    case PUT_CATEGORY:
+      updatedCategories = state.allCategories.map((info) => {
+        if (info.id === action.payload.id) {
+          return {
+            ...info,
+            color: action.payload.color,
+            name: action.payload.name,
+          };
+        }
+        return info;
+      });
+
+      return {
+        ...state,
+        allCategories: updatedCategories,
+      };
+    case PUT_STATUS:
+      updatedStatus = state.allStatus.map((info) => {
+        if (info.id === action.payload.id) {
+          return {
+            ...info,
+            color: action.payload.color,
+            name: action.payload.name,
+          };
+        }
+        return info;
+      });
+
+      return {
+        ...state,
+        allStatus: updatedStatus,
+      };
+    case PUT_PRIORITY:
+      updatedPriorities = state.allPriorities.map((info) => {
+        if (info.id === action.payload.id) {
+          return {
+            ...info,
+            color: action.payload.color,
+            name: action.payload.name,
+          };
+        }
+        return info;
+      });
+
+      return {
+        ...state,
+        allPriorities: updatedPriorities,
+      };
     case PUT_ACCOUNT:
       updatedAccounts = state.allAccounts.map((info) => {
         if (info.id === action.payload.id) {
@@ -225,6 +294,14 @@ function rootReducer(state = initialState, action) {
         return info;
       });
 
+      return {
+        ...state,
+        allAccounts: updatedAccounts,
+      };
+    case DELETE_ACCOUNT:
+      updatedAccounts = state.allAccounts.filter(
+        (account) => account.id !== action.payload
+      );
       return {
         ...state,
         allAccounts: updatedAccounts,
