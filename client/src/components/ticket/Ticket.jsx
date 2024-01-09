@@ -375,8 +375,8 @@ const Ticket = (props) => {
     <section className={styles.sectionTicket}>
       <section className={styles.topOptions}>
         <div className={styles.dateContainer}>
-          <div>
-            <div>
+          <div className={styles.div1}>
+            <div className={styles.div2}>
               <h3>Desde</h3>
               <DatePicker
                 selected={startDate}
@@ -386,7 +386,7 @@ const Ticket = (props) => {
                 endDate={endDate}
               />
             </div>
-            <div>
+            <div className={styles.div3}>
               <h3>Hasta</h3>
               <DatePicker
                 selected={endDate}

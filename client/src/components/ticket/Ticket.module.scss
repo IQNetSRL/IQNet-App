@@ -9,9 +9,9 @@
     .dateContainer {
       @include centerFlex(flex, row, center, flex-end, 1rem);
       padding: 0.5rem 0.5rem 0.5rem 1rem;
-      div {
+      .div1 {
         @include centerFlex(flex, row, center, flex-end, 0.5rem);
-        div {
+        .div2 {
           @include centerFlex(flex, column, center, flex-start, 0);
         }
         h3 {
@@ -308,11 +308,40 @@
         .twoButtons {
           @include centerFlex(flex, row, center, center, 1rem);
         }
+        .renderList {
+          .options {
+            top: 2.5rem;
+            right: -25rem;
+          }
+        }
       }
       .dateContainer {
         @include centerFlex(flex, row, space-between, flex-end, 0);
         @include width(100%, 100%);
         padding: 1rem 1rem 0 1rem;
+        .reset {
+          button {
+            @include centerFlex(flex, row, center, center, 0);
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 580px) {
+  .sectionTicket {
+    .topOptions {
+      .leftSection {
+        .renderList {
+          .options {
+            @include centerFlex(flex, column, flex-start, flex-start, 0.5rem);
+            @include width(15rem, 15rem);
+            @include height(25rem, 25rem);
+            top: 2.5rem;
+            right: -12.5rem;
+          }
+        }
       }
     }
   }
@@ -325,13 +354,16 @@
         @include centerFlex(flex, row, space-between, flex-end, 0);
         @include width(100%, 100%);
         padding: 1rem 1rem 0 1rem;
-        div {
+        .div1 {
           @include centerFlex(flex, row, center, center, 0.5rem);
-          div {
+          .div2,
+          .div3 {
             @include centerFlex(flex, column, flex-start, flex-start, 0);
             div {
-              input {
-                @include width(7rem, 7rem);
+              div {
+                input {
+                  @include width(7rem, 7rem);
+                }
               }
             }
           }
@@ -348,13 +380,16 @@
         @include centerFlex(flex, row, space-between, flex-end, 0);
         @include width(100%, 100%);
         padding: 1rem 1rem 0 1rem;
-        div {
+        .div1 {
           @include centerFlex(flex, row, center, center, 0.5rem);
-          div {
+          .div2,
+          .div3 {
             @include centerFlex(flex, column, flex-start, flex-start, 0);
             div {
-              input {
-                @include width(6rem, 6rem);
+              div {
+                input {
+                  @include width(6rem, 6rem);
+                }
               }
             }
           }

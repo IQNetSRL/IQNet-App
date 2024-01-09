@@ -142,3 +142,17 @@
 .open {
   left: 0;
 }
+
+@media (max-width: 500px) {
+  .sectionSideBar {
+    position: fixed;
+    left: -3.5rem;
+    .toggleButton {
+      @include width(3rem, 3rem);
+      @include height(4rem, 4rem);
+      position: absolute;
+      top: -4rem;
+      right: -3rem;
+    }
+  }
+}

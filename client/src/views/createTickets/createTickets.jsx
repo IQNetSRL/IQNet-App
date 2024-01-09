@@ -7,6 +7,7 @@ import { RiEdit2Fill } from "react-icons/ri";
 import { MdOutlineClose } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
 import { IoAdd } from "react-icons/io5";
+import { MdModeEdit } from "react-icons/md";
 import {
   postArea,
   postCategory,
@@ -21,6 +22,10 @@ import {
   deleteCategory,
   deleteStatus,
   deletePriority,
+  putArea,
+  putCategory,
+  putStatus,
+  putPriority,
 } from "../../redux/actions.js";
 import Swal from "sweetalert2";
 import PropTypes from "prop-types";
@@ -37,11 +42,30 @@ const CreateTickets = (props) => {
   const [newCategory, setNewCategory] = useState({ name: "" });
   const [newStatus, setNewStatus] = useState({ name: "" });
   const [newPriority, setNewPriority] = useState({ name: "" });
-  const [color, setColor] = useState("#000000");
+  const [colorArea, setColorArea] = useState("#000000");
+  const [colorPriority, setColorPriority] = useState("#000000");
+  const [colorStatus, setColorStatus] = useState("#000000");
+  const [colorCategory, setColorCategory] = useState("#000000");
   const [creatingArea, setCreatingArea] = useState(false);
   const [creatingCategory, setCreatingCategory] = useState(false);
   const [creatingStatus, setCreatingStatus] = useState(false);
   const [creatingPriority, setCreatingPriority] = useState(false);
+  const [isEditingArea, setIsEditingArea] = useState(false);
+  const [isEditingCategory, setIsEditingCategory] = useState(false);
+  const [isEditingStatus, setIsEditingStatus] = useState(false);
+  const [isEditingPriority, setIsEditingPriority] = useState(false);
+  const [dataArea, setDataArea] = useState({ id: "", name: "", color: "" });
+  const [dataCategory, setDataCategory] = useState({
+    id: "",
+    name: "",
+    color: "",
+  });
+  const [dataStatus, setDataStatus] = useState({ id: "", name: "", color: "" });
+  const [dataPriority, setDataPriority] = useState({
+    id: "",
+    name: "",
+    color: "",
+  });
   const [isOpen, setIsOpen] = useState({
     area: false,
     category: false,
@@ -82,6 +106,7 @@ const CreateTickets = (props) => {
     try {
       await dispatch(postArea(newArea));
       setNewArea({ name: "", color: "" });
+      setCreatingArea(false);
     } catch (error) {
       console.error("Error al agregar el Area:", error);
     }
@@ -106,6 +131,7 @@ const CreateTickets = (props) => {
     try {
       await dispatch(postCategory(newCategory));
       setNewCategory({ name: "", color: "" });
+      setCreatingCategory(false);
     } catch (error) {
       console.error("Error al agregar la Categoria:", error);
     }
@@ -120,6 +146,7 @@ const CreateTickets = (props) => {
     try {
       await dispatch(postStatus(newStatus));
       setNewStatus({ name: "", color: "" });
+      setCreatingStatus(false);
     } catch (error) {
       console.error("Error al agregar el Estatus:", error);
     }
@@ -134,28 +161,49 @@ const CreateTickets = (props) => {
     try {
       await dispatch(postPriority(newPriority));
       setNewPriority({ name: "", color: "" });
+      setCreatingPriority(false);
     } catch (error) {
       console.error("Error al agregar la Prioridad:", error);
     }
   };
 
   const handleColorChangeArea = (newColor) => {
-    setColor(newColor);
+    setColorArea(newColor);
     setNewArea((prevArea) => ({ ...prevArea, color: newColor }));
   };
 
+  const handleColorChangeEditingArea = (newColor) => {
+    setColorArea(newColor);
+    setDataArea((prevData) => ({ ...prevData, color: newColor }));
+  };
+
+  const handleColorChangeEditingCategory = (newColor) => {
+    setColorCategory(newColor);
+    setDataCategory((prevData) => ({ ...prevData, color: newColor }));
+  };
+
+  const handleColorChangeEditingStatus = (newColor) => {
+    setColorStatus(newColor);
+    setDataStatus((prevData) => ({ ...prevData, color: newColor }));
+  };
+
+  const handleColorChangeEditingPriority = (newColor) => {
+    setColorPriority(newColor);
+    setDataPriority((prevData) => ({ ...prevData, color: newColor }));
+  };
+
   const handleColorChangeCategory = (newColor) => {
-    setColor(newColor);
+    setColorCategory(newColor);
     setNewCategory((prevCategory) => ({ ...prevCategory, color: newColor }));
   };
 
   const handleColorChangeStatus = (newColor) => {
-    setColor(newColor);
+    setColorStatus(newColor);
     setNewStatus((prevStatus) => ({ ...prevStatus, color: newColor }));
   };
 
   const handleColorChangePriority = (newColor) => {
-    setColor(newColor);
+    setColorPriority(newColor);
     setNewPriority((prevPriority) => ({ ...prevPriority, color: newColor }));
   };
 
@@ -167,6 +215,26 @@ const CreateTickets = (props) => {
   const handleInputChangeArea = (e) => {
     const { name, value } = e.target;
     setNewArea({ ...newArea, [name]: value });
+  };
+
+  const handleInputChangeEditingArea = (e) => {
+    const { name, value } = e.target;
+    setDataArea({ ...dataArea, [name]: value });
+  };
+
+  const handleInputChangeEditingCategory = (e) => {
+    const { name, value } = e.target;
+    setDataCategory({ ...dataCategory, [name]: value });
+  };
+
+  const handleInputChangeEditingStatus = (e) => {
+    const { name, value } = e.target;
+    setDataStatus({ ...dataStatus, [name]: value });
+  };
+
+  const handleInputChangeEditingPriority = (e) => {
+    const { name, value } = e.target;
+    setDataPriority({ ...dataPriority, [name]: value });
   };
 
   const handleInputChangeStatus = (e) => {
@@ -183,7 +251,7 @@ const CreateTickets = (props) => {
     if (value === "area") {
       Swal.fire({
         title:
-          "Esta seguro que desea eliminar esta area? Esto no se podra deshacer y el area desaparecera de los tickets asociados!",
+          "Esta seguro que desea eliminar esta area? Esto no se podra deshacer y el area se eliminara con todos los tickets asociados!",
         showDenyButton: true,
         confirmButtonText: "Confirmar",
         denyButtonText: `Cancelar`,
@@ -205,6 +273,7 @@ const CreateTickets = (props) => {
                 title: "Area Eliminada!",
               });
               dispatch(deleteArea(id));
+              setIsEditingArea(false);
             } else if (result.isDenied) {
               return;
             }
@@ -217,7 +286,7 @@ const CreateTickets = (props) => {
     if (value === "category") {
       Swal.fire({
         title:
-          "Esta seguro que desea eliminar esta categoria? Esto no se podra deshacer y el area desaparecera de los tickets asociados!",
+          "Esta seguro que desea eliminar esta categoria? Esto no se podra deshacer y la categoria se eliminara con todos los tickets asociados!",
         showDenyButton: true,
         confirmButtonText: "Confirmar",
         denyButtonText: `Cancelar`,
@@ -239,6 +308,7 @@ const CreateTickets = (props) => {
                 title: "Categoria Eliminada!",
               });
               dispatch(deleteCategory(id));
+              setIsEditingCategory(false);
             } else if (result.isDenied) {
               return;
             }
@@ -251,7 +321,7 @@ const CreateTickets = (props) => {
     if (value === "status") {
       Swal.fire({
         title:
-          "Esta seguro que desea eliminar este estatus? Esto no se podra deshacer y el area desaparecera de los tickets asociados!",
+          "Esta seguro que desea eliminar este estatus? Esto no se podra deshacer y el estado se eliminara con todos los tickets asociados!",
         showDenyButton: true,
         confirmButtonText: "Confirmar",
         denyButtonText: `Cancelar`,
@@ -273,6 +343,7 @@ const CreateTickets = (props) => {
                 title: "Estado Eliminado!",
               });
               dispatch(deleteStatus(id));
+              setIsEditingStatus(false);
             } else if (result.isDenied) {
               return;
             }
@@ -285,7 +356,7 @@ const CreateTickets = (props) => {
     if (value === "priority") {
       Swal.fire({
         title:
-          "Esta seguro que desea eliminar esta prioridad? Esto no se podra deshacer y el area desaparecera de los tickets asociados!",
+          "Esta seguro que desea eliminar esta prioridad? Esto no se podra deshacer y la prioridad se eliminara con todos los tickets asociados!",
         showDenyButton: true,
         confirmButtonText: "Confirmar",
         denyButtonText: `Cancelar`,
@@ -307,6 +378,7 @@ const CreateTickets = (props) => {
                 title: "Prioridad Eliminada!",
               });
               dispatch(deletePriority(id));
+              setIsEditingPriority(false);
             } else if (result.isDenied) {
               return;
             }
@@ -315,6 +387,100 @@ const CreateTickets = (props) => {
           return;
         }
       });
+    }
+  };
+
+  const handleEdit = (id, name, color, value) => {
+    if (value === "area") {
+      setIsEditingArea(!isEditingArea);
+      setDataArea({ id: id, name: name, color: color });
+    }
+    if (value === "category") {
+      setIsEditingCategory(!isEditingCategory);
+      setDataCategory({ id: id, name: name, color: color });
+    }
+    if (value === "status") {
+      setIsEditingStatus(!isEditingStatus);
+      setDataStatus({ id: id, name: name, color: color });
+    }
+    if (value === "priority") {
+      setIsEditingPriority(!isEditingPriority);
+      setDataPriority({ id: id, name: name, color: color });
+    }
+  };
+
+  const handleCancel = (value) => {
+    if (value === "area") {
+      setIsEditingArea(false);
+    }
+    if (value === "category") {
+      setIsEditingCategory(false);
+    }
+    if (value === "status") {
+      setIsEditingStatus(false);
+    }
+    if (value === "priority") {
+      setIsEditingPriority(false);
+    }
+  };
+
+  const handleEditArea = async (e) => {
+    e.preventDefault();
+    if (dataArea.name.trim() === "") {
+      return;
+    }
+
+    try {
+      await dispatch(putArea(dataArea));
+      setDataArea({ id: "", name: "", color: "" });
+      setIsEditingArea(false);
+    } catch (error) {
+      console.error("Error al editar el Area:", error);
+    }
+  };
+
+  const handleEditCategory = async (e) => {
+    e.preventDefault();
+    if (dataCategory.name.trim() === "") {
+      return;
+    }
+
+    try {
+      await dispatch(putCategory(dataCategory));
+      setDataCategory({ id: "", name: "", color: "" });
+      setIsEditingCategory(false);
+    } catch (error) {
+      console.error("Error al editar el Categoria:", error);
+    }
+  };
+
+  const handleEditStatus = async (e) => {
+    e.preventDefault();
+    if (dataStatus.name.trim() === "") {
+      return;
+    }
+
+    try {
+      await dispatch(putStatus(dataStatus));
+      setDataStatus({ id: "", name: "", color: "" });
+      setIsEditingStatus(false);
+    } catch (error) {
+      console.error("Error al editar el estado:", error);
+    }
+  };
+
+  const handleEditPriority = async (e) => {
+    e.preventDefault();
+    if (dataPriority.name.trim() === "") {
+      return;
+    }
+
+    try {
+      await dispatch(putPriority(dataPriority));
+      setDataPriority({ id: "", name: "", color: "" });
+      setIsEditingPriority(false);
+    } catch (error) {
+      console.error("Error al editar la Prioridad:", error);
     }
   };
 
@@ -359,25 +525,66 @@ const CreateTickets = (props) => {
                       {area.name}
                       <button
                         className={styles.deleteButton}
-                        onClick={() => handleDelete(area.id, "area")}
+                        onClick={() =>
+                          handleEdit(area.id, area.name, area.color, "area")
+                        }
                       >
-                        <MdDelete />
+                        <MdModeEdit />
                       </button>
                     </li>
                   ))}
                   <li className={styles.liForm}>
-                    <button
-                      className={styles.addButton}
-                      onClick={() => handleAdd("area")}
-                    >
-                      {creatingArea ? (
-                        "cancelar"
-                      ) : (
+                    <form>
+                      {isEditingArea && (
                         <>
-                          <span>añadir area</span> <IoAdd />
+                          <input
+                            type="text"
+                            name="name"
+                            placeholder="nueva area"
+                            style={{ color: dataArea.color }}
+                            onChange={handleInputChangeEditingArea}
+                            value={dataArea.name}
+                          />
+                          <div>
+                            <HexColorPicker
+                              color={dataArea.color}
+                              onChange={handleColorChangeEditingArea}
+                            />
+                          </div>
+                          <button onClick={handleEditArea}>Aceptar</button>
+                          <button
+                            className={styles.cancel}
+                            onClick={() => handleCancel("area")}
+                          >
+                            Cancelar
+                          </button>
                         </>
                       )}
-                    </button>
+                    </form>
+                    {isEditingArea && (
+                      <button
+                        className={styles.delete}
+                        onClick={() => handleDelete(dataArea.id, "area")}
+                      >
+                        Eliminar
+                      </button>
+                    )}
+                  </li>
+                  <li className={styles.liForm}>
+                    {!isEditingArea && (
+                      <button
+                        className={styles.addButton}
+                        onClick={() => handleAdd("area")}
+                      >
+                        {creatingArea ? (
+                          "cancelar"
+                        ) : (
+                          <>
+                            <span>añadir area</span> <IoAdd />
+                          </>
+                        )}
+                      </button>
+                    )}
                     <form onSubmit={handleSubmitArea}>
                       {creatingArea && (
                         <>
@@ -385,13 +592,13 @@ const CreateTickets = (props) => {
                             type="text"
                             name="name"
                             placeholder="nueva area"
-                            style={{ color: color }}
+                            style={{ color: colorArea }}
                             onChange={handleInputChangeArea}
                             value={newArea.name}
                           />
                           <div>
                             <HexColorPicker
-                              color={color}
+                              color={colorArea}
                               onChange={handleColorChangeArea}
                             />
                           </div>
@@ -424,25 +631,73 @@ const CreateTickets = (props) => {
                       {category.name}
                       <button
                         className={styles.deleteButton}
-                        onClick={() => handleDelete(category.id, "category")}
+                        onClick={() =>
+                          handleEdit(
+                            category.id,
+                            category.name,
+                            category.color,
+                            "category"
+                          )
+                        }
                       >
-                        <MdDelete />
+                        <MdModeEdit />
                       </button>
                     </li>
                   ))}
                   <li className={styles.liForm}>
-                    <button
-                      className={styles.addButton}
-                      onClick={() => handleAdd("category")}
-                    >
-                      {creatingCategory ? (
-                        "cancelar"
-                      ) : (
+                    <form>
+                      {isEditingCategory && (
                         <>
-                          <span>añadir categoria</span> <IoAdd />
+                          <input
+                            type="text"
+                            name="name"
+                            placeholder="nueva categoria"
+                            style={{ color: dataCategory.color }}
+                            onChange={handleInputChangeEditingCategory}
+                            value={dataCategory.name}
+                          />
+                          <div>
+                            <HexColorPicker
+                              color={dataCategory.color}
+                              onChange={handleColorChangeEditingCategory}
+                            />
+                          </div>
+                          <button onClick={handleEditCategory}>Aceptar</button>
+                          <button
+                            className={styles.cancel}
+                            onClick={() => handleCancel("category")}
+                          >
+                            Cancelar
+                          </button>
                         </>
                       )}
-                    </button>
+                    </form>
+                    {isEditingCategory && (
+                      <button
+                        className={styles.delete}
+                        onClick={() =>
+                          handleDelete(dataCategory.id, "category")
+                        }
+                      >
+                        Eliminar
+                      </button>
+                    )}
+                  </li>
+                  <li className={styles.liForm}>
+                    {!isEditingCategory && (
+                      <button
+                        className={styles.addButton}
+                        onClick={() => handleAdd("category")}
+                      >
+                        {creatingCategory ? (
+                          "cancelar"
+                        ) : (
+                          <>
+                            <span>añadir categoria</span> <IoAdd />
+                          </>
+                        )}
+                      </button>
+                    )}
                     <form onSubmit={handleSubmitCategory}>
                       {creatingCategory && (
                         <>
@@ -450,12 +705,13 @@ const CreateTickets = (props) => {
                             type="text"
                             name="name"
                             placeholder="nueva categoria"
+                            style={{ color: colorCategory }}
                             onChange={handleInputChangeCategory}
                             value={newCategory.name}
                           />
                           <div>
                             <HexColorPicker
-                              color={color}
+                              color={colorCategory}
                               onChange={handleColorChangeCategory}
                             />
                           </div>
@@ -488,25 +744,71 @@ const CreateTickets = (props) => {
                       {status.name}
                       <button
                         className={styles.deleteButton}
-                        onClick={() => handleDelete(status.id, "status")}
+                        onClick={() =>
+                          handleEdit(
+                            status.id,
+                            status.name,
+                            status.color,
+                            "status"
+                          )
+                        }
                       >
-                        <MdDelete />
+                        <MdModeEdit />
                       </button>
                     </li>
                   ))}
                   <li className={styles.liForm}>
-                    <button
-                      className={styles.addButton}
-                      onClick={() => handleAdd("status")}
-                    >
-                      {creatingStatus ? (
-                        "cancelar"
-                      ) : (
+                    <form>
+                      {isEditingStatus && (
                         <>
-                          <span>añadir estatus</span> <IoAdd />
+                          <input
+                            type="text"
+                            name="name"
+                            placeholder="nuevo estado"
+                            style={{ color: dataStatus.color }}
+                            onChange={handleInputChangeEditingStatus}
+                            value={dataStatus.name}
+                          />
+                          <div>
+                            <HexColorPicker
+                              color={dataStatus.color}
+                              onChange={handleColorChangeEditingStatus}
+                            />
+                          </div>
+                          <button onClick={handleEditStatus}>Aceptar</button>
+                          <button
+                            className={styles.cancel}
+                            onClick={() => handleCancel("status")}
+                          >
+                            Cancelar
+                          </button>
                         </>
                       )}
-                    </button>
+                    </form>
+                    {isEditingStatus && (
+                      <button
+                        className={styles.delete}
+                        onClick={() => handleDelete(dataStatus.id, "status")}
+                      >
+                        Eliminar
+                      </button>
+                    )}
+                  </li>
+                  <li className={styles.liForm}>
+                    {!isEditingStatus && (
+                      <button
+                        className={styles.addButton}
+                        onClick={() => handleAdd("status")}
+                      >
+                        {creatingStatus ? (
+                          "cancelar"
+                        ) : (
+                          <>
+                            <span>añadir estatus</span> <IoAdd />
+                          </>
+                        )}
+                      </button>
+                    )}
                     <form onSubmit={handleSubmitStatus}>
                       {creatingStatus && (
                         <>
@@ -514,12 +816,13 @@ const CreateTickets = (props) => {
                             type="text"
                             name="name"
                             placeholder="nuevo estatus"
+                            style={{ color: colorStatus }}
                             onChange={handleInputChangeStatus}
                             value={newStatus.name}
                           />
                           <div>
                             <HexColorPicker
-                              color={color}
+                              color={colorStatus}
                               onChange={handleColorChangeStatus}
                             />
                           </div>
@@ -552,25 +855,73 @@ const CreateTickets = (props) => {
                       {priority.name}
                       <button
                         className={styles.deleteButton}
-                        onClick={() => handleDelete(priority.id, "priority")}
+                        onClick={() =>
+                          handleEdit(
+                            priority.id,
+                            priority.name,
+                            priority.color,
+                            "priority"
+                          )
+                        }
                       >
-                        <MdDelete />
+                        <MdModeEdit />
                       </button>
                     </li>
                   ))}
                   <li className={styles.liForm}>
-                    <button
-                      className={styles.addButton}
-                      onClick={() => handleAdd("priority")}
-                    >
-                      {creatingPriority ? (
-                        "cancelar"
-                      ) : (
+                    <form>
+                      {isEditingPriority && (
                         <>
-                          <span>añadir prioridad</span> <IoAdd />
+                          <input
+                            type="text"
+                            name="name"
+                            placeholder="nueva prioridad"
+                            style={{ color: dataPriority.color }}
+                            onChange={handleInputChangeEditingPriority}
+                            value={dataPriority.name}
+                          />
+                          <div>
+                            <HexColorPicker
+                              color={dataPriority.color}
+                              onChange={handleColorChangeEditingPriority}
+                            />
+                          </div>
+                          <button onClick={handleEditPriority}>Aceptar</button>
+                          <button
+                            className={styles.cancel}
+                            onClick={() => handleCancel("priority")}
+                          >
+                            Cancelar
+                          </button>
                         </>
                       )}
-                    </button>
+                    </form>
+                    {isEditingPriority && (
+                      <button
+                        className={styles.delete}
+                        onClick={() =>
+                          handleDelete(dataPriority.id, "priority")
+                        }
+                      >
+                        Eliminar
+                      </button>
+                    )}
+                  </li>
+                  <li className={styles.liForm}>
+                    {!isEditingPriority && (
+                      <button
+                        className={styles.addButton}
+                        onClick={() => handleAdd("priority")}
+                      >
+                        {creatingPriority ? (
+                          "cancelar"
+                        ) : (
+                          <>
+                            <span>añadir prioridad</span> <IoAdd />
+                          </>
+                        )}
+                      </button>
+                    )}
                     <form onSubmit={handleSubmitPriority}>
                       {creatingPriority && (
                         <>
@@ -578,12 +929,13 @@ const CreateTickets = (props) => {
                             type="text"
                             name="name"
                             placeholder="nueva prioridad"
+                            style={{ color: colorPriority }}
                             onChange={handleInputChangePriority}
                             value={newPriority.name}
                           />
                           <div>
                             <HexColorPicker
-                              color={color}
+                              color={colorPriority}
                               onChange={handleColorChangePriority}
                             />
                           </div>

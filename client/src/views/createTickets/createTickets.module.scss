@@ -35,9 +35,15 @@
             cursor: default;
             .deleteButton {
               @include centerFlex(flex, row, center, center, 0);
-              @include button(rgb(255, 44, 44), none);
+              @include button(rgb(27, 81, 126), none);
               @include width(2rem, 2rem);
               @include height(2rem, 2rem);
+              svg {
+                color: $white-100;
+              }
+              &:hover {
+                @include button($white-800, none);
+              }
             }
             .addButton {
               @include centerFlex(flex, row, center, center, 0.1rem);
@@ -82,12 +88,39 @@
                   }
                 }
               }
+              .cancel {
+                color: $white-100;
+                background-color: $pumpkin-700;
+                &:hover {
+                  background-color: $white-100;
+                  color: $pumpkin-700;
+                  border: 0.1rem solid $pumpkin-700;
+                }
+              }
               button {
                 @include centerFlex(flex, row, center, center, 0);
                 @include button(rgb(27, 126, 27), none);
                 border-radius: 0.4rem;
                 font-size: 1.1rem;
+                transition: 0.2s ease;
+                &:hover {
+                  background-color: $white-100;
+                  color: rgb(27, 126, 27);
+                  border: 0.1rem solid rgb(27, 126, 27);
+                }
               }
+            }
+          }
+          .delete {
+            @include centerFlex(flex, row, center, center, 0);
+            @include button(rgb(167, 25, 25), none);
+            border-radius: 0.4rem;
+            font-size: 1.1rem;
+            transition: 0.2s ease;
+            &:hover {
+              background-color: $white-100;
+              color: rgb(167, 25, 25);
+              border: 0.1rem solid rgb(167, 25, 25);
             }
           }
         }

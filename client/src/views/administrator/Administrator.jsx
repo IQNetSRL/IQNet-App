@@ -283,6 +283,9 @@ const Administrator = () => {
                     >
                       <MdModeEdit />
                     </button>
+                    <button onClick={() => handleDeleteAccount(account.id)}>
+                      <MdDelete />
+                    </button>
                   </li>
                 ))}
             </ol>

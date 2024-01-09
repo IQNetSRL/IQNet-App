@@ -37,3 +37,18 @@ main {
     padding-right: 1rem;
   }
 }
+
+@media (max-width: 500px) {
+  main {
+    .mainContainer {
+      .mainSection {
+        padding-left: 0;
+      }
+    }
+  }
+  .navBar {
+    h2 {
+      padding-left: 4rem;
+    }
+  }
+}

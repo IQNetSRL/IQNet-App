@@ -37,8 +37,9 @@ const SideBar = (props) => {
     setIsSidebarOpen(false);
   };
 
-  const toggleSidebar = () => {
-    setIsSidebarOpen((prev) => !prev);
+  const toggleSidebar = (e) => {
+    e.stopPropagation()
+    setIsSidebarOpen(!isSidebarOpen);
   };
 
   return (

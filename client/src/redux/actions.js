@@ -203,7 +203,7 @@ export function putArea(newArea) {
       });
       return dispatch({
         type: PUT_AREA,
-        payload: response.data[0],
+        payload: response.data,
       });
     } catch (error) {
       console.error(error);
@@ -220,7 +220,7 @@ export function putCategory(newCategory) {
       });
       return dispatch({
         type: PUT_CATEGORY,
-        payload: response.data[0],
+        payload: response.data,
       });
     } catch (error) {
       console.error(error);
@@ -237,7 +237,7 @@ export function putStatus(newStatus) {
       });
       return dispatch({
         type: PUT_STATUS,
-        payload: response.data[0],
+        payload: response.data,
       });
     } catch (error) {
       console.error(error);
@@ -254,7 +254,7 @@ export function putPriority(newPriority) {
       });
       return dispatch({
         type: PUT_PRIORITY,
-        payload: response.data[0],
+        payload: response.data,
       });
     } catch (error) {
       console.error(error);
@@ -574,7 +574,7 @@ export function postCustomers(result) {
         payload: response.data[0],
       });
     } catch (error) {
-      console.error("Error al agregar customers:",error);
+      console.error("Error al agregar customers:", error);
     }
   };
 }
